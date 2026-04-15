@@ -1,22 +1,12 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About — Kosei | HP制作',
-  description: '医療DX出身のコンサルタントがHP制作を始めた理由と、4つの強み・制作への姿勢をご紹介します。',
-}
-
-function SectionLabel({ num, label }: { num: string; label: string }) {
-  return (
-    <div className="flex items-center gap-4 mb-16">
-      <span className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase shrink-0">
-        {num} / {label}
-      </span>
-      <div className="flex-1 h-px bg-[#e5e5e5]" aria-hidden="true" />
-    </div>
-  )
+  title: 'About — Kosei Wakabayashi',
+  description: '医療DXのコンサルタントがHP制作を始めた理由と、4つの強みをご紹介します。',
 }
 
 const strengths = [
@@ -55,166 +45,142 @@ export default function AboutPage() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
+
         {/* Page header */}
-        <div className="bg-[#0a0f1e] pt-32 pb-16 px-8 md:px-16 relative overflow-hidden">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden="true"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          <div className="relative z-10 max-w-7xl mx-auto">
-            <p className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase mb-6">About</p>
-            <h1
-              className="text-white font-black leading-tight"
-              style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', textWrap: 'balance' }}
-            >
-              Koseiについて
-            </h1>
-            <p className="text-white/40 text-base mt-4 max-w-md leading-relaxed">
-              医療DXのコンサルタントが、なぜHP制作を始めたのか。強みと制作への姿勢を全部書きました。
+        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1400px] mx-auto pb-16">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
+              ABOUT
             </p>
+            <h1
+              className="font-display font-extrabold text-[var(--ink)] leading-tight"
+              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
+            >
+              Kosei
+              <br />
+              Wakabayashi
+            </h1>
           </div>
         </div>
 
         {/* Story */}
-        <section className="bg-white py-24 md:py-36 px-8 md:px-16">
-          <div className="max-w-7xl mx-auto">
-            <SectionLabel num="01" label="Story" />
-
-            <div className="grid lg:grid-cols-2 gap-16 items-start">
-              <div>
-                <h2
-                  className="text-[#111] font-black leading-tight"
-                  style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', textWrap: 'balance' }}
-                >
-                  「なんでこんなに古いサイトのまま
-                  <br />
-                  商売してるんだろう」と思った。
-                </h2>
-              </div>
-              <div className="space-y-6 text-[#555] leading-[1.9] text-lg lg:pt-4">
-                <p>
-                  本業は医療DX SaaS企業のコンサルティングセールス。
-                  病院・クリニック・医療法人を日々訪問して気づいたことがある。
-                </p>
-                <p>
-                  <strong className="text-[#111]">「HPが信頼を大きく左右している」</strong>こと。
-                  スマホで崩れていたり、2010年代のデザインのまま止まっていたり、
-                  何を売っているのかパッと伝わらなかったり。
-                </p>
-                <p>
-                  同時に、「制作会社に頼むと高い・遅い・融通が利かない」という声も耳にした。
-                  150万円かけて作ってもらったのに、2ヶ月かかった上に更新できない——そんな話を何度も聞いた。
-                </p>
-                <p>
-                  最初のクライアントのサイトが公開されたとき、
-                  「思ったより全然早かった。しかもかっこいい」という言葉をもらった。
-                </p>
-                <p>
-                  <strong className="text-[#111]">自分の知識とスキルで、この課題を解ける。</strong>
-                  そう確信して、HP制作を始めた。
-                </p>
-              </div>
+        <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28">
+            <div>
+              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
+                01 / STORY
+              </p>
+              <h2
+                className="font-display font-extrabold text-[var(--ink)] leading-tight"
+                style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+              >
+                「なんでこんなに古いサイトのまま
+                商売してるんだろう」と思った。
+              </h2>
+            </div>
+            <div className="space-y-6 text-[var(--muted)] leading-[1.9] md:pt-20">
+              <p>
+                本業は医療DX SaaS企業のコンサルティングセールス。
+                病院・クリニック・医療法人を日々訪問して気づいたことがある。
+              </p>
+              <p>
+                <strong className="text-[var(--ink)]">「HPが信頼を大きく左右している」</strong>こと。
+                スマホで崩れていたり、2010年代のデザインのまま止まっていたり。
+              </p>
+              <p>
+                同時に、「制作会社に頼むと高い・遅い・融通が利かない」という声も耳にした。
+                150万円・2ヶ月・更新できない——そんな話を何度も聞いた。
+              </p>
+              <p>
+                最初のクライアントのサイトが公開されたとき、
+                「思ったより全然早かった。しかもかっこいい」という言葉をもらった。
+              </p>
+              <p>
+                <strong className="text-[var(--ink)]">自分の知識とスキルで、この課題を解ける。</strong>
+                そう確信して、HP制作を始めた。
+              </p>
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* Strengths */}
-        <section className="bg-[#fafafa] py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
-          <div className="max-w-7xl mx-auto">
-            <SectionLabel num="02" label="Strengths" />
-            <h2
-              className="text-[#111] font-black leading-tight mb-16"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', textWrap: 'balance' }}
-            >
-              4つの強み
-            </h2>
-            <div className="border-t border-[#e5e5e5]">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
+              02 / STRENGTHS
+            </p>
+            <div className="border-t border-[var(--border)]">
               {strengths.map((item) => (
-                <div
-                  key={item.num}
-                  className="flex flex-col md:flex-row gap-6 md:gap-12 py-8 border-b border-[#f0f0f0] group"
-                >
-                  <span className="text-[#f59e0b] font-black text-xs w-6 shrink-0 mt-1">{item.num}</span>
-                  <p className="text-[#111] font-bold text-lg md:w-52 shrink-0 group-hover:text-[#f59e0b] transition-colors duration-200">
+                <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-8 border-b border-[var(--border)] group">
+                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
+                    {item.num}
+                  </span>
+                  <p
+                    className="font-display font-bold text-[var(--ink)] text-base md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200"
+                  >
                     {item.title}
                   </p>
-                  <p className="text-[#777] leading-relaxed">{item.desc}</p>
+                  <p className="text-[var(--muted)] text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* Quality pillars */}
-        <section className="bg-[#0a0f1e] py-24 md:py-36 px-8 md:px-16 relative overflow-hidden">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden="true"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(245,158,11,0.06) 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          <div className="relative z-10 max-w-7xl mx-auto">
-            <div className="flex items-center gap-4 mb-16">
-              <span className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase shrink-0">
-                03 / Quality
-              </span>
-              <div className="flex-1 h-px bg-white/10" aria-hidden="true" />
-            </div>
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36 bg-[var(--ink)]">
+          <div className="max-w-[1400px] mx-auto">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
+              03 / QUALITY
+            </p>
             <h2
-              className="text-white font-black leading-tight mb-4"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', textWrap: 'balance' }}
+              className="font-display font-extrabold text-[var(--bg)] leading-tight mb-4"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
             >
               品質を支える6つの柱
             </h2>
-            <p className="text-white/40 text-lg mb-16 max-w-xl">
+            <p className="text-white/30 text-sm mb-16 max-w-lg leading-relaxed">
               エンタープライズ水準の技術基盤で、公開後も安定して動き続けるサイトを作ります。
             </p>
             <div className="border-t border-white/10">
               {qualities.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex flex-col md:flex-row gap-4 md:gap-12 py-6 border-b border-white/5"
-                >
-                  <p className="text-white font-bold md:w-36 shrink-0">{item.label}</p>
-                  <p className="text-white/40 text-sm leading-relaxed">{item.desc}</p>
+                <div key={item.label} className="flex flex-col md:flex-row gap-4 md:gap-16 py-6 border-b border-white/10">
+                  <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.label}</p>
+                  <p className="text-white/35 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* CTA */}
-        <section className="bg-white py-24 md:py-32 px-8 md:px-16 border-t border-[#e5e5e5]">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-32">
+          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
             <div>
-              <p className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase mb-6">Contact</p>
+              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-8">
+                CONTACT
+              </p>
               <h2
-                className="text-[#111] font-black leading-tight"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', textWrap: 'balance' }}
+                className="font-display font-extrabold text-[var(--ink)] leading-tight"
+                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
               >
                 まずは話を
                 <br />
                 聞いてみませんか？
               </h2>
-              <p className="text-[#777] text-base mt-4 max-w-xs leading-relaxed">
+              <p className="text-[var(--muted)] text-sm mt-4 max-w-xs leading-relaxed">
                 30分・無料・オンライン。「まだぼんやりしている」でも大丈夫です。
               </p>
             </div>
             <Link
               href="/contact"
-              className="shrink-0 inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-10 py-5 text-lg hover:bg-[#fbbf24] transition-colors duration-200"
+              className="font-display font-bold text-sm tracking-[0.1em] bg-[var(--ink)] text-[var(--bg)] px-10 py-4 hover:bg-[var(--gold)] transition-colors duration-300 shrink-0"
             >
-              無料相談を申し込む →
+              FREE CONSULTATION →
             </Link>
           </div>
-        </section>
+        </ScrollReveal>
       </main>
       <Footer />
     </>

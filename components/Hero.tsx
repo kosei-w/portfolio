@@ -2,86 +2,106 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import Link from 'next/link'
 
 export default function Hero() {
-  const topRef = useRef<HTMLDivElement>(null)
-  const midRef = useRef<HTMLDivElement>(null)
-  const botRef = useRef<HTMLDivElement>(null)
+  const firstRef = useRef<HTMLSpanElement>(null)
+  const lastRef = useRef<HTMLSpanElement>(null)
+  const ruleRef = useRef<HTMLDivElement>(null)
+  const metaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
+    /* Delay if Loader is running (first visit this session).
+       Hero's useEffect runs before Loader's (children before parents in React).
+       So on first visit sessionStorage is still empty here → apply delay. */
+    const firstVisit = !sessionStorage.getItem('kw_loaded')
+    const delay = firstVisit ? 2.75 : 0
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
-      tl.from(topRef.current, { y: -20, opacity: 0, duration: 0.8 })
-        .from(midRef.current?.children ?? [], { y: 60, opacity: 0, stagger: 0.08, duration: 1 }, '-=0.4')
-        .from(botRef.current?.children ?? [], { y: 20, opacity: 0, stagger: 0.1, duration: 0.6 }, '-=0.4')
+      const tl = gsap.timeline({ delay, defaults: { ease: 'power4.out' } })
+
+      tl.from([firstRef.current, lastRef.current], {
+        y: 90,
+        opacity: 0,
+        immediateRender: true,
+        stagger: 0.1,
+        duration: 1.1,
+      })
+        .from(
+          ruleRef.current,
+          { scaleX: 0, immediateRender: true, duration: 1, ease: 'power3.inOut' },
+          '-=0.6',
+        )
+        .from(
+          metaRef.current?.children ?? [],
+          { y: 20, opacity: 0, immediateRender: true, stagger: 0.08, duration: 0.7 },
+          '-=0.5',
+        )
     })
+
     return () => ctx.revert()
   }, [])
 
   return (
-    <section className="min-h-screen bg-[#0a0f1e] flex flex-col justify-between px-8 md:px-16 pt-28 pb-12 relative overflow-hidden">
-      {/* Subtle dot texture */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
-
-      {/* Top bar */}
-      <div ref={topRef} className="relative z-10 flex items-center justify-between">
-        <p className="text-white/30 text-xs tracking-[0.3em] uppercase font-medium">
-          Kosei Idezuka — HP制作
-        </p>
-        <div className="flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-[#f59e0b] rounded-full animate-pulse" />
-          <p className="text-white/40 text-xs tracking-[0.2em] uppercase">受付中</p>
-        </div>
-      </div>
-
-      {/* Main headline — editorial, massive */}
-      <div ref={midRef} className="relative z-10 py-8 md:py-0">
+    <section
+      className="min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16"
+      aria-label="Hero"
+    >
+      {/* Massive editorial name */}
+      <div className="flex-1 flex flex-col justify-center py-8">
         <h1
-          className="text-white font-black leading-[0.88] tracking-tight"
-          style={{ fontSize: 'clamp(4.5rem, 13vw, 13rem)' }}
+          className="font-display font-extrabold leading-[0.86] select-none"
+          style={{ fontSize: 'clamp(4.5rem, 16.5vw, 18rem)', letterSpacing: '-0.035em' }}
         >
-          <span className="block">最短</span>
-          <span
-            className="block text-transparent bg-clip-text"
-            style={{ backgroundImage: 'linear-gradient(90deg, #f59e0b, #fbbf24)' }}
-          >
-            10日で、
+          <span ref={firstRef} className="block text-[var(--ink)]">
+            KOSEI
           </span>
-          <span className="block">集客する。</span>
+          {/* Asymmetric indent — editorial signature move */}
+          <span
+            ref={lastRef}
+            className="block text-[var(--ink)]"
+            style={{ paddingLeft: 'clamp(1.5rem, 5.5vw, 9rem)' }}
+          >
+            WAKABAYASHI
+          </span>
         </h1>
       </div>
 
-      {/* Bottom: description + CTA */}
-      <div ref={botRef} className="relative z-10 flex flex-col md:flex-row gap-10 md:items-end justify-between">
-        <p className="text-white/50 text-base md:text-lg max-w-sm leading-relaxed">
-          制作会社の1/6の納期。医療DX出身のコンサルタントが、
-          ヒアリングから保守まで一気通貫で担います。
-        </p>
+      {/* Full-width ruled line */}
+      <div
+        ref={ruleRef}
+        className="w-full h-px bg-[var(--border)] origin-left mb-8 md:mb-10"
+      />
 
-        <div className="flex flex-col sm:flex-row gap-4 shrink-0">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-8 py-4 text-base hover:bg-[#fbbf24] transition-colors duration-200"
-          >
-            無料で相談する →
-          </Link>
-          <Link
+      {/* Meta row: tagline left, CTAs right */}
+      <div
+        ref={metaRef}
+        className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6"
+      >
+        <div className="space-y-1.5">
+          <p className="font-display text-xs tracking-[0.22em] text-[var(--muted)] uppercase">
+            HP制作 / Web Designer &amp; Developer
+          </p>
+          <p className="font-display text-xs tracking-[0.15em] text-[var(--muted)]/60">
+            Based in Japan — Available for new projects
+          </p>
+        </div>
+
+        <div className="flex items-center gap-5 shrink-0">
+          <a
             href="/works"
-            className="inline-flex items-center justify-center border border-white/20 text-white font-medium px-8 py-4 text-base hover:border-white/60 hover:text-white transition-colors duration-200"
+            className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline"
           >
-            制作実績を見る
-          </Link>
+            SEE WORKS →
+          </a>
+          <a
+            href="/contact"
+            className="font-display font-bold text-xs tracking-[0.1em] bg-[var(--ink)] text-[var(--bg)] px-5 py-2.5 hover:bg-[var(--gold)] transition-colors duration-300"
+          >
+            CONTACT
+          </a>
         </div>
       </div>
     </section>

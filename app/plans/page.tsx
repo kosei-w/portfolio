@@ -1,17 +1,18 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
-import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '料金プラン — Kosei | HP制作',
-  description: '¥128,000〜の明瞭な3プラン。追加費用・隠れたコストなし。初回見積もり無料。保守プランもあり。',
+  title: 'Plans — Kosei Wakabayashi',
+  description: '¥128,000〜の明瞭な3プラン。追加費用・隠れたコストなし。初回見積もり無料。',
 }
 
 const plans = [
   {
-    name: 'スターター',
+    name: 'STARTER',
+    nameJa: 'スターター',
     price: '¥128,000',
     unit: '〜',
     period: '最短7日',
@@ -24,27 +25,29 @@ const plans = [
       '公開後1ヶ月サポート',
     ],
     notIncluded: ['アニメーション', 'CMS（自分で更新できる仕組み）', 'SEO詳細設定'],
-    highlight: false,
+    featured: false,
   },
   {
-    name: 'スタンダード',
+    name: 'STANDARD',
+    nameJa: 'スタンダード',
     price: '¥198,000',
     unit: '〜',
     period: '最短10日',
     desc: '最も選ばれるプラン。アニメーションと通知機能で、成果につながるサイトに。',
     features: [
       'スターターの全機能',
-      'スクロールアニメーション（GSAP）',
+      'スクロールアニメーション',
       'お問い合わせ自動メール通知',
       'Google Analytics設置',
       '10ページまで',
       '公開後3ヶ月サポート',
     ],
     notIncluded: ['CMS（自分で更新できる仕組み）'],
-    highlight: true,
+    featured: true,
   },
   {
-    name: 'プレミアム',
+    name: 'PREMIUM',
+    nameJa: 'プレミアム',
     price: '¥350,000',
     unit: '〜',
     period: '最短14日',
@@ -58,7 +61,7 @@ const plans = [
       '公開後6ヶ月サポート',
     ],
     notIncluded: [],
-    highlight: false,
+    featured: false,
   },
 ]
 
@@ -77,7 +80,7 @@ const maintenance = {
 const faqs = [
   {
     q: '追加費用はかかりますか？',
-    a: '見積もり時に提示した金額以外の追加費用は発生しません。ドメイン・サーバー（Vercel）費用は別途かかりますが、事前にお伝えします。',
+    a: '見積もり時に提示した金額以外の追加費用は発生しません。ドメイン・ホスティング費用は別途かかりますが、事前にお伝えします。',
   },
   {
     q: '修正は何回までできますか？',
@@ -85,11 +88,7 @@ const faqs = [
   },
   {
     q: '公開後に自分でも更新できますか？',
-    a: 'プレミアムプランにはCMSが含まれているため、自分で文章や画像を更新できます。スターター・スタンダードの場合は保守プランでの対応になります。',
-  },
-  {
-    q: 'WordPressでも作れますか？',
-    a: 'Next.js + Vercelでの制作を専門にしています。WordPressより表示速度が圧倒的に速く、セキュリティリスクも低いため、こちらをおすすめしています。',
+    a: 'プレミアムプランにはCMSが含まれているため、自分で文章や画像を更新できます。スターター・スタンダードは保守プランでの対応になります。',
   },
   {
     q: '医療・クリニック以外でも依頼できますか？',
@@ -105,170 +104,198 @@ export default function PlansPage() {
   return (
     <>
       <Header />
-      <main>
-        <PageHero
-          eyebrow="Plans"
-          title="料金プラン"
-          desc="追加費用・隠れたコストなし。すべて税抜き表示・初回お見積もり無料。"
-        />
+      <main className="pt-20">
+
+        {/* Page header */}
+        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1400px] mx-auto pb-16">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
+              PLANS
+            </p>
+            <h1
+              className="font-display font-extrabold text-[var(--ink)] leading-none"
+              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em' }}
+            >
+              Pricing
+            </h1>
+            <p className="text-[var(--muted)] text-sm mt-6 max-w-md leading-relaxed">
+              追加費用・隠れたコストなし。すべて税抜き表示・初回お見積もり無料。
+            </p>
+          </div>
+        </div>
 
         {/* Plans */}
-        <section className="py-20 md:py-28 px-6 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border)] border border-[var(--border)]">
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`rounded-2xl p-8 border transition-all duration-300 ${
-                    plan.highlight
-                      ? 'bg-[#0a0f1e] border-[#0a0f1e] shadow-2xl scale-[1.02]'
-                      : 'bg-white border-[#e5e7eb] hover:border-[#f59e0b]'
-                  }`}
+                  className="flex flex-col p-8 md:p-10"
+                  style={{ background: plan.featured ? 'var(--ink)' : 'var(--bg)' }}
                 >
-                  {plan.highlight && (
-                    <span className="inline-block bg-[#f59e0b] text-[#0a0f1e] text-xs font-black px-3 py-1 rounded-full mb-4 tracking-wider">
-                      MOST POPULAR
+                  {plan.featured && (
+                    <span className="font-display text-[9px] tracking-[0.2em] uppercase text-[var(--gold)] mb-3">
+                      Most Popular
                     </span>
                   )}
-                  <p className={`text-sm font-bold mb-2 ${plan.highlight ? 'text-[#9ca3af]' : 'text-[#6b7280]'}`}>
+                  <p
+                    className="font-display font-bold text-xs tracking-[0.1em] mb-4"
+                    style={{ color: plan.featured ? 'rgba(242,240,235,0.4)' : 'var(--muted)' }}
+                  >
                     {plan.name}
                   </p>
                   <div className="flex items-baseline gap-1 mb-1">
-                    <span className={`text-4xl font-black ${plan.highlight ? 'text-white' : 'text-[#0a0f1e]'}`}>
+                    <span
+                      className="font-display font-extrabold"
+                      style={{
+                        fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
+                        color: plan.featured ? 'var(--bg)' : 'var(--ink)',
+                        letterSpacing: '-0.02em',
+                      }}
+                    >
                       {plan.price}
                     </span>
-                    <span className={plan.highlight ? 'text-[#9ca3af]' : 'text-[#6b7280]'}>{plan.unit}</span>
+                    <span style={{ color: plan.featured ? 'rgba(242,240,235,0.4)' : 'var(--muted)', fontSize: '0.9rem' }}>
+                      {plan.unit}
+                    </span>
                   </div>
-                  <p className={`text-sm mb-3 ${plan.highlight ? 'text-[#f59e0b]' : 'text-[#f59e0b]'}`}>
+                  <p
+                    className="font-display text-xs mb-6"
+                    style={{ color: plan.featured ? 'var(--gold)' : 'var(--muted)' }}
+                  >
                     ⚡ {plan.period}
                   </p>
-                  <p className={`text-sm leading-relaxed mb-6 ${plan.highlight ? 'text-[#d1d5db]' : 'text-[#6b7280]'}`}>
+                  <p
+                    className="text-xs leading-relaxed mb-8"
+                    style={{ color: plan.featured ? 'rgba(242,240,235,0.5)' : 'var(--muted)' }}
+                  >
                     {plan.desc}
                   </p>
 
-                  {/* Included */}
-                  <ul className="space-y-2.5 mb-4">
+                  <ul className="space-y-3 mb-4 flex-1">
                     {plan.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2 text-sm">
-                        <span className="text-[#f59e0b] font-bold mt-0.5 shrink-0">✓</span>
-                        <span className={plan.highlight ? 'text-[#d1d5db]' : 'text-[#374151]'}>{f}</span>
+                      <li key={f} className="flex items-start gap-3 text-xs">
+                        <span className="text-[var(--gold)] shrink-0 mt-0.5">✓</span>
+                        <span style={{ color: plan.featured ? 'rgba(242,240,235,0.7)' : 'var(--muted)' }}>{f}</span>
+                      </li>
+                    ))}
+                    {plan.notIncluded.map((f) => (
+                      <li key={f} className="flex items-start gap-3 text-xs opacity-40">
+                        <span className="shrink-0 mt-0.5" style={{ color: plan.featured ? 'var(--bg)' : 'var(--muted)' }}>—</span>
+                        <span style={{ color: plan.featured ? 'var(--bg)' : 'var(--muted)' }}>{f}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Not included */}
-                  {plan.notIncluded.length > 0 && (
-                    <ul className="space-y-2 mb-8">
-                      {plan.notIncluded.map((f) => (
-                        <li key={f} className="flex items-start gap-2 text-sm">
-                          <span className="text-[#4b5563] mt-0.5 shrink-0">—</span>
-                          <span className={plan.highlight ? 'text-[#4b5563]' : 'text-[#9ca3af]'}>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
                   <Link
                     href="/contact"
-                    className={`block text-center font-black py-3.5 rounded-full transition-all duration-200 mt-8 ${
-                      plan.highlight
-                        ? 'bg-[#f59e0b] text-[#0a0f1e] hover:bg-[#fbbf24]'
-                        : 'bg-[#0a0f1e] text-white hover:bg-[#f59e0b] hover:text-[#0a0f1e]'
-                    }`}
+                    className="font-display font-bold text-xs tracking-[0.1em] text-center py-3.5 mt-8 transition-colors duration-200"
+                    style={{
+                      background: plan.featured ? 'var(--gold)' : 'var(--ink)',
+                      color: plan.featured ? 'var(--ink)' : 'var(--bg)',
+                    }}
                   >
-                    このプランで相談する
+                    このプランで相談 →
                   </Link>
                 </div>
               ))}
             </div>
-
-            {/* Note */}
-            <p className="text-center text-[#9ca3af] text-sm">
-              ※ 表示価格はすべて税抜きです。ドメイン・Vercelホスティング費用は別途。
+            <p className="text-[var(--muted)] text-xs mt-6">
+              ※ 表示価格はすべて税抜きです。ドメイン・ホスティング費用は別途。
             </p>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* Maintenance */}
-        <section className="py-20 md:py-28 px-6 bg-[#f9fafb]">
-          <div className="max-w-5xl mx-auto">
-            <p className="text-[#f59e0b] text-sm font-bold tracking-[0.2em] uppercase mb-4">Maintenance</p>
-            <h2 className="text-[#0a0f1e] font-black text-3xl md:text-5xl mb-4 leading-tight">
-              保守プラン
-            </h2>
-            <p className="text-[#6b7280] text-lg mb-12 max-w-xl">
-              作って終わりにしない。サイトを「資産」として育て続けます。
+        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
+              MAINTENANCE
             </p>
-            <div className="bg-[#0a0f1e] rounded-3xl p-8 md:p-12">
-              <div className="flex flex-col md:flex-row gap-10 items-start">
-                <div className="shrink-0">
-                  <div className="flex items-baseline gap-1 mb-2">
-                    <span className="text-white text-5xl font-black">{maintenance.price}</span>
-                    <span className="text-[#9ca3af] text-lg">{maintenance.unit}</span>
-                  </div>
-                  <Link
-                    href="/contact"
-                    className="mt-6 block text-center bg-[#f59e0b] text-[#0a0f1e] font-black px-8 py-3.5 rounded-full hover:bg-[#fbbf24] transition-all"
+            <div className="grid md:grid-cols-2 gap-16 items-start">
+              <div>
+                <h2
+                  className="font-display font-extrabold text-[var(--bg)] leading-none mb-4"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em' }}
+                >
+                  保守プラン
+                </h2>
+                <p className="text-white/35 text-sm leading-relaxed mb-8">
+                  作って終わりにしない。サイトを「資産」として育て続けます。
+                </p>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span
+                    className="font-display font-extrabold text-[var(--bg)]"
+                    style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', letterSpacing: '-0.02em' }}
                   >
-                    保守プランを申し込む
-                  </Link>
+                    {maintenance.price}
+                  </span>
+                  <span className="text-white/40 text-lg">{maintenance.unit}</span>
                 </div>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-1">
-                  {maintenance.features.map((f) => (
-                    <li key={f} className="flex items-center gap-3 text-[#d1d5db]">
-                      <span className="text-[#f59e0b] font-bold shrink-0">✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                <Link
+                  href="/contact"
+                  className="font-display font-bold text-xs tracking-[0.1em] bg-[var(--gold)] text-[var(--ink)] px-8 py-3.5 hover:bg-[var(--bg)] transition-colors duration-200 inline-block"
+                >
+                  保守プランを申し込む →
+                </Link>
               </div>
+              <ul className="border-t border-white/10">
+                {maintenance.features.map((f) => (
+                  <li key={f} className="flex items-center gap-4 py-5 border-b border-white/10 text-sm">
+                    <span className="text-[var(--gold)] text-xs shrink-0">✓</span>
+                    <span className="text-white/50">{f}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* FAQ */}
-        <section className="py-20 md:py-28 px-6 bg-white">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-[#f59e0b] text-sm font-bold tracking-[0.2em] uppercase mb-4">FAQ</p>
-            <h2 className="text-[#0a0f1e] font-black text-3xl md:text-5xl mb-16 leading-tight">
-              よくある質問
-            </h2>
-            <div className="space-y-6">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
+              FAQ
+            </p>
+            <div className="border-t border-[var(--border)]">
               {faqs.map((faq) => (
-                <details
-                  key={faq.q}
-                  className="group bg-[#f9fafb] rounded-2xl border border-[#e5e7eb] overflow-hidden"
-                >
-                  <summary className="flex items-center justify-between p-6 cursor-pointer font-bold text-[#0a0f1e] list-none hover:text-[#f59e0b] transition-colors">
+                <details key={faq.q} className="group border-b border-[var(--border)]">
+                  <summary className="flex items-center justify-between py-6 cursor-pointer font-display font-bold text-[var(--ink)] text-sm list-none hover:text-[var(--gold)] transition-colors duration-200">
                     {faq.q}
-                    <span className="text-[#f59e0b] font-black text-xl group-open:rotate-45 transition-transform duration-200 shrink-0 ml-4">
+                    <span className="text-[var(--gold)] font-bold text-lg group-open:rotate-45 transition-transform duration-200 shrink-0 ml-4">
                       +
                     </span>
                   </summary>
-                  <div className="px-6 pb-6">
-                    <p className="text-[#6b7280] leading-relaxed">{faq.a}</p>
+                  <div className="pb-6 pl-0">
+                    <p className="text-[var(--muted)] text-sm leading-relaxed">{faq.a}</p>
                   </div>
                 </details>
               ))}
             </div>
           </div>
-        </section>
+        </ScrollReveal>
 
         {/* CTA */}
-        <section className="py-20 px-6 bg-[#f59e0b] text-center">
-          <h2 className="text-[#0a0f1e] font-black text-3xl md:text-4xl mb-4">
-            どのプランか迷ったら、まず相談を。
-          </h2>
-          <p className="text-[#78350f] text-lg mb-10">
-            ヒアリングをして、最適なプランをご提案します。
-          </p>
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center bg-[#0a0f1e] text-white font-black px-10 py-5 rounded-full text-xl hover:bg-[#111827] transition-all hover:scale-105"
-          >
-            無料相談を申し込む →
-          </Link>
-        </section>
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-32">
+          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
+            <h2
+              className="font-display font-extrabold text-[var(--ink)] leading-none"
+              style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+            >
+              どのプランか迷ったら、
+              <br />
+              まず相談を。
+            </h2>
+            <Link
+              href="/contact"
+              className="font-display font-bold text-sm tracking-[0.1em] bg-[var(--ink)] text-[var(--bg)] px-10 py-4 hover:bg-[var(--gold)] transition-colors duration-300 shrink-0"
+            >
+              FREE CONSULTATION →
+            </Link>
+          </div>
+        </ScrollReveal>
+
       </main>
       <Footer />
     </>

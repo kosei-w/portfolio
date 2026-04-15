@@ -1,32 +1,22 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: '制作実績 — Kosei | HP制作',
+  title: 'Works — Kosei Wakabayashi',
   description: '実際に作ったサイトのビフォーアフターを公開。飲食業のサイトを依頼から10日でリニューアルした実績など。',
-}
-
-function SectionLabel({ num, label }: { num: string; label: string }) {
-  return (
-    <div className="flex items-center gap-4 mb-16">
-      <span className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase shrink-0">
-        {num} / {label}
-      </span>
-      <div className="flex-1 h-px bg-[#e5e5e5]" aria-hidden="true" />
-    </div>
-  )
 }
 
 const works = [
   {
     id: '01',
     tag: '飲食業',
-    plan: 'スタンダード',
-    period: '10日',
+    plan: 'STANDARD',
+    period: '10 days',
     year: '2026',
-    title: '企業サイト 全面リニューアル',
+    title: '企業サイト全面リニューアル',
     summary:
       'スマホで崩れていた古いサイトを全面リニューアル。シンプルで清潔感のあるデザインに生まれ変わり、問い合わせ導線を整備。依頼から10日で公開まで完了。',
     before: [
@@ -57,146 +47,152 @@ export default function WorksPage() {
   return (
     <>
       <Header />
-      <main>
+      <main className="pt-20">
+
         {/* Page header */}
-        <div className="bg-[#0a0f1e] pt-32 pb-16 px-8 md:px-16 relative overflow-hidden">
-          <div
-            className="absolute inset-0 pointer-events-none"
-            aria-hidden="true"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          <div className="relative z-10 max-w-7xl mx-auto">
-            <p className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase mb-6">Works</p>
+        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1400px] mx-auto pb-16">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
+              WORKS
+            </p>
             <h1
-              className="text-white font-black leading-tight"
-              style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', textWrap: 'balance' }}
+              className="font-display font-extrabold text-[var(--ink)] leading-none"
+              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em' }}
             >
-              制作実績
+              Selected Work
             </h1>
-            <p className="text-white/40 text-base mt-4 max-w-md leading-relaxed">
+            <p className="text-[var(--muted)] text-sm mt-6 max-w-md leading-relaxed">
               実際に作ったサイトのビフォーアフターを公開しています。クライアントの許可のもと掲載。
             </p>
           </div>
         </div>
 
         {/* Works list */}
-        <section className="bg-white py-24 md:py-36 px-8 md:px-16">
-          <div className="max-w-7xl mx-auto">
-            <SectionLabel num="01" label="Cases" />
+        <section className="px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
 
             {works.map((work) => (
-              <article key={work.id} className="mb-24">
-                {/* Work header row */}
-                <div className="flex flex-wrap items-baseline gap-4 mb-12 pb-8 border-b border-[#e5e5e5]">
-                  <span className="text-[#f59e0b] font-black text-xs shrink-0">{work.id}</span>
-                  <span className="text-[#aaa] text-xs uppercase tracking-widest">{work.tag}</span>
+              <article key={work.id} className="mb-28">
+
+                {/* Work header */}
+                <ScrollReveal className="flex flex-wrap items-baseline gap-6 mb-12 pb-8 border-b border-[var(--border)]">
+                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0">{work.id}</span>
+                  <span className="font-display text-[10px] tracking-[0.25em] uppercase text-[var(--muted)]">
+                    {work.tag}
+                  </span>
                   <h2
-                    className="text-[#111] font-black flex-1"
-                    style={{ fontSize: 'clamp(1.6rem, 3vw, 2.5rem)', textWrap: 'balance' }}
+                    className="font-display font-extrabold text-[var(--ink)] flex-1"
+                    style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
                   >
                     {work.title}
                   </h2>
-                  <div className="flex items-center gap-4 shrink-0">
-                    <span className="text-[#aaa] text-sm">{work.year}</span>
-                    <span className="bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-bold px-3 py-1">⚡ {work.period}</span>
+                  <div className="flex items-center gap-5 shrink-0">
+                    <span className="font-display text-xs text-[var(--muted)]">{work.year}</span>
+                    <span className="font-display text-xs text-[var(--gold)] border border-[var(--gold)]/30 px-3 py-1">
+                      ⚡ {work.period}
+                    </span>
                   </div>
-                </div>
+                </ScrollReveal>
 
                 {/* Summary */}
-                <p className="text-[#555] text-lg leading-relaxed max-w-2xl mb-16">{work.summary}</p>
+                <ScrollReveal>
+                  <p className="text-[var(--muted)] text-base leading-relaxed max-w-2xl mb-16">{work.summary}</p>
+                </ScrollReveal>
 
                 {/* Before / After */}
-                <div className="grid md:grid-cols-2 gap-12 mb-16">
+                <ScrollReveal className="grid md:grid-cols-2 gap-12 mb-16">
                   <div>
-                    <p className="text-xs font-black tracking-[0.25em] uppercase text-[#ef4444] mb-6">Before</p>
-                    <ul className="space-y-0">
+                    <p className="font-display text-[10px] tracking-[0.28em] uppercase text-red-400/80 mb-6">
+                      BEFORE
+                    </p>
+                    <ul>
                       {work.before.map((item) => (
-                        <li key={item} className="flex items-start gap-4 py-4 border-b border-[#f0f0f0]">
-                          <span className="text-[#ef4444] font-bold shrink-0 mt-0.5 text-sm">✗</span>
-                          <span className="text-[#555] text-sm leading-relaxed">{item}</span>
+                        <li key={item} className="flex items-start gap-5 py-4 border-b border-[var(--border)]">
+                          <span className="text-red-400 text-xs font-bold shrink-0 mt-0.5">✗</span>
+                          <span className="text-[var(--muted)] text-sm leading-relaxed">{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs font-black tracking-[0.25em] uppercase text-[#f59e0b] mb-6">After</p>
-                    <ul className="space-y-0">
+                    <p className="font-display text-[10px] tracking-[0.28em] uppercase text-[var(--gold)] mb-6">
+                      AFTER
+                    </p>
+                    <ul>
                       {work.after.map((item) => (
-                        <li key={item} className="flex items-start gap-4 py-4 border-b border-[#f0f0f0]">
-                          <span className="text-[#f59e0b] font-bold shrink-0 mt-0.5 text-sm">✓</span>
-                          <span className="text-[#555] text-sm leading-relaxed">{item}</span>
+                        <li key={item} className="flex items-start gap-5 py-4 border-b border-[var(--border)]">
+                          <span className="text-[var(--gold)] text-xs font-bold shrink-0 mt-0.5">✓</span>
+                          <span className="text-[var(--muted)] text-sm leading-relaxed">{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
-                </div>
+                </ScrollReveal>
 
                 {/* Pull quote */}
-                <div className="border-l-2 border-[#f59e0b] pl-8">
+                <ScrollReveal className="border-l-2 border-[var(--gold)] pl-8">
                   <p
-                    className="text-[#111] font-black leading-tight mb-3"
+                    className="font-display font-extrabold text-[var(--ink)] leading-tight mb-3"
                     style={{ fontSize: 'clamp(1.3rem, 2.5vw, 2rem)', textWrap: 'balance' }}
                   >
                     {work.quote}
                   </p>
-                  <p className="text-[#aaa] text-sm">— {work.quoteBy}</p>
-                </div>
+                  <p className="font-display text-xs tracking-[0.1em] text-[var(--muted)]">— {work.quoteBy}</p>
+                </ScrollReveal>
               </article>
             ))}
 
             {/* Coming soon */}
-            <div className="border-t border-[#e5e5e5] pt-16">
-              <p className="text-[#aaa] text-xs font-black tracking-[0.3em] uppercase mb-6">Coming Soon</p>
+            <ScrollReveal className="border-t border-[var(--border)] pt-16">
+              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-8">
+                COMING SOON
+              </p>
               <p
-                className="text-[#111] font-black leading-tight mb-4"
-                style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
+                className="font-display font-extrabold text-[var(--ink)] leading-none mb-4"
+                style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)', letterSpacing: '-0.02em' }}
               >
                 実績を順次追加予定
               </p>
-              <p className="text-[#777] leading-relaxed mb-10 max-w-md">
-                初期クライアントとして特別価格でのご相談も承っています。
-                まずはお気軽にご連絡ください。
+              <p className="text-[var(--muted)] text-sm leading-relaxed mb-10 max-w-md">
+                初期クライアントとして特別価格でのご相談も承っています。まずはお気軽にご連絡ください。
               </p>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
+                className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline"
               >
-                <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
-                  無料相談を申し込む
-                </span>
-                <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
+                GET IN TOUCH →
               </Link>
-            </div>
+            </ScrollReveal>
           </div>
         </section>
 
         {/* Process */}
-        <section className="bg-[#fafafa] py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
-          <div className="max-w-7xl mx-auto">
-            <SectionLabel num="02" label="Process" />
+        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 py-24 md:py-36">
+          <div className="max-w-[1400px] mx-auto">
+            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
+              PROCESS
+            </p>
             <h2
-              className="text-[#111] font-black leading-tight mb-16"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', textWrap: 'balance' }}
+              className="font-display font-extrabold text-[var(--bg)] leading-tight mb-16"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
             >
               依頼から公開まで
             </h2>
-            <div className="border-t border-[#e5e5e5]">
+            <div className="border-t border-white/10">
               {process.map((item) => (
                 <div
                   key={item.step}
-                  className="flex flex-col md:flex-row md:items-start gap-4 md:gap-12 py-7 border-b border-[#f0f0f0]"
+                  className="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 py-7 border-b border-white/10"
                 >
-                  <span className="text-[#f59e0b] font-black text-xs w-6 shrink-0">{item.step}</span>
-                  <p className="text-[#111] font-bold md:w-40 shrink-0">{item.title}</p>
-                  <p className="text-[#777] text-sm leading-relaxed">{item.desc}</p>
+                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0">{item.step}</span>
+                  <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.title}</p>
+                  <p className="text-white/35 text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </ScrollReveal>
+
       </main>
       <Footer />
     </>

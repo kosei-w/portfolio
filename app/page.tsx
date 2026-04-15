@@ -1,235 +1,72 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
-import StatsStrip from '@/components/StatsStrip'
 import Footer from '@/components/Footer'
+import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
-/* ── Section label with ruled line ── */
-function SectionLabel({ num, label }: { num: string; label: string }) {
-  return (
-    <div className="flex items-center gap-4 mb-16">
-      <span className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase shrink-0">
-        {num} / {label}
-      </span>
-      <div className="flex-1 h-px bg-[#e5e5e5]" aria-hidden="true" />
-    </div>
-  )
+export const metadata: Metadata = {
+  title: 'Kosei Wakabayashi — HP制作',
+  description:
+    '最短10日納品・明瞭な料金体系。医療DX出身のコンサルタントが、集客につながるサイトを一気通貫で担います。',
 }
 
-/* ── About teaser ── */
-function AboutTeaser() {
+/* ── Works thumbnail card ── */
+function WorkCard({
+  id,
+  tag,
+  title,
+  period,
+  bg,
+  href,
+  placeholder,
+}: {
+  id: string
+  tag: string
+  title: string
+  period: string
+  bg: string
+  href: string
+  placeholder?: boolean
+}) {
   return (
-    <section className="bg-white py-24 md:py-36 px-8 md:px-16">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel num="01" label="About" />
-        <div className="grid lg:grid-cols-2 gap-16 items-end">
-          <div>
-            <h2
-              className="text-[#111] font-black leading-tight mb-8"
-              style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
-            >
-              なぜ、これほど
-              <br />
-              早く作れるのか。
-            </h2>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
-            >
-              <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
-                Koseiについて詳しく
-              </span>
-              <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
-            </Link>
-          </div>
-          <div className="space-y-6">
-            {[
-              { num: '01', title: '独自の高速制作プロセス', desc: '制作会社で2〜3ヶ月かかるところを最短10日で対応。無駄なプロセスを排除しているから早い。' },
-              { num: '02', title: 'コンサル出身のヒアリング力', desc: '「何を作るか」より「何のために作るか」を先に掴む。作ったあとに「なんか違う」が起きない。' },
-              { num: '03', title: '作って終わりにしない設計', desc: '公開後の保守・更新・SEO対応まで一気通貫。サイトを「資産」として育て続けます。' },
-            ].map((item) => (
-              <div key={item.num} className="flex gap-5 py-5 border-b border-[#f0f0f0]">
-                <span className="text-[#f59e0b] font-black text-sm shrink-0 mt-0.5">{item.num}</span>
-                <div>
-                  <p className="text-[#111] font-bold mb-1">{item.title}</p>
-                  <p className="text-[#777] text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── Works teaser ── */
-function WorksTeaser() {
-  const works = [
-    { num: '01', tag: '飲食業', title: '企業サイト全面リニューアル', year: '2026', period: '10日' },
-  ]
-
-  return (
-    <section className="bg-[#fafafa] py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel num="02" label="Works" />
-        <div className="mb-12">
-          <h2
-            className="text-[#111] font-black leading-tight mb-4"
-            style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
-          >
-            「思ったより全然早かった。
-            <br />
-            しかもかっこいい」
-          </h2>
-          <p className="text-[#777] text-lg max-w-lg leading-relaxed">
-            実際に作ったサイトのビフォーアフターを公開しています。
-          </p>
-        </div>
-
-        {/* Work list */}
-        <div className="border-t border-[#e5e5e5]">
-          {works.map((w) => (
-            <Link
-              key={w.num}
-              href="/works"
-              className="flex items-center justify-between py-6 border-b border-[#e5e5e5] group hover:pl-2 transition-all duration-300"
-            >
-              <div className="flex items-center gap-6">
-                <span className="text-[#f59e0b] font-black text-xs w-6 shrink-0">{w.num}</span>
-                <div>
-                  <span className="text-[#aaa] text-xs uppercase tracking-widest block mb-1">{w.tag}</span>
-                  <span className="text-[#111] font-bold text-lg group-hover:text-[#f59e0b] transition-colors duration-200">
-                    {w.title}
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center gap-6 shrink-0">
-                <span className="text-[#aaa] text-sm hidden md:block">{w.year}</span>
-                <span className="bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-bold px-3 py-1">⚡ {w.period}</span>
-                <span className="text-[#aaa] group-hover:text-[#111] transition-colors duration-200 text-lg">→</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-8">
-          <Link
-            href="/works"
-            className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
-          >
-            <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
-              全ての実績を見る
-            </span>
-            <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
-          </Link>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── Plans teaser ── */
-function PlansTeaser() {
-  return (
-    <section className="bg-white py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
-      <div className="max-w-7xl mx-auto">
-        <SectionLabel num="03" label="Plans" />
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          <div>
-            <h2
-              className="text-[#111] font-black leading-tight mb-6"
-              style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
-            >
-              追加費用なし。
-              <br />
-              明瞭な3プラン。
-            </h2>
-            <p className="text-[#777] leading-relaxed mb-8 max-w-sm">
-              「頼んだら思ったより高かった」が起きない料金体系。
-              初回のお見積もりは無料です。
-            </p>
-            <Link
-              href="/plans"
-              className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
-            >
-              <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
-                料金プランを見る
-              </span>
-              <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
-            </Link>
-          </div>
-
-          {/* Plan list */}
-          <div className="border-t border-[#e5e5e5]">
-            {[
-              { name: 'スターター', price: '¥128,000〜', period: '最短7日', popular: false },
-              { name: 'スタンダード', price: '¥198,000〜', period: '最短10日', popular: true },
-              { name: 'プレミアム', price: '¥350,000〜', period: '最短14日', popular: false },
-            ].map((plan) => (
-              <div
-                key={plan.name}
-                className={`flex items-center justify-between py-5 border-b border-[#e5e5e5] ${plan.popular ? 'opacity-100' : 'opacity-60'}`}
-              >
-                <div className="flex items-center gap-3">
-                  <span className="text-[#111] font-bold">{plan.name}</span>
-                  {plan.popular && (
-                    <span className="bg-[#f59e0b] text-[#0a0f1e] text-[10px] font-black px-2 py-0.5 tracking-wider">
-                      人気
-                    </span>
-                  )}
-                </div>
-                <div className="flex items-center gap-4">
-                  <span className="text-[#aaa] text-xs">{plan.period}</span>
-                  <span className={`font-black ${plan.popular ? 'text-[#111]' : 'text-[#777]'}`}>
-                    {plan.price}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-/* ── Final CTA ── */
-function FinalCta() {
-  return (
-    <section className="bg-[#0a0f1e] py-28 md:py-40 px-8 md:px-16 relative overflow-hidden border-t border-white/5">
-      <div
-        className="absolute inset-0 pointer-events-none"
+    <Link
+      href={href}
+      className="relative block overflow-hidden group"
+      style={{ background: bg, aspectRatio: '4 / 3' }}
+      aria-label={title}
+    >
+      {/* Ghost number — decorative */}
+      <span
+        className="absolute -bottom-4 -right-2 font-display font-extrabold select-none pointer-events-none leading-none text-white/[0.05]"
+        style={{ fontSize: 'clamp(8rem, 22vw, 18rem)' }}
         aria-hidden="true"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(245,158,11,0.06) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }}
-      />
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-start md:items-end justify-between">
-        <div>
-          <p className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase mb-6">Contact</p>
-          <h2
-            className="text-white font-black leading-tight"
-            style={{ fontSize: 'clamp(2.5rem, 7vw, 7rem)', lineHeight: 0.9, textWrap: 'balance' }}
-          >
-            まず、
-            <br />
-            話しましょう。
-          </h2>
-          <p className="text-white/40 text-base mt-6 max-w-xs leading-relaxed">
-            30分・無料・オンライン。
-            「まだぼんやりしている」でも大丈夫。
-          </p>
-        </div>
-        <Link
-          href="/contact"
-          className="shrink-0 inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-10 py-5 text-lg hover:bg-[#fbbf24] transition-colors duration-200"
+      >
+        {id}
+      </span>
+
+      {/* Tag — always visible */}
+      <span className="absolute top-7 left-8 font-display text-[10px] tracking-[0.28em] uppercase text-white/35">
+        {tag}
+      </span>
+
+      {/* Hover overlay — gold reveal */}
+      <div className="absolute inset-0 flex flex-col justify-end p-8 bg-[#C9A96E] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span className="font-display text-[10px] tracking-[0.28em] uppercase text-black/50 mb-2">{tag}</span>
+        <p
+          className="font-display font-extrabold text-black leading-tight"
+          style={{ fontSize: 'clamp(1.3rem, 2.8vw, 2rem)', textWrap: 'balance' }}
         >
-          無料相談を申し込む →
-        </Link>
+          {title}
+        </p>
+        <div className="flex items-center justify-between mt-4">
+          {!placeholder && (
+            <span className="font-display text-xs text-black/50">⚡ {period}</span>
+          )}
+          <span className="font-display font-bold text-xl text-black ml-auto">→</span>
+        </div>
       </div>
-    </section>
+    </Link>
   )
 }
 
@@ -238,12 +75,207 @@ export default function Home() {
     <>
       <Header />
       <main>
+        {/* Hero */}
         <Hero />
-        <StatsStrip />
-        <AboutTeaser />
-        <WorksTeaser />
-        <PlansTeaser />
-        <FinalCta />
+
+        {/* ── Works ── */}
+        <section aria-labelledby="section-works">
+          <ScrollReveal className="px-8 md:px-14 py-8 flex items-center justify-between border-t border-[var(--border)]">
+            <div className="flex items-center gap-6">
+              <h2
+                id="section-works"
+                className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase"
+              >
+                01 / WORKS
+              </h2>
+              <div className="w-12 h-px bg-[var(--border)]" aria-hidden="true" />
+            </div>
+            <Link
+              href="/works"
+              className="font-display text-[10px] tracking-[0.2em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors duration-200"
+            >
+              ALL WORKS →
+            </Link>
+          </ScrollReveal>
+
+          {/* Full-bleed grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 border-t border-[var(--border)]">
+            <WorkCard
+              id="01"
+              tag="飲食業"
+              title="企業サイト全面リニューアル"
+              period="10 days"
+              bg="#161410"
+              href="/works"
+            />
+            <WorkCard
+              id="02"
+              tag="Next project"
+              title="あなたのサイトになります"
+              period="—"
+              bg="#1E1B16"
+              href="/contact"
+              placeholder
+            />
+          </div>
+        </section>
+
+        {/* ── About ── */}
+        <section aria-labelledby="section-about" className="border-t border-[var(--border)]">
+          <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
+            <div className="max-w-[1400px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28 items-end">
+              <div>
+                <h2
+                  id="section-about"
+                  className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10"
+                >
+                  02 / ABOUT
+                </h2>
+                <p
+                  className="font-display font-extrabold text-[var(--ink)] leading-tight"
+                  style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+                >
+                  なぜ、これほど
+                  <br />
+                  早く作れるのか。
+                </p>
+              </div>
+              <div>
+                <ul className="space-y-0 mb-10">
+                  {[
+                    {
+                      num: '01',
+                      t: '独自の高速制作プロセス',
+                      d: '制作会社で2〜3ヶ月かかるところを最短10日で。無駄なプロセスを徹底的に排除しているから早い。',
+                    },
+                    {
+                      num: '02',
+                      t: 'コンサル出身のヒアリング力',
+                      d: '「何を作るか」より「何のために作るか」を先に掴む。作ったあとに「なんか違う」が起きない。',
+                    },
+                    {
+                      num: '03',
+                      t: '作って終わりにしない設計',
+                      d: '公開後の保守・更新・SEO対応まで一気通貫。サイトを「資産」として育て続けます。',
+                    },
+                  ].map((item) => (
+                    <li key={item.num} className="flex gap-6 py-6 border-b border-[var(--border)]">
+                      <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
+                        {item.num}
+                      </span>
+                      <div>
+                        <p className="font-display font-bold text-[var(--ink)] text-sm mb-1.5">{item.t}</p>
+                        <p className="text-[var(--muted)] text-sm leading-relaxed">{item.d}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/about"
+                  className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline"
+                >
+                  MORE ABOUT ME →
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* ── Plans strip ── */}
+        <section aria-labelledby="section-plans" className="border-t border-[var(--border)]">
+          <ScrollReveal className="px-8 md:px-14 py-20">
+            <div className="max-w-[1400px] mx-auto">
+              <h2
+                id="section-plans"
+                className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10"
+              >
+                03 / PLANS
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border)] border border-[var(--border)]">
+                {[
+                  { name: 'STARTER', price: '¥128,000〜', period: '最短7日', featured: false },
+                  { name: 'STANDARD', price: '¥198,000〜', period: '最短10日', featured: true },
+                  { name: 'PREMIUM', price: '¥350,000〜', period: '最短14日', featured: false },
+                ].map((p) => (
+                  <div
+                    key={p.name}
+                    className="flex flex-col gap-3 p-8"
+                    style={{ background: p.featured ? 'var(--ink)' : 'var(--bg)' }}
+                  >
+                    {p.featured && (
+                      <span className="font-display text-[9px] tracking-[0.2em] uppercase text-[var(--gold)]">
+                        Most Popular
+                      </span>
+                    )}
+                    <p
+                      className="font-display font-bold text-xs tracking-[0.1em]"
+                      style={{ color: p.featured ? 'rgba(242,240,235,0.5)' : 'var(--muted)' }}
+                    >
+                      {p.name}
+                    </p>
+                    <p
+                      className="font-display font-extrabold"
+                      style={{
+                        fontSize: 'clamp(1.4rem, 2.5vw, 1.8rem)',
+                        color: p.featured ? 'var(--bg)' : 'var(--ink)',
+                      }}
+                    >
+                      {p.price}
+                    </p>
+                    <p
+                      className="font-display text-xs"
+                      style={{ color: p.featured ? 'var(--gold)' : 'var(--muted)' }}
+                    >
+                      ⚡ {p.period}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex justify-end">
+                <Link
+                  href="/plans"
+                  className="font-display font-bold text-xs tracking-[0.15em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors duration-200"
+                >
+                  FULL PRICING →
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* ── Contact CTA ── */}
+        <section className="border-t border-[var(--border)]">
+          <ScrollReveal className="px-8 md:px-14 py-24 md:py-44">
+            <div className="max-w-[1400px] mx-auto">
+              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-12">
+                04 / CONTACT
+              </p>
+              <h2
+                className="font-display font-extrabold text-[var(--ink)] leading-none mb-16"
+                style={{
+                  fontSize: 'clamp(3.5rem, 11vw, 11rem)',
+                  letterSpacing: '-0.03em',
+                  textWrap: 'balance',
+                }}
+              >
+                Let&apos;s work
+                <br />
+                together.
+              </h2>
+              <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center justify-between">
+                <p className="text-[var(--muted)] leading-relaxed max-w-sm text-sm">
+                  30分・無料・オンライン。「まだぼんやりしている」でも大丈夫。
+                </p>
+                <Link
+                  href="/contact"
+                  className="font-display font-bold text-sm tracking-[0.1em] text-[var(--bg)] bg-[var(--ink)] px-10 py-4 hover:bg-[var(--gold)] transition-colors duration-300 shrink-0"
+                >
+                  FREE CONSULTATION →
+                </Link>
+              </div>
+            </div>
+          </ScrollReveal>
+        </section>
       </main>
       <Footer />
     </>

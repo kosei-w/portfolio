@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Contact from '@/components/Contact'
+import ScrollReveal from '@/components/ScrollReveal'
 
 export const metadata: Metadata = {
-  title: 'お問い合わせ — Kosei | HP制作',
+  title: 'Contact — Kosei Wakabayashi',
   description: '初回相談は無料・30分・オンライン。HP制作に関するご相談はこちらから。',
 }
 
@@ -25,71 +26,68 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main>
-        {/* Split hero */}
-        <div className="grid lg:grid-cols-2 min-h-screen">
-          {/* Left: dark panel */}
-          <div className="bg-[#0a0f1e] relative overflow-hidden flex flex-col justify-center px-8 md:px-16 pt-32 pb-16 lg:pt-0 lg:pb-0">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: 'radial-gradient(rgba(245,158,11,0.08) 1px, transparent 1px)',
-                backgroundSize: '32px 32px',
-              }}
-            />
-            <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-[#f59e0b] opacity-[0.04] rounded-full blur-[100px] pointer-events-none" />
+      <main className="pt-20">
+        {/* Split layout */}
+        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-80px)]">
 
-            <div className="relative z-10 max-w-md">
-              <p className="text-[#f59e0b] text-xs font-black tracking-[0.25em] uppercase mb-5">Contact</p>
+          {/* Left: dark info panel */}
+          <div className="bg-[var(--ink)] flex flex-col justify-center px-8 md:px-14 pt-16 pb-16">
+            <div className="max-w-md">
+              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-10">
+                CONTACT
+              </p>
               <h1
-                className="text-white font-black leading-tight mb-6"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+                className="font-display font-extrabold text-[var(--bg)] leading-none mb-10"
+                style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', letterSpacing: '-0.03em' }}
               >
-                まず、
-                <br />
-                話しましょう。
+                Let&apos;s talk.
               </h1>
-              <p className="text-[#9ca3af] text-lg leading-relaxed mb-14">
+              <p className="text-white/40 text-sm leading-relaxed mb-14">
                 初回相談は無料・30分・オンライン。
                 「まだぼんやりしている」でも大丈夫です。
               </p>
 
               {/* Steps */}
-              <div className="space-y-7">
+              <div className="border-t border-white/10">
                 {steps.map((item) => (
-                  <div key={item.step} className="flex gap-4 items-start">
-                    <div className="w-9 h-9 rounded-full bg-[#f59e0b]/10 border border-[#f59e0b]/30 flex items-center justify-center shrink-0 mt-0.5">
-                      <span className="text-[#f59e0b] font-black text-xs">{item.step}</span>
-                    </div>
+                  <div key={item.step} className="flex gap-6 py-6 border-b border-white/10">
+                    <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
+                      {item.step}
+                    </span>
                     <div>
-                      <p className="text-white font-bold mb-1">{item.title}</p>
-                      <p className="text-[#6b7280] text-sm leading-relaxed">{item.desc}</p>
+                      <p className="font-display font-bold text-[var(--bg)] text-sm mb-1">{item.title}</p>
+                      <p className="text-white/35 text-xs leading-relaxed">{item.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* FAQ */}
-              <div className="mt-12 space-y-3">
+              {/* FAQs */}
+              <div className="mt-10 space-y-4">
                 {faqs.map((faq) => (
-                  <div key={faq.q} className="bg-white/[0.04] border border-white/10 rounded-xl p-5">
-                    <p className="text-white font-bold text-sm mb-1.5">Q. {faq.q}</p>
-                    <p className="text-[#6b7280] text-sm leading-relaxed">{faq.a}</p>
+                  <div key={faq.q} className="border border-white/10 p-5">
+                    <p className="font-display font-bold text-[var(--bg)] text-xs mb-2">Q. {faq.q}</p>
+                    <p className="text-white/35 text-xs leading-relaxed">{faq.a}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Right: form panel */}
-          <div className="bg-white flex flex-col justify-center px-8 md:px-16 py-16">
+          {/* Right: form */}
+          <div className="flex flex-col justify-center px-8 md:px-14 py-16">
             <div className="max-w-md w-full mx-auto">
+              <p className="font-display font-extrabold text-[var(--ink)] text-lg mb-10 tracking-tight">
+                お問い合わせフォーム
+              </p>
               <Contact />
             </div>
           </div>
         </div>
       </main>
-      <Footer />
+      <ScrollReveal>
+        <Footer />
+      </ScrollReveal>
     </>
   )
 }

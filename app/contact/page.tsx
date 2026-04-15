@@ -5,7 +5,7 @@ import Contact from '@/components/Contact'
 import ScrollReveal from '@/components/ScrollReveal'
 
 export const metadata: Metadata = {
-  title: 'Contact — Kosei Wakabayashi',
+  title: 'Contact — Kosei Idezuka',
   description: '初回相談は無料・30分・オンライン。HP制作に関するご相談はこちらから。',
 }
 

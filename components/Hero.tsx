@@ -64,7 +64,7 @@ export default function Hero() {
             className="block text-[var(--ink)]"
             style={{ paddingLeft: 'clamp(1.5rem, 5.5vw, 9rem)' }}
           >
-            WAKABAYASHI
+            IDEZUKA
           </span>
         </h1>
       </div>

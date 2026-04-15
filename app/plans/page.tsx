@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Plans — Kosei Wakabayashi',
+  title: 'Plans — Kosei Idezuka',
   description: '¥128,000〜の明瞭な3プラン。追加費用・隠れたコストなし。初回見積もり無料。',
 }
 

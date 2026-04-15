@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Works — Kosei Wakabayashi',
+  title: 'Works — Kosei Idezuka',
   description: '実際に作ったサイトのビフォーアフターを公開。飲食業のサイトを依頼から10日でリニューアルした実績など。',
 }
 

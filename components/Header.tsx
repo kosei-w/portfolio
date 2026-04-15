@@ -39,7 +39,7 @@ export default function Header() {
           <Link
             href="/"
             className="font-display font-extrabold text-[var(--ink)] tracking-tight text-xl leading-none"
-            aria-label="Kosei Wakabayashi — Home"
+            aria-label="Kosei Idezuka — Home"
           >
             KW
           </Link>
@@ -109,7 +109,7 @@ export default function Header() {
         <p
           className="absolute bottom-10 left-10 font-display text-xs tracking-[0.2em] text-[var(--muted)]"
         >
-          © 2026 Kosei Wakabayashi
+          © 2026 Kosei Idezuka
         </p>
       </div>
     </>

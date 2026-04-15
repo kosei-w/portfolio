@@ -18,12 +18,12 @@ const notoSansJP = Noto_Sans_JP({
 })
 
 export const metadata: Metadata = {
-  title: 'Kosei Wakabayashi — HP制作',
+  title: 'Kosei Idezuka — HP制作',
   description:
     '中小企業・個人事業主向けのHP制作。最短10日納品・明瞭な料金体系。医療DX出身のコンサルタントが、集客につながるサイトを一気通貫で担います。',
   keywords: 'HP制作, ホームページ制作, Web制作, フリーランス, 中小企業',
   openGraph: {
-    title: 'Kosei Wakabayashi — HP制作',
+    title: 'Kosei Idezuka — HP制作',
     description: '中小企業・個人事業主向けのHP制作。最短10日納品で、集客につながるサイトを作ります。',
     type: 'website',
   },

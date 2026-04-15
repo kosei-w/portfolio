@@ -6,7 +6,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Kosei Wakabayashi — HP制作',
+  title: 'Kosei Idezuka — HP制作',
   description:
     '最短10日納品・明瞭な料金体系。医療DX出身のコンサルタントが、集客につながるサイトを一気通貫で担います。',
 }

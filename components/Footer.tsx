@@ -28,7 +28,7 @@ export default function Footer() {
         </nav>
 
         <p className="font-display text-[10px] tracking-[0.15em] text-[var(--muted)]">
-          © 2026 Kosei Wakabayashi
+          © 2026 Kosei Idezuka
         </p>
       </div>
     </footer>

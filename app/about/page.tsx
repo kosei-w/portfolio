@@ -5,7 +5,7 @@ import ScrollReveal from '@/components/ScrollReveal'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About — Kosei Wakabayashi',
+  title: 'About — Kosei Idezuka',
   description: '医療DXのコンサルタントがHP制作を始めた理由と、4つの強みをご紹介します。',
 }
 
@@ -59,7 +59,7 @@ export default function AboutPage() {
             >
               Kosei
               <br />
-              Wakabayashi
+              Idezuka
             </h1>
           </div>
         </div>

@@ -41,7 +41,7 @@ export default function Header() {
             className="font-display font-extrabold text-[var(--ink)] tracking-tight text-xl leading-none"
             aria-label="Kosei Idezuka — Home"
           >
-            KW
+            KI
           </Link>
 
           {/* Desktop nav */}

@@ -12,8 +12,8 @@ export default function Loader() {
   /* Only show on first visit per browser session */
   useEffect(() => {
     if (typeof window === 'undefined') return
-    if (sessionStorage.getItem('kw_loaded')) return
-    sessionStorage.setItem('kw_loaded', '1')
+    if (sessionStorage.getItem('ki_loaded')) return
+    sessionStorage.setItem('ki_loaded', '1')
     setShow(true)
   }, [])
 

@@ -12,7 +12,7 @@ export default function Footer() {
     <footer className="border-t border-[var(--border)] px-8 md:px-14 py-10">
       <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <p className="font-display font-extrabold text-[var(--ink)] text-sm tracking-tight">
-          KW
+          KI
         </p>
 
         <nav className="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer navigation">

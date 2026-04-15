@@ -16,7 +16,7 @@ export default function Hero() {
     /* Delay if Loader is running (first visit this session).
        Hero's useEffect runs before Loader's (children before parents in React).
        So on first visit sessionStorage is still empty here → apply delay. */
-    const firstVisit = !sessionStorage.getItem('kw_loaded')
+    const firstVisit = !sessionStorage.getItem('ki_loaded')
     const delay = firstVisit ? 2.75 : 0
 
     const ctx = gsap.context(() => {

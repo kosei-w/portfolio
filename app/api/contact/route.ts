@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
   try {
     const resend = getResend()
     await resend.emails.send({
-      from: 'portfolio@resend.dev',
+      from: 'onboarding@resend.dev',
       to: CONTACT_TO,
       subject: `【HP制作相談】${name}様より`,
       html: `
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
     // Auto-reply to client
     await resend.emails.send({
-      from: 'portfolio@resend.dev',
+      from: 'onboarding@resend.dev',
       to: email,
       subject: 'お問い合わせありがとうございます — Kosei',
       html: `

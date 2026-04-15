@@ -4,64 +4,58 @@ import StatsStrip from '@/components/StatsStrip'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
+/* ── Section label with ruled line ── */
+function SectionLabel({ num, label }: { num: string; label: string }) {
+  return (
+    <div className="flex items-center gap-4 mb-16">
+      <span className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase shrink-0">
+        {num} / {label}
+      </span>
+      <div className="flex-1 h-px bg-[#e5e5e5]" aria-hidden="true" />
+    </div>
+  )
+}
+
 /* ── About teaser ── */
 function AboutTeaser() {
   return (
-    <section className="bg-white py-24 md:py-32 px-6">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <p className="text-[#f59e0b] text-xs font-black tracking-[0.25em] uppercase mb-5">About</p>
-          <h2
-            className="text-[#0a0f1e] font-black leading-tight mb-6"
-            style={{ fontSize: 'clamp(1.9rem, 4vw, 3.5rem)' }}
-          >
-            なぜ、これほど
-            <br />
-            早く作れるのか。
-          </h2>
-          <p className="text-[#6b7280] text-lg leading-relaxed mb-8">
-            医療DX出身のコンサルタントとして培った「課題を掴む力」と、
-            独自の高速制作プロセスの掛け合わせ。
-            ヒアリングから設計・実装・公開まで、すべて一人で完結します。
-          </p>
-          <Link
-            href="/about"
-            className="inline-flex items-center gap-2 text-[#0a0f1e] font-black group"
-          >
-            <span className="border-b-2 border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors">
-              Koseiについて詳しく
-            </span>
-            <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-        </div>
-
-        {/* Visual: big number */}
-        <div className="flex justify-center lg:justify-end">
-          <div className="relative">
-            <div
-              className="text-[#0a0f1e] font-black select-none"
-              style={{
-                fontSize: 'clamp(8rem, 20vw, 16rem)',
-                lineHeight: 1,
-                opacity: 0.06,
-                letterSpacing: '-0.04em',
-              }}
+    <section className="bg-white py-24 md:py-36 px-8 md:px-16">
+      <div className="max-w-7xl mx-auto">
+        <SectionLabel num="01" label="About" />
+        <div className="grid lg:grid-cols-2 gap-16 items-end">
+          <div>
+            <h2
+              className="text-[#111] font-black leading-tight mb-8"
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
             >
-              10
-            </div>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <p
-                className="font-black text-transparent bg-clip-text text-center"
-                style={{
-                  backgroundImage: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
-                  fontSize: 'clamp(2.5rem, 7vw, 5rem)',
-                  lineHeight: 1,
-                }}
-              >
-                最短10日
-              </p>
-              <p className="text-[#6b7280] text-sm mt-3 tracking-wider">で公開まで</p>
-            </div>
+              なぜ、これほど
+              <br />
+              早く作れるのか。
+            </h2>
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
+            >
+              <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
+                Koseiについて詳しく
+              </span>
+              <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
+            </Link>
+          </div>
+          <div className="space-y-6">
+            {[
+              { num: '01', title: '独自の高速制作プロセス', desc: '制作会社で2〜3ヶ月かかるところを最短10日で対応。無駄なプロセスを排除しているから早い。' },
+              { num: '02', title: 'コンサル出身のヒアリング力', desc: '「何を作るか」より「何のために作るか」を先に掴む。作ったあとに「なんか違う」が起きない。' },
+              { num: '03', title: '作って終わりにしない設計', desc: '公開後の保守・更新・SEO対応まで一気通貫。サイトを「資産」として育て続けます。' },
+            ].map((item) => (
+              <div key={item.num} className="flex gap-5 py-5 border-b border-[#f0f0f0]">
+                <span className="text-[#f59e0b] font-black text-sm shrink-0 mt-0.5">{item.num}</span>
+                <div>
+                  <p className="text-[#111] font-bold mb-1">{item.title}</p>
+                  <p className="text-[#777] text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -71,64 +65,63 @@ function AboutTeaser() {
 
 /* ── Works teaser ── */
 function WorksTeaser() {
-  return (
-    <section className="bg-[#0a0f1e] py-24 md:py-32 px-6 relative overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(245,158,11,0.08) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
-        }}
-      />
-      <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        {/* Visual: before/after cards */}
-        <div className="order-2 lg:order-1 flex flex-col gap-3">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-            <p className="text-[#ef4444] text-xs font-black tracking-widest uppercase mb-4">Before</p>
-            {['スマホで崩れて表示される', '何を売っているか伝わらない', '問い合わせが来ない'].map((t) => (
-              <div key={t} className="flex items-center gap-3 mb-2.5">
-                <span className="w-4 h-4 rounded-full bg-[#ef4444]/20 border border-[#ef4444]/40 flex items-center justify-center shrink-0">
-                  <span className="text-[#ef4444] text-xs">✗</span>
-                </span>
-                <span className="text-[#9ca3af] text-sm line-through">{t}</span>
-              </div>
-            ))}
-          </div>
-          <div className="bg-[#f59e0b]/10 border border-[#f59e0b]/30 rounded-2xl p-6">
-            <p className="text-[#f59e0b] text-xs font-black tracking-widest uppercase mb-4">After</p>
-            {['スマホ・PCどちらもきれいに表示', '会社の強みが一発で伝わる', '問い合わせ導線が整備される'].map((t) => (
-              <div key={t} className="flex items-center gap-3 mb-2.5">
-                <span className="w-4 h-4 rounded-full bg-[#f59e0b]/20 border border-[#f59e0b]/40 flex items-center justify-center shrink-0">
-                  <span className="text-[#f59e0b] text-xs">✓</span>
-                </span>
-                <span className="text-white text-sm">{t}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+  const works = [
+    { num: '01', tag: '飲食業', title: '企業サイト全面リニューアル', year: '2026', period: '10日' },
+  ]
 
-        <div className="order-1 lg:order-2">
-          <p className="text-[#f59e0b] text-xs font-black tracking-[0.25em] uppercase mb-5">Works</p>
+  return (
+    <section className="bg-[#fafafa] py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
+      <div className="max-w-7xl mx-auto">
+        <SectionLabel num="02" label="Works" />
+        <div className="mb-12">
           <h2
-            className="text-white font-black leading-tight mb-6"
-            style={{ fontSize: 'clamp(1.9rem, 4vw, 3.5rem)' }}
+            className="text-[#111] font-black leading-tight mb-4"
+            style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
           >
             「思ったより全然早かった。
             <br />
             しかもかっこいい」
           </h2>
-          <p className="text-[#9ca3af] text-lg leading-relaxed mb-8">
-            実際のビフォーアフターを公開しています。
-            古いサイトを10日でリニューアルした実績を、そのままお見せします。
+          <p className="text-[#777] text-lg max-w-lg leading-relaxed">
+            実際に作ったサイトのビフォーアフターを公開しています。
           </p>
+        </div>
+
+        {/* Work list */}
+        <div className="border-t border-[#e5e5e5]">
+          {works.map((w) => (
+            <Link
+              key={w.num}
+              href="/works"
+              className="flex items-center justify-between py-6 border-b border-[#e5e5e5] group hover:pl-2 transition-all duration-300"
+            >
+              <div className="flex items-center gap-6">
+                <span className="text-[#f59e0b] font-black text-xs w-6 shrink-0">{w.num}</span>
+                <div>
+                  <span className="text-[#aaa] text-xs uppercase tracking-widest block mb-1">{w.tag}</span>
+                  <span className="text-[#111] font-bold text-lg group-hover:text-[#f59e0b] transition-colors duration-200">
+                    {w.title}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-6 shrink-0">
+                <span className="text-[#aaa] text-sm hidden md:block">{w.year}</span>
+                <span className="bg-[#f59e0b]/10 text-[#f59e0b] text-xs font-bold px-3 py-1">⚡ {w.period}</span>
+                <span className="text-[#aaa] group-hover:text-[#111] transition-colors duration-200 text-lg">→</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-8">
           <Link
             href="/works"
-            className="inline-flex items-center gap-2 text-[#f59e0b] font-black group"
+            className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
           >
-            <span className="border-b-2 border-[#f59e0b]/40 pb-0.5 group-hover:border-[#f59e0b] transition-colors">
-              制作実績を見る
+            <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
+              全ての実績を見る
             </span>
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
+            <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
           </Link>
         </div>
       </div>
@@ -139,68 +132,62 @@ function WorksTeaser() {
 /* ── Plans teaser ── */
 function PlansTeaser() {
   return (
-    <section className="bg-[#f9fafb] py-24 md:py-32 px-6">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-        <div>
-          <p className="text-[#f59e0b] text-xs font-black tracking-[0.25em] uppercase mb-5">Plans</p>
-          <h2
-            className="text-[#0a0f1e] font-black leading-tight mb-6"
-            style={{ fontSize: 'clamp(1.9rem, 4vw, 3.5rem)' }}
-          >
-            追加費用なし。
-            <br />
-            明瞭な3プラン。
-          </h2>
-          <p className="text-[#6b7280] text-lg leading-relaxed mb-8">
-            「頼んだら思ったより高かった」が起きない料金体系。
-            初回のお見積もりは無料で、金額に納得してから始められます。
-          </p>
-          <Link
-            href="/plans"
-            className="inline-flex items-center gap-2 text-[#0a0f1e] font-black group"
-          >
-            <span className="border-b-2 border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors">
-              料金プランを見る
-            </span>
-            <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-        </div>
-
-        {/* Visual: plan preview */}
-        <div className="flex flex-col gap-3">
-          {[
-            { name: 'スターター', price: '¥128,000〜', period: '最短7日', muted: true },
-            { name: 'スタンダード', price: '¥198,000〜', period: '最短10日', muted: false },
-            { name: 'プレミアム', price: '¥350,000〜', period: '最短14日', muted: true },
-          ].map((plan) => (
-            <div
-              key={plan.name}
-              className={`rounded-xl px-6 py-4 flex items-center justify-between transition-all duration-200 ${
-                plan.muted
-                  ? 'bg-white border border-[#e5e7eb]'
-                  : 'bg-[#0a0f1e] border border-[#0a0f1e] shadow-lg'
-              }`}
+    <section className="bg-white py-24 md:py-36 px-8 md:px-16 border-t border-[#e5e5e5]">
+      <div className="max-w-7xl mx-auto">
+        <SectionLabel num="03" label="Plans" />
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div>
+            <h2
+              className="text-[#111] font-black leading-tight mb-6"
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 4.5rem)', textWrap: 'balance' }}
             >
-              <div className="flex items-center gap-3">
-                {!plan.muted && (
-                  <span className="bg-[#f59e0b] text-[#0a0f1e] text-[10px] font-black px-2 py-0.5 rounded-full">
-                    人気
+              追加費用なし。
+              <br />
+              明瞭な3プラン。
+            </h2>
+            <p className="text-[#777] leading-relaxed mb-8 max-w-sm">
+              「頼んだら思ったより高かった」が起きない料金体系。
+              初回のお見積もりは無料です。
+            </p>
+            <Link
+              href="/plans"
+              className="inline-flex items-center gap-3 text-[#111] font-bold text-sm tracking-wide group"
+            >
+              <span className="border-b border-[#f59e0b] pb-0.5 group-hover:text-[#f59e0b] transition-colors duration-200">
+                料金プランを見る
+              </span>
+              <span className="text-[#f59e0b] group-hover:translate-x-1 transition-transform duration-200">→</span>
+            </Link>
+          </div>
+
+          {/* Plan list */}
+          <div className="border-t border-[#e5e5e5]">
+            {[
+              { name: 'スターター', price: '¥128,000〜', period: '最短7日', popular: false },
+              { name: 'スタンダード', price: '¥198,000〜', period: '最短10日', popular: true },
+              { name: 'プレミアム', price: '¥350,000〜', period: '最短14日', popular: false },
+            ].map((plan) => (
+              <div
+                key={plan.name}
+                className={`flex items-center justify-between py-5 border-b border-[#e5e5e5] ${plan.popular ? 'opacity-100' : 'opacity-60'}`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-[#111] font-bold">{plan.name}</span>
+                  {plan.popular && (
+                    <span className="bg-[#f59e0b] text-[#0a0f1e] text-[10px] font-black px-2 py-0.5 tracking-wider">
+                      人気
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-[#aaa] text-xs">{plan.period}</span>
+                  <span className={`font-black ${plan.popular ? 'text-[#111]' : 'text-[#777]'}`}>
+                    {plan.price}
                   </span>
-                )}
-                <span className={`font-bold ${plan.muted ? 'text-[#374151]' : 'text-white'}`}>
-                  {plan.name}
-                </span>
+                </div>
               </div>
-              <div className="text-right">
-                <p className={`font-black ${plan.muted ? 'text-[#0a0f1e]' : 'text-[#f59e0b]'}`}>
-                  {plan.price}
-                </p>
-                <p className={`text-xs mt-0.5 ${plan.muted ? 'text-[#9ca3af]' : 'text-[#9ca3af]'}`}>
-                  {plan.period}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -210,38 +197,34 @@ function PlansTeaser() {
 /* ── Final CTA ── */
 function FinalCta() {
   return (
-    <section className="relative py-28 md:py-36 px-6 bg-[#0a0f1e] overflow-hidden">
+    <section className="bg-[#0a0f1e] py-28 md:py-40 px-8 md:px-16 relative overflow-hidden border-t border-white/5">
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
         style={{
-          backgroundImage: 'radial-gradient(rgba(245,158,11,0.1) 1px, transparent 1px)',
-          backgroundSize: '32px 32px',
+          backgroundImage: 'radial-gradient(rgba(245,158,11,0.06) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
         }}
       />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#f59e0b] opacity-[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="relative z-10 max-w-3xl mx-auto text-center">
-        <p className="text-[#f59e0b] text-xs font-black tracking-[0.25em] uppercase mb-6">Contact</p>
-        <h2
-          className="text-white font-black leading-tight mb-6"
-          style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)' }}
-        >
-          まず、話しましょう。
-          <br />
-          <span
-            className="text-transparent bg-clip-text"
-            style={{ backgroundImage: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-start md:items-end justify-between">
+        <div>
+          <p className="text-[#f59e0b] text-xs font-black tracking-[0.3em] uppercase mb-6">Contact</p>
+          <h2
+            className="text-white font-black leading-tight"
+            style={{ fontSize: 'clamp(2.5rem, 7vw, 7rem)', lineHeight: 0.9, textWrap: 'balance' }}
           >
+            まず、
+            <br />
+            話しましょう。
+          </h2>
+          <p className="text-white/40 text-base mt-6 max-w-xs leading-relaxed">
             30分・無料・オンライン。
-          </span>
-        </h2>
-        <p className="text-[#9ca3af] text-lg mb-12 leading-relaxed">
-          「まだぼんやりしている」「見積もりだけ知りたい」でも大丈夫です。
-          <br />
-          現状の課題を一緒に整理するところから始めます。
-        </p>
+            「まだぼんやりしている」でも大丈夫。
+          </p>
+        </div>
         <Link
           href="/contact"
-          className="inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-12 py-5 rounded-xl text-xl hover:bg-[#fbbf24] transition-all duration-200 hover:scale-105 hover:shadow-[0_0_50px_rgba(245,158,11,0.3)]"
+          className="shrink-0 inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-10 py-5 text-lg hover:bg-[#fbbf24] transition-colors duration-200"
         >
           無料相談を申し込む →
         </Link>

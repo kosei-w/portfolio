@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { resend, CONTACT_TO } from '@/lib/resend'
+import { getResend, CONTACT_TO } from '@/lib/resend'
 
 type ContactBody = {
   name: string
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
+    const resend = getResend()
     await resend.emails.send({
       from: 'portfolio@resend.dev',
       to: CONTACT_TO,

@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: '制作実績 — Kosei | HP制作',
+  description: '実際に作ったサイトのビフォーアフターを公開。飲食業のサイトを依頼から10日でリニューアルした実績など。',
+}
 
 const works = [
   {

@@ -15,18 +15,30 @@ export default function Hero() {
   const rightRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(leftRef.current?.children ?? [], {
-        y: 50,
-        opacity: 0,
-        stagger: 0.12,
-        duration: 0.8,
-      }).from(
-        rightRef.current?.children ?? [],
-        { y: 30, opacity: 0, stagger: 0.1, duration: 0.6 },
-        '-=0.4'
-      )
+      const mm = gsap.matchMedia()
+
+      mm.add('(min-width: 1024px)', () => {
+        // Desktop: animate both columns
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+        tl.from(leftRef.current?.children ?? [], {
+          y: 50, opacity: 0, stagger: 0.12, duration: 0.8,
+        }).from(
+          rightRef.current?.children ?? [],
+          { y: 30, opacity: 0, stagger: 0.1, duration: 0.6 },
+          '-=0.4'
+        )
+      })
+
+      mm.add('(max-width: 1023px)', () => {
+        // Mobile: lighter animation, left column only
+        gsap.from(leftRef.current?.children ?? [], {
+          y: 30, opacity: 0, stagger: 0.1, duration: 0.6, ease: 'power3.out',
+        })
+      })
     })
     return () => ctx.revert()
   }, [])

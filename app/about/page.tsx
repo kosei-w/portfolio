@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'About — Kosei | HP制作',
+  description: '医療DX出身のコンサルタントがHP制作を始めた理由と、4つの強み・制作への姿勢をご紹介します。',
+}
 
 const strengths = [
   {

@@ -1,5 +1,6 @@
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
+import StatsStrip from '@/components/StatsStrip'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
@@ -255,6 +256,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <StatsStrip />
         <AboutTeaser />
         <WorksTeaser />
         <PlansTeaser />

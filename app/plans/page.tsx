@@ -1,7 +1,13 @@
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: '料金プラン — Kosei | HP制作',
+  description: '¥128,000〜の明瞭な3プラン。追加費用・隠れたコストなし。初回見積もり無料。保守プランもあり。',
+}
 
 const plans = [
   {

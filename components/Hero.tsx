@@ -2,102 +2,130 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
+import Link from 'next/link'
+
+const stats = [
+  { value: '10日', label: '最短納期', sub: '制作会社の平均は2〜3ヶ月' },
+  { value: '1/6', label: '制作会社比の納期', sub: '実証済みのスピード' },
+  { value: '¥128k〜', label: 'スターター', sub: '明瞭な料金・追加費用なし' },
+]
 
 export default function Hero() {
-  const headingRef = useRef<HTMLHeadingElement>(null)
-  const subRef = useRef<HTMLParagraphElement>(null)
-  const badgesRef = useRef<HTMLDivElement>(null)
-  const ctaRef = useRef<HTMLDivElement>(null)
+  const leftRef = useRef<HTMLDivElement>(null)
+  const rightRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(headingRef.current, { y: 60, opacity: 0, duration: 0.9 })
-        .from(subRef.current, { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
-        .from(badgesRef.current?.children ?? [], { y: 20, opacity: 0, stagger: 0.1, duration: 0.5 }, '-=0.3')
-        .from(ctaRef.current?.children ?? [], { y: 20, opacity: 0, stagger: 0.1, duration: 0.5 }, '-=0.2')
+      tl.from(leftRef.current?.children ?? [], {
+        y: 50,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.8,
+      }).from(
+        rightRef.current?.children ?? [],
+        { y: 30, opacity: 0, stagger: 0.1, duration: 0.6 },
+        '-=0.4'
+      )
     })
     return () => ctx.revert()
   }, [])
 
   return (
     <section className="relative min-h-screen flex items-center bg-[#0a0f1e] overflow-hidden">
-      {/* Background grid */}
+      {/* Dot grid */}
       <div
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0"
         style={{
-          backgroundImage: `linear-gradient(rgba(245,158,11,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245,158,11,0.3) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
+          backgroundImage: 'radial-gradient(rgba(245,158,11,0.15) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
         }}
       />
-      {/* Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#f59e0b] opacity-5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Glow spots */}
+      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[#f59e0b] opacity-[0.04] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-600 opacity-[0.06] rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-28 pb-20 md:pt-36 md:pb-28">
-        {/* Eyebrow */}
-        <p className="text-[#f59e0b] text-sm font-bold tracking-[0.2em] uppercase mb-6">
-          HP制作フリーランス
-        </p>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 md:pt-32 md:pb-20 w-full">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left */}
+          <div ref={leftRef}>
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
+              <span className="w-2 h-2 bg-[#f59e0b] rounded-full animate-pulse" />
+              <span className="text-white/70 text-sm font-medium">HP制作 — 受付中</span>
+            </div>
 
-        {/* Heading */}
-        <h1
-          ref={headingRef}
-          className="text-white font-black leading-[1.1] mb-6"
-          style={{ fontSize: 'clamp(2.8rem, 7vw, 5.5rem)' }}
-        >
-          最短10日で、
-          <br />
-          <span className="text-[#f59e0b]">集客できる</span>
-          <br />
-          サイトを届ける。
-        </h1>
-
-        {/* Sub */}
-        <p
-          ref={subRef}
-          className="text-[#9ca3af] text-lg md:text-xl max-w-xl leading-relaxed mb-10"
-        >
-          制作会社の1/6の納期・明瞭な料金体系。
-          <br className="hidden md:block" />
-          医療DX出身のコンサルタントが、
-          <br className="hidden md:block" />
-          「作って終わり」にしないHPを作ります。
-        </p>
-
-        {/* Badges */}
-        <div ref={badgesRef} className="flex flex-wrap gap-3 mb-12">
-          {['最短10日納品', '制作会社の1/6の納期', '全プラン保守対応', '初回相談無料'].map((badge) => (
-            <span
-              key={badge}
-              className="bg-white/10 text-white text-sm px-4 py-1.5 rounded-full border border-white/20"
+            <h1
+              className="text-white font-black leading-[1.05] mb-8"
+              style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)' }}
             >
-              ✓ {badge}
-            </span>
-          ))}
-        </div>
+              集客できる
+              <br />
+              サイトを、
+              <br />
+              <span
+                className="text-transparent bg-clip-text"
+                style={{ backgroundImage: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}
+              >
+                最短10日で。
+              </span>
+            </h1>
 
-        {/* CTA */}
-        <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4">
-          <a
-            href="#contact"
-            className="inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-8 py-4 rounded-full text-lg hover:bg-[#fbbf24] transition-all duration-200 hover:scale-105"
-          >
-            無料で相談する →
-          </a>
-          <a
-            href="#works"
-            className="inline-flex items-center justify-center border border-white/30 text-white font-bold px-8 py-4 rounded-full text-lg hover:border-[#f59e0b] hover:text-[#f59e0b] transition-all duration-200"
-          >
-            制作実績を見る
-          </a>
+            <p className="text-[#9ca3af] text-xl leading-relaxed mb-10 max-w-lg">
+              「古い・崩れる・問い合わせが来ない」を解決する。
+              <br />
+              医療DX出身のコンサルタントが、
+              <br />
+              作って終わりにしないHPを届けます。
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center bg-[#f59e0b] text-[#0a0f1e] font-black px-8 py-4 rounded-xl text-lg hover:bg-[#fbbf24] transition-all duration-200 hover:scale-105 hover:shadow-[0_0_30px_rgba(245,158,11,0.4)]"
+              >
+                無料相談を申し込む →
+              </Link>
+              <Link
+                href="/works"
+                className="inline-flex items-center justify-center border border-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg hover:border-[#f59e0b]/60 hover:bg-white/5 transition-all duration-200"
+              >
+                制作実績を見る
+              </Link>
+            </div>
+          </div>
+
+          {/* Right: Stats panel */}
+          <div ref={rightRef} className="hidden lg:flex flex-col gap-4">
+            {stats.map((stat) => (
+              <div
+                key={stat.value}
+                className="bg-white/[0.04] border border-white/10 rounded-2xl p-6 flex items-center gap-6 hover:border-[#f59e0b]/30 hover:bg-white/[0.07] transition-all duration-300"
+              >
+                <div
+                  className="text-5xl font-black text-transparent bg-clip-text shrink-0"
+                  style={{ backgroundImage: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}
+                >
+                  {stat.value}
+                </div>
+                <div>
+                  <p className="text-white font-bold text-lg leading-tight">{stat.label}</p>
+                  <p className="text-[#6b7280] text-sm mt-1">{stat.sub}</p>
+                </div>
+              </div>
+            ))}
+
+            {/* Bottom note */}
+            <div className="bg-[#f59e0b]/10 border border-[#f59e0b]/20 rounded-2xl p-5 mt-2">
+              <p className="text-[#f59e0b] text-sm font-bold mb-1">初回相談 無料</p>
+              <p className="text-white/60 text-sm">30分・オンライン・「まだぼんやり」でもOK</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="text-white/40 text-xs">scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent" />
+      {/* Scroll */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <div className="w-px h-10 bg-gradient-to-b from-[#f59e0b]/50 to-transparent animate-pulse" />
       </div>
     </section>
   )

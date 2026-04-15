@@ -28,7 +28,7 @@ export default function ContactPage() {
       <Header />
       <main className="pt-20">
         {/* Split layout */}
-        <div className="grid lg:grid-cols-2 min-h-[calc(100vh-80px)]">
+        <div className="grid lg:grid-cols-2 lg:min-h-[calc(100vh-80px)]">
 
           {/* Left: dark info panel */}
           <div className="bg-[var(--ink)] flex flex-col justify-center px-8 md:px-14 pt-16 pb-16">

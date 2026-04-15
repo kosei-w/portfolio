@@ -46,9 +46,19 @@ function WorkCard({
       </span>
 
       {/* Tag — always visible */}
-      <span className="absolute top-7 left-8 font-display text-[10px] tracking-[0.28em] uppercase text-white/35">
+      <span className="absolute top-7 left-8 font-display text-[10px] tracking-[0.28em] uppercase text-white/70">
         {tag}
       </span>
+
+      {/* Bottom info — always visible (mobile friendly) */}
+      <div className="absolute bottom-0 left-0 right-0 px-8 pb-7 pt-14 bg-gradient-to-t from-black/75 to-transparent group-hover:opacity-0 transition-opacity duration-300">
+        <p className="font-display font-extrabold text-white leading-tight" style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.3rem)' }}>
+          {title}
+        </p>
+        {!placeholder && (
+          <span className="font-display text-[10px] tracking-[0.15em] text-white/55 mt-1 block">{period}</span>
+        )}
+      </div>
 
       {/* Hover overlay — gold reveal */}
       <div className="absolute inset-0 flex flex-col justify-end p-8 bg-[#C9A96E] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -61,7 +71,7 @@ function WorkCard({
         </p>
         <div className="flex items-center justify-between mt-4">
           {!placeholder && (
-            <span className="font-display text-xs text-black/50">⚡ {period}</span>
+            <span className="font-display text-xs text-black/50">{period}</span>
           )}
           <span className="font-display font-bold text-xl text-black ml-auto">→</span>
         </div>

@@ -46,7 +46,7 @@ export default function Hero() {
 
   return (
     <section
-      className="min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16"
+      className="min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16 overflow-x-clip"
       aria-label="Hero"
     >
       {/* Massive editorial name */}

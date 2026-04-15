@@ -79,7 +79,7 @@ export default function AboutPage() {
                 商売してるんだろう」と思った。
               </h2>
             </div>
-            <div className="space-y-6 text-[var(--muted)] leading-[1.9] md:pt-20">
+            <div className="space-y-6 text-[var(--muted)] leading-[1.9] md:pt-20 min-w-0">
               <p>
                 本業は医療DX SaaS企業のコンサルティングセールス。
                 病院・クリニック・医療法人を日々訪問して気づいたことがある。
@@ -121,7 +121,7 @@ export default function AboutPage() {
                   >
                     {item.title}
                   </p>
-                  <p className="text-[var(--muted)] text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-[var(--muted)] text-sm leading-relaxed min-w-0 break-words">{item.desc}</p>
                 </div>
               ))}
             </div>

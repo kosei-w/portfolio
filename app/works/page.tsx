@@ -50,14 +50,14 @@ export default function WorksPage() {
       <main className="pt-20">
 
         {/* Page header */}
-        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
-          <div className="max-w-[1400px] mx-auto pb-16">
+        <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1200px] mx-auto pb-16">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
               WORKS
             </p>
             <h1
               className="font-display font-extrabold text-[var(--ink)] leading-none"
-              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em' }}
+              style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em' }}
             >
               Selected Work
             </h1>
@@ -68,8 +68,8 @@ export default function WorksPage() {
         </div>
 
         {/* Works list */}
-        <section className="px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
+        <section className="px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
 
             {works.map((work) => (
               <article key={work.id} className="mb-28">
@@ -167,8 +167,8 @@ export default function WorksPage() {
         </section>
 
         {/* Process */}
-        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
+        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
               PROCESS
             </p>
@@ -178,7 +178,7 @@ export default function WorksPage() {
             >
               依頼から公開まで
             </h2>
-            <div className="border-t border-white/10">
+            <ScrollReveal stagger className="border-t border-white/10">
               {process.map((item) => (
                 <div
                   key={item.step}
@@ -186,10 +186,10 @@ export default function WorksPage() {
                 >
                   <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0">{item.step}</span>
                   <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.title}</p>
-                  <p className="text-white/35 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white/50 text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
           </div>
         </ScrollReveal>
 

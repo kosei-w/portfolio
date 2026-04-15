@@ -29,51 +29,81 @@ function WorkCard({
   href: string
   placeholder?: boolean
 }) {
+  const EASE = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+
   return (
     <Link
       href={href}
-      className="relative block overflow-hidden group"
-      style={{ background: bg, aspectRatio: '4 / 3' }}
+      className="block overflow-hidden group"
+      style={{ aspectRatio: '4 / 3' }}
       aria-label={title}
     >
-      {/* Ghost number — decorative */}
-      <span
-        className="absolute -bottom-4 -right-2 font-display font-extrabold select-none pointer-events-none leading-none text-white/[0.05]"
-        style={{ fontSize: 'clamp(8rem, 22vw, 18rem)' }}
-        aria-hidden="true"
+      {/* Inner — scales on hover while outer clips overflow */}
+      <div
+        className="relative w-full h-full transition-transform duration-[400ms] group-hover:scale-[1.03]"
+        style={{ background: bg, transitionTimingFunction: EASE }}
       >
-        {id}
-      </span>
+        {/* Subtle grid lines for visual texture */}
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)',
+            backgroundSize: '60px 60px',
+          }}
+          aria-hidden="true"
+        />
 
-      {/* Tag — always visible */}
-      <span className="absolute top-7 left-8 font-display text-[10px] tracking-[0.28em] uppercase text-white/70">
-        {tag}
-      </span>
-
-      {/* Bottom info — always visible (mobile friendly) */}
-      <div className="absolute bottom-0 left-0 right-0 px-8 pb-7 pt-14 bg-gradient-to-t from-black/75 to-transparent group-hover:opacity-0 transition-opacity duration-300">
-        <p className="font-display font-extrabold text-white leading-tight" style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.3rem)' }}>
-          {title}
-        </p>
-        {!placeholder && (
-          <span className="font-display text-[10px] tracking-[0.15em] text-white/55 mt-1 block">{period}</span>
-        )}
-      </div>
-
-      {/* Hover overlay — gold reveal */}
-      <div className="absolute inset-0 flex flex-col justify-end p-8 bg-[#C9A96E] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="font-display text-[10px] tracking-[0.28em] uppercase text-black/50 mb-2">{tag}</span>
-        <p
-          className="font-display font-extrabold text-black leading-tight"
-          style={{ fontSize: 'clamp(1.3rem, 2.8vw, 2rem)', textWrap: 'balance' }}
+        {/* Ghost number — decorative */}
+        <span
+          className="absolute -bottom-4 -right-2 font-display font-extrabold select-none pointer-events-none leading-none text-white/[0.04]"
+          style={{ fontSize: 'clamp(8rem, 22vw, 18rem)' }}
+          aria-hidden="true"
         >
-          {title}
-        </p>
-        <div className="flex items-center justify-between mt-4">
+          {id}
+        </span>
+
+        {/* Tag */}
+        <span className="absolute top-7 left-8 font-display text-[10px] tracking-[0.28em] uppercase text-white/70">
+          {tag}
+        </span>
+
+        {/* Bottom permanent info — fades out on hover */}
+        <div
+          className="absolute bottom-0 left-0 right-0 px-8 pb-8 pt-16 bg-gradient-to-t from-black/80 to-transparent transition-opacity duration-[400ms] group-hover:opacity-0"
+          style={{ transitionTimingFunction: EASE }}
+        >
+          <p
+            className="font-display font-extrabold text-white leading-tight"
+            style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.3rem)' }}
+          >
+            {title}
+          </p>
           {!placeholder && (
-            <span className="font-display text-xs text-black/50">{period}</span>
+            <span className="font-display text-[10px] tracking-[0.15em] text-white/55 mt-1.5 block">
+              {period}
+            </span>
           )}
-          <span className="font-display font-bold text-xl text-black ml-auto">→</span>
+        </div>
+
+        {/* Hover overlay — gold reveal */}
+        <div
+          className="absolute inset-0 flex flex-col justify-end p-8 bg-[#C9A96E] opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100"
+          style={{ transitionTimingFunction: EASE }}
+        >
+          <span className="font-display text-[10px] tracking-[0.28em] uppercase text-black/50 mb-2">{tag}</span>
+          <p
+            className="font-display font-extrabold text-black leading-tight"
+            style={{ fontSize: 'clamp(1.3rem, 2.8vw, 2rem)', textWrap: 'balance' }}
+          >
+            {title}
+          </p>
+          <div className="flex items-center justify-between mt-4">
+            {!placeholder && (
+              <span className="font-display text-xs text-black/50">{period}</span>
+            )}
+            <span className="font-display font-bold text-xl text-black ml-auto">→</span>
+          </div>
         </div>
       </div>
     </Link>
@@ -132,8 +162,8 @@ export default function Home() {
 
         {/* ── About ── */}
         <section aria-labelledby="section-about" className="border-t border-[var(--border)]">
-          <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
-            <div className="max-w-[1400px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28 items-end">
+          <ScrollReveal className="px-8 md:px-14 section-py">
+            <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28 items-end">
               <div>
                 <h2
                   id="section-about"
@@ -194,7 +224,7 @@ export default function Home() {
         {/* ── Plans strip ── */}
         <section aria-labelledby="section-plans" className="border-t border-[var(--border)]">
           <ScrollReveal className="px-8 md:px-14 py-20">
-            <div className="max-w-[1400px] mx-auto">
+            <div className="max-w-[1200px] mx-auto">
               <h2
                 id="section-plans"
                 className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10"
@@ -256,7 +286,7 @@ export default function Home() {
         {/* ── Contact CTA ── */}
         <section className="border-t border-[var(--border)]">
           <ScrollReveal className="px-8 md:px-14 py-24 md:py-44">
-            <div className="max-w-[1400px] mx-auto">
+            <div className="max-w-[1200px] mx-auto">
               <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-12">
                 04 / CONTACT
               </p>

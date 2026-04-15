@@ -48,14 +48,14 @@ export default function AboutPage() {
       <main className="pt-20">
 
         {/* Page header */}
-        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
-          <div className="max-w-[1400px] mx-auto pb-16">
+        <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1200px] mx-auto pb-16">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
               ABOUT
             </p>
             <h1
               className="font-display font-extrabold text-[var(--ink)] leading-tight"
-              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
+              style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
             >
               Kosei
               <br />
@@ -65,8 +65,8 @@ export default function AboutPage() {
         </div>
 
         {/* Story */}
-        <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28">
+        <ScrollReveal className="px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28">
             <div>
               <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
                 01 / STORY
@@ -105,12 +105,12 @@ export default function AboutPage() {
         </ScrollReveal>
 
         {/* Strengths */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
               02 / STRENGTHS
             </p>
-            <div className="border-t border-[var(--border)]">
+            <ScrollReveal stagger className="border-t border-[var(--border)]">
               {strengths.map((item) => (
                 <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-8 border-b border-[var(--border)] group">
                   <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
@@ -121,16 +121,16 @@ export default function AboutPage() {
                   >
                     {item.title}
                   </p>
-                  <p className="text-[var(--muted)] text-sm leading-relaxed min-w-0 break-words">{item.desc}</p>
+                  <p className="text-[var(--muted)] text-base leading-relaxed min-w-0 break-words">{item.desc}</p>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
           </div>
         </ScrollReveal>
 
         {/* Quality pillars */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36 bg-[var(--ink)]">
-          <div className="max-w-[1400px] mx-auto">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py bg-[var(--ink)]">
+          <div className="max-w-[1200px] mx-auto">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
               03 / QUALITY
             </p>
@@ -143,20 +143,20 @@ export default function AboutPage() {
             <p className="text-white/30 text-sm mb-16 max-w-lg leading-relaxed">
               エンタープライズ水準の技術基盤で、公開後も安定して動き続けるサイトを作ります。
             </p>
-            <div className="border-t border-white/10">
+            <ScrollReveal stagger className="border-t border-white/10">
               {qualities.map((item) => (
                 <div key={item.label} className="flex flex-col md:flex-row gap-4 md:gap-16 py-6 border-b border-white/10">
                   <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.label}</p>
-                  <p className="text-white/35 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white/50 text-base leading-relaxed">{item.desc}</p>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
           </div>
         </ScrollReveal>
 
         {/* CTA */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-32">
-          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
             <div>
               <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-8">
                 CONTACT

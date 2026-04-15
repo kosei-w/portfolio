@@ -107,14 +107,14 @@ export default function PlansPage() {
       <main className="pt-20">
 
         {/* Page header */}
-        <div className="px-8 md:px-14 pt-16 pb-0 border-b border-[var(--border)]">
-          <div className="max-w-[1400px] mx-auto pb-16">
+        <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
+          <div className="max-w-[1200px] mx-auto pb-16">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
               PLANS
             </p>
             <h1
               className="font-display font-extrabold text-[var(--ink)] leading-none"
-              style={{ fontSize: 'clamp(3rem, 8vw, 8rem)', letterSpacing: '-0.03em' }}
+              style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em' }}
             >
               Pricing
             </h1>
@@ -125,9 +125,9 @@ export default function PlansPage() {
         </div>
 
         {/* Plans */}
-        <ScrollReveal className="px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border)] border border-[var(--border)]">
+        <ScrollReveal className="px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
+            <ScrollReveal stagger className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[var(--border)] border border-[var(--border)]">
               {plans.map((plan) => (
                 <div
                   key={plan.name}
@@ -200,7 +200,7 @@ export default function PlansPage() {
                   </Link>
                 </div>
               ))}
-            </div>
+            </ScrollReveal>
             <p className="text-[var(--muted)] text-xs mt-6">
               ※ 表示価格はすべて税抜きです。ドメイン・ホスティング費用は別途。
             </p>
@@ -208,8 +208,8 @@ export default function PlansPage() {
         </ScrollReveal>
 
         {/* Maintenance */}
-        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
+        <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
               MAINTENANCE
             </p>
@@ -253,8 +253,8 @@ export default function PlansPage() {
         </ScrollReveal>
 
         {/* FAQ */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-36">
-          <div className="max-w-[1400px] mx-auto">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto">
             <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
               FAQ
             </p>
@@ -277,8 +277,8 @@ export default function PlansPage() {
         </ScrollReveal>
 
         {/* CTA */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 py-24 md:py-32">
-          <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
+          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
             <h2
               className="font-display font-extrabold text-[var(--ink)] leading-none"
               style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}

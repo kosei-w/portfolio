@@ -212,7 +212,7 @@ export default function Home() {
                 </ul>
                 <Link
                   href="/about"
-                  className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline"
+                  className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline link-gold"
                 >
                   MORE ABOUT ME →
                 </Link>
@@ -291,7 +291,7 @@ export default function Home() {
               <h2
                 className="font-display font-extrabold text-[var(--ink)] leading-none mb-16"
                 style={{
-                  fontSize: 'clamp(3.5rem, 11vw, 11rem)',
+                  fontSize: 'clamp(5.25rem, 16.5vw, 16.5rem)',
                   letterSpacing: '-0.03em',
                   textWrap: 'balance',
                 }}

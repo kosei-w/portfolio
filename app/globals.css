@@ -140,3 +140,8 @@ body {
 .link-gold::after {
   background: var(--gold);
 }
+
+/* ── Typography limits ── */
+p, li {
+  max-width: 55ch;
+}

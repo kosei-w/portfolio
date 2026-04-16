@@ -8,6 +8,7 @@ export default function Hero() {
   const lastRef = useRef<HTMLSpanElement>(null)
   const ruleRef = useRef<HTMLDivElement>(null)
   const metaRef = useRef<HTMLDivElement>(null)
+  const imgRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -39,6 +40,11 @@ export default function Hero() {
           { y: 20, opacity: 0, immediateRender: true, stagger: 0.08, duration: 0.7 },
           '-=0.5',
         )
+        .from(
+          imgRef.current,
+          { opacity: 0, scale: 0.95, duration: 1, ease: 'power2.out' },
+          '-=0.8'
+        )
     })
 
     return () => ctx.revert()
@@ -55,20 +61,31 @@ export default function Hero() {
         style={{ background: 'var(--border)' }}
         aria-hidden="true"
       />
+      {/* Editorial floating image */}
+      <div
+        ref={imgRef}
+        className="absolute top-[20%] right-8 md:right-24 w-[40vw] max-w-[400px] aspect-[4/3] grayscale opacity-90 mix-blend-multiply z-[-1]"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200"
+          alt="Workspace"
+          className="w-full h-full object-cover"
+        />
+      </div>
 
       {/* Massive editorial name */}
       <div className="flex-1 flex flex-col justify-center py-8">
         <h1
-          className="font-display font-extrabold leading-[0.86] select-none"
+          className="font-display font-extrabold leading-[0.86] select-none overflow-hidden"
           style={{ fontSize: 'clamp(4.5rem, 16.5vw, 18rem)', letterSpacing: '-0.035em' }}
         >
-          <span ref={firstRef} className="block text-[var(--ink)]">
+          <span ref={firstRef} className="block text-[var(--ink)] whitespace-nowrap">
             KOSEI
           </span>
           {/* Asymmetric indent + bleed — editorial signature */}
           <span
             ref={lastRef}
-            className="block text-[var(--ink)]"
+            className="block text-[var(--ink)] whitespace-nowrap"
             style={{ paddingLeft: 'clamp(1.5rem, 5.5vw, 9rem)' }}
           >
             IDEZUKA

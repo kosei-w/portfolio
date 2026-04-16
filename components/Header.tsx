@@ -50,7 +50,7 @@ export default function Header() {
               <Link
                 key={href}
                 href={href}
-                className="font-display text-xs tracking-[0.2em] transition-colors duration-200"
+                className="font-display text-xs tracking-[0.2em] transition-colors duration-200 hover:text-[var(--gold)]"
                 style={{
                   color: pathname === href ? 'var(--gold)' : 'var(--muted)',
                   fontWeight: pathname === href ? 700 : 500,

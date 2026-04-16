@@ -4,6 +4,8 @@ import { useEffect, useRef, type ReactNode, type CSSProperties } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
+
 interface Props {
   children: ReactNode
   className?: string
@@ -20,7 +22,6 @@ export default function ScrollReveal({ children, className, style, delay = 0, y 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
-    gsap.registerPlugin(ScrollTrigger)
     const el = ref.current
     if (!el) return
 
@@ -34,7 +35,7 @@ export default function ScrollReveal({ children, className, style, delay = 0, y 
         duration: 0.9,
         delay,
         ease: 'power3.out',
-        ...(useStagger ? { stagger: 0.1 } : {}),
+        stagger: useStagger ? 0.1 : undefined,
         scrollTrigger: {
           trigger: el,
           start: 'top 88%',

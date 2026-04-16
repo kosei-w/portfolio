@@ -221,7 +221,7 @@ export default function PlansPage() {
                 >
                   保守プラン
                 </h2>
-                <p className="text-white/35 text-sm leading-relaxed mb-8">
+                <p className="body-text-dark mb-8">
                   作って終わりにしない。サイトを「資産」として育て続けます。
                 </p>
                 <div className="flex items-baseline gap-1 mb-8">
@@ -242,9 +242,9 @@ export default function PlansPage() {
               </div>
               <ul className="border-t border-white/10">
                 {maintenance.features.map((f) => (
-                  <li key={f} className="flex items-center gap-4 py-5 border-b border-white/10 text-sm">
+                  <li key={f} className="flex items-center gap-4 py-6 border-b border-white/10">
                     <span className="text-[var(--gold)] text-xs shrink-0">✓</span>
-                    <span className="text-white/50">{f}</span>
+                    <span className="body-text-dark">{f}</span>
                   </li>
                 ))}
               </ul>
@@ -261,14 +261,14 @@ export default function PlansPage() {
             <div className="border-t border-[var(--border)]">
               {faqs.map((faq) => (
                 <details key={faq.q} className="group border-b border-[var(--border)]">
-                  <summary className="flex items-center justify-between py-6 cursor-pointer font-display font-bold text-[var(--ink)] text-sm list-none hover:text-[var(--gold)] transition-colors duration-200">
+                  <summary className="flex items-center justify-between py-7 cursor-pointer font-display font-bold text-[var(--ink)] text-base list-none hover:text-[var(--gold)] transition-colors duration-200">
                     {faq.q}
                     <span className="text-[var(--gold)] font-bold text-lg group-open:rotate-45 transition-transform duration-200 shrink-0 ml-4">
                       +
                     </span>
                   </summary>
-                  <div className="pb-6 pl-0">
-                    <p className="text-[var(--muted)] text-sm leading-relaxed">{faq.a}</p>
+                  <div className="pb-8 pl-0">
+                    <p className="body-text">{faq.a}</p>
                   </div>
                 </details>
               ))}

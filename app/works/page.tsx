@@ -96,7 +96,7 @@ export default function WorksPage() {
 
                 {/* Summary */}
                 <ScrollReveal>
-                  <p className="text-[var(--muted)] text-base leading-relaxed max-w-2xl mb-16">{work.summary}</p>
+                  <p className="lead-text mb-16">{work.summary}</p>
                 </ScrollReveal>
 
                 {/* Before / After */}
@@ -107,9 +107,9 @@ export default function WorksPage() {
                     </p>
                     <ul>
                       {work.before.map((item) => (
-                        <li key={item} className="flex items-start gap-5 py-4 border-b border-[var(--border)]">
+                        <li key={item} className="flex items-start gap-5 py-5 border-b border-[var(--border)]">
                           <span className="text-red-400 text-xs font-bold shrink-0 mt-0.5">✗</span>
-                          <span className="text-[var(--muted)] text-sm leading-relaxed">{item}</span>
+                          <span className="body-text">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -120,9 +120,9 @@ export default function WorksPage() {
                     </p>
                     <ul>
                       {work.after.map((item) => (
-                        <li key={item} className="flex items-start gap-5 py-4 border-b border-[var(--border)]">
+                        <li key={item} className="flex items-start gap-5 py-5 border-b border-[var(--border)]">
                           <span className="text-[var(--gold)] text-xs font-bold shrink-0 mt-0.5">✓</span>
-                          <span className="text-[var(--muted)] text-sm leading-relaxed">{item}</span>
+                          <span className="body-text">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -153,7 +153,7 @@ export default function WorksPage() {
               >
                 実績を順次追加予定
               </p>
-              <p className="text-[var(--muted)] text-sm leading-relaxed mb-10 max-w-md">
+              <p className="body-text mb-10">
                 初期クライアントとして特別価格でのご相談も承っています。まずはお気軽にご連絡ください。
               </p>
               <Link
@@ -185,8 +185,8 @@ export default function WorksPage() {
                   className="flex flex-col md:flex-row md:items-start gap-4 md:gap-16 py-7 border-b border-white/10"
                 >
                   <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0">{item.step}</span>
-                  <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.title}</p>
-                  <p className="text-white/50 text-base leading-relaxed">{item.desc}</p>
+                  <p className="font-display font-bold text-[var(--bg)] text-base md:w-36 shrink-0">{item.title}</p>
+                  <p className="body-text-dark">{item.desc}</p>
                 </div>
               ))}
             </ScrollReveal>

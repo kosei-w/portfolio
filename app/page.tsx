@@ -199,13 +199,13 @@ export default function Home() {
                       d: '公開後の保守・更新・SEO対応まで一気通貫。サイトを「資産」として育て続けます。',
                     },
                   ].map((item) => (
-                    <li key={item.num} className="flex gap-6 py-6 border-b border-[var(--border)]">
+                    <li key={item.num} className="flex gap-6 py-7 border-b border-[var(--border)]">
                       <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
                         {item.num}
                       </span>
                       <div>
-                        <p className="font-display font-bold text-[var(--ink)] text-sm mb-1.5">{item.t}</p>
-                        <p className="text-[var(--muted)] text-sm leading-relaxed">{item.d}</p>
+                        <p className="font-display font-bold text-[var(--ink)] text-base mb-2">{item.t}</p>
+                        <p className="body-text">{item.d}</p>
                       </div>
                     </li>
                   ))}
@@ -223,7 +223,7 @@ export default function Home() {
 
         {/* ── Plans strip ── */}
         <section aria-labelledby="section-plans" className="border-t border-[var(--border)]">
-          <ScrollReveal className="px-8 md:px-14 py-20">
+          <ScrollReveal className="px-8 md:px-14 section-py">
             <div className="max-w-[1200px] mx-auto">
               <h2
                 id="section-plans"

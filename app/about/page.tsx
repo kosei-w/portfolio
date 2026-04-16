@@ -66,38 +66,38 @@ export default function AboutPage() {
 
         {/* Story */}
         <ScrollReveal className="px-8 md:px-14 section-py">
-          <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-28">
+          <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-32">
             <div>
               <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
                 01 / STORY
               </p>
               <h2
-                className="font-display font-extrabold text-[var(--ink)] leading-tight"
-                style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+                className="font-display font-extrabold text-[var(--ink)] leading-[1.1]"
+                style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
               >
                 「なんでこんなに古いサイトのまま
                 商売してるんだろう」と思った。
               </h2>
             </div>
-            <div className="space-y-6 text-[var(--muted)] leading-[1.9] md:pt-20 min-w-0">
-              <p>
+            <div className="space-y-7 md:pt-24 min-w-0">
+              <p className="body-text">
                 本業は医療DX SaaS企業のコンサルティングセールス。
                 病院・クリニック・医療法人を日々訪問して気づいたことがある。
               </p>
-              <p>
-                <strong className="text-[var(--ink)]">「HPが信頼を大きく左右している」</strong>こと。
+              <p className="body-text">
+                <strong className="text-[var(--ink)] font-bold">「HPが信頼を大きく左右している」</strong>こと。
                 スマホで崩れていたり、2010年代のデザインのまま止まっていたり。
               </p>
-              <p>
+              <p className="body-text">
                 同時に、「制作会社に頼むと高い・遅い・融通が利かない」という声も耳にした。
                 150万円・2ヶ月・更新できない——そんな話を何度も聞いた。
               </p>
-              <p>
+              <p className="body-text">
                 最初のクライアントのサイトが公開されたとき、
                 「思ったより全然早かった。しかもかっこいい」という言葉をもらった。
               </p>
-              <p>
-                <strong className="text-[var(--ink)]">自分の知識とスキルで、この課題を解ける。</strong>
+              <p className="body-text">
+                <strong className="text-[var(--ink)] font-bold">自分の知識とスキルで、この課題を解ける。</strong>
                 そう確信して、HP制作を始めた。
               </p>
             </div>
@@ -112,16 +112,16 @@ export default function AboutPage() {
             </p>
             <ScrollReveal stagger className="border-t border-[var(--border)]">
               {strengths.map((item) => (
-                <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-8 border-b border-[var(--border)] group">
-                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-0.5">
+                <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-10 border-b border-[var(--border)] group">
+                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-1">
                     {item.num}
                   </span>
                   <p
-                    className="font-display font-bold text-[var(--ink)] text-base md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200"
+                    className="font-display font-bold text-[var(--ink)] text-lg md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200 leading-snug"
                   >
                     {item.title}
                   </p>
-                  <p className="text-[var(--muted)] text-base leading-relaxed min-w-0 break-words">{item.desc}</p>
+                  <p className="body-text min-w-0 break-words">{item.desc}</p>
                 </div>
               ))}
             </ScrollReveal>
@@ -140,14 +140,14 @@ export default function AboutPage() {
             >
               品質を支える6つの柱
             </h2>
-            <p className="text-white/30 text-sm mb-16 max-w-lg leading-relaxed">
+            <p className="body-text-dark mb-16">
               エンタープライズ水準の技術基盤で、公開後も安定して動き続けるサイトを作ります。
             </p>
             <ScrollReveal stagger className="border-t border-white/10">
               {qualities.map((item) => (
-                <div key={item.label} className="flex flex-col md:flex-row gap-4 md:gap-16 py-6 border-b border-white/10">
-                  <p className="font-display font-bold text-[var(--bg)] text-sm md:w-36 shrink-0">{item.label}</p>
-                  <p className="text-white/50 text-base leading-relaxed">{item.desc}</p>
+                <div key={item.label} className="flex flex-col md:flex-row gap-4 md:gap-16 py-8 border-b border-white/10">
+                  <p className="font-display font-bold text-[var(--bg)] text-base md:w-40 shrink-0">{item.label}</p>
+                  <p className="body-text-dark">{item.desc}</p>
                 </div>
               ))}
             </ScrollReveal>

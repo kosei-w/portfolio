@@ -25,10 +25,45 @@ html {
   overflow-x: hidden;
 }
 
+/* ── Typographic scale (explicit) ──
+   10px  → label / eyebrow
+   12px  → caption / meta
+   14px  → secondary body (text-sm)
+   16px  → primary body (text-base)
+   18px  → lead / intro
+   24px  → sub-heading
+   40px  → section heading
+   64px+ → hero / display
+── */
+
 /* ── Section spacing utility ── */
 .section-py {
-  padding-top: min(120px, 12vw);
-  padding-bottom: min(120px, 12vw);
+  padding-top: clamp(80px, 14vw, 160px);
+  padding-bottom: clamp(80px, 14vw, 160px);
+}
+
+/* ── Body text: max 65ch, comfortable line-height ── */
+.body-text {
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 65ch;
+  color: var(--muted);
+}
+
+/* ── Lead text: slightly larger intro copy ── */
+.lead-text {
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.75;
+  max-width: 52ch;
+  color: var(--muted);
+}
+
+/* ── Dark section body text ── */
+.body-text-dark {
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 65ch;
+  color: rgba(242, 240, 235, 0.5);
 }
 
 body {

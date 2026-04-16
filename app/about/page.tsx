@@ -50,9 +50,7 @@ export default function AboutPage() {
         {/* Page header */}
         <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
           <div className="max-w-[1200px] mx-auto pb-16">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
-              ABOUT
-            </p>
+            <p className="eyebrow text-[var(--muted)] mb-10">ABOUT</p>
             <h1
               className="font-display font-extrabold text-[var(--ink)] leading-tight"
               style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
@@ -68,12 +66,10 @@ export default function AboutPage() {
         <ScrollReveal className="px-8 md:px-14 section-py">
           <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-32">
             <div>
-              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
-                01 / STORY
-              </p>
+              <p className="eyebrow text-[var(--muted)] mb-10">01 / STORY</p>
               <h2
                 className="font-display font-extrabold text-[var(--ink)] leading-[1.1]"
-                style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
+                style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
               >
                 「なんでこんなに古いサイトのまま
                 商売してるんだろう」と思った。
@@ -107,18 +103,14 @@ export default function AboutPage() {
         {/* Strengths */}
         <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
           <div className="max-w-[1200px] mx-auto">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
-              02 / STRENGTHS
-            </p>
+            <p className="eyebrow text-[var(--muted)] mb-16">02 / STRENGTHS</p>
             <ScrollReveal stagger className="border-t border-[var(--border)]">
               {strengths.map((item) => (
                 <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-10 border-b border-[var(--border)] group">
                   <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-1">
                     {item.num}
                   </span>
-                  <p
-                    className="font-display font-bold text-[var(--ink)] text-lg md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200 leading-snug"
-                  >
+                  <p className="font-display font-bold text-[var(--ink)] text-xl md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200 leading-snug">
                     {item.title}
                   </p>
                   <p className="body-text min-w-0 break-words">{item.desc}</p>
@@ -131,12 +123,10 @@ export default function AboutPage() {
         {/* Quality pillars */}
         <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py bg-[var(--ink)]">
           <div className="max-w-[1200px] mx-auto">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
-              03 / QUALITY
-            </p>
+            <p className="eyebrow text-[var(--gold)] mb-16">03 / QUALITY</p>
             <h2
               className="font-display font-extrabold text-[var(--bg)] leading-tight mb-4"
-              style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+              style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
             >
               品質を支える6つの柱
             </h2>
@@ -154,22 +144,20 @@ export default function AboutPage() {
           </div>
         </ScrollReveal>
 
-        {/* CTA */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
+        {/* CTA — pb-0 で不要な底余白を排除 */}
+        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 pt-[clamp(80px,14vw,160px)] pb-[clamp(80px,14vw,120px)]">
           <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
             <div>
-              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-8">
-                CONTACT
-              </p>
+              <p className="eyebrow text-[var(--muted)] mb-8">CONTACT</p>
               <h2
                 className="font-display font-extrabold text-[var(--ink)] leading-tight"
-                style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+                style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
               >
                 まずは話を
                 <br />
                 聞いてみませんか？
               </h2>
-              <p className="text-[var(--muted)] text-sm mt-4 max-w-xs leading-relaxed">
+              <p className="body-text mt-6">
                 30分・無料・オンライン。「まだぼんやりしている」でも大丈夫です。
               </p>
             </div>

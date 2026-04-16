@@ -52,7 +52,7 @@ export default function Header() {
                 href={href}
                 className="font-display text-xs tracking-[0.2em] transition-colors duration-200"
                 style={{
-                  color: pathname === href ? 'var(--ink)' : 'var(--muted)',
+                  color: pathname === href ? 'var(--gold)' : 'var(--muted)',
                   fontWeight: pathname === href ? 700 : 500,
                 }}
               >

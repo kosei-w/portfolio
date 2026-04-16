@@ -88,8 +88,8 @@ function WorkCard({
 
         {/* Hover overlay — gold reveal */}
         <div
-          className="absolute inset-0 flex flex-col justify-end p-8 bg-[#C9A96E] opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100"
-          style={{ transitionTimingFunction: EASE }}
+          className="absolute inset-0 flex flex-col justify-end p-8 opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100"
+          style={{ transitionTimingFunction: EASE, background: 'var(--gold)' }}
         >
           <span className="font-display text-[10px] tracking-[0.28em] uppercase text-black/50 mb-2">{tag}</span>
           <p
@@ -124,7 +124,7 @@ export default function Home() {
             <div className="flex items-center gap-6">
               <h2
                 id="section-works"
-                className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase"
+                className="eyebrow text-[var(--muted)]"
               >
                 01 / WORKS
               </h2>
@@ -167,13 +167,13 @@ export default function Home() {
               <div>
                 <h2
                   id="section-about"
-                  className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10"
+                  className="eyebrow text-[var(--muted)] mb-10"
                 >
                   02 / ABOUT
                 </h2>
                 <p
                   className="font-display font-extrabold text-[var(--ink)] leading-tight"
-                  style={{ fontSize: 'clamp(2rem, 4.5vw, 4rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+                  style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
                 >
                   なぜ、これほど
                   <br />
@@ -227,7 +227,7 @@ export default function Home() {
             <div className="max-w-[1200px] mx-auto">
               <h2
                 id="section-plans"
-                className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10"
+                className="eyebrow text-[var(--muted)] mb-10"
               >
                 03 / PLANS
               </h2>
@@ -287,9 +287,7 @@ export default function Home() {
         <section className="border-t border-[var(--border)]">
           <ScrollReveal className="px-8 md:px-14 py-24 md:py-44">
             <div className="max-w-[1200px] mx-auto">
-              <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-12">
-                04 / CONTACT
-              </p>
+              <p className="eyebrow text-[var(--muted)] mb-12">04 / CONTACT</p>
               <h2
                 className="font-display font-extrabold text-[var(--ink)] leading-none mb-16"
                 style={{
@@ -303,7 +301,7 @@ export default function Home() {
                 together.
               </h2>
               <div className="flex flex-col sm:flex-row gap-8 items-start sm:items-center justify-between">
-                <p className="text-[var(--muted)] leading-relaxed max-w-sm text-sm">
+                <p className="body-text">
                   30分・無料・オンライン。「まだぼんやりしている」でも大丈夫。
                 </p>
                 <Link

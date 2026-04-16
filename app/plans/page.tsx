@@ -109,9 +109,7 @@ export default function PlansPage() {
         {/* Page header */}
         <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
           <div className="max-w-[1200px] mx-auto pb-16">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-10">
-              PLANS
-            </p>
+            <p className="eyebrow text-[var(--muted)] mb-10">PLANS</p>
             <h1
               className="font-display font-extrabold text-[var(--ink)] leading-none"
               style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em' }}
@@ -210,14 +208,12 @@ export default function PlansPage() {
         {/* Maintenance */}
         <ScrollReveal className="border-t border-[var(--border)] bg-[var(--ink)] px-8 md:px-14 section-py">
           <div className="max-w-[1200px] mx-auto">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--gold)] uppercase mb-16">
-              MAINTENANCE
-            </p>
+            <p className="eyebrow text-[var(--gold)] mb-16">MAINTENANCE</p>
             <div className="grid md:grid-cols-2 gap-16 items-start">
               <div>
                 <h2
                   className="font-display font-extrabold text-[var(--bg)] leading-none mb-4"
-                  style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', letterSpacing: '-0.02em' }}
+                  style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em' }}
                 >
                   保守プラン
                 </h2>
@@ -255,9 +251,7 @@ export default function PlansPage() {
         {/* FAQ */}
         <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
           <div className="max-w-[1200px] mx-auto">
-            <p className="font-display text-[10px] tracking-[0.3em] text-[var(--muted)] uppercase mb-16">
-              FAQ
-            </p>
+            <p className="eyebrow text-[var(--muted)] mb-16">FAQ</p>
             <div className="border-t border-[var(--border)]">
               {faqs.map((faq) => (
                 <details key={faq.q} className="group border-b border-[var(--border)]">
@@ -280,8 +274,8 @@ export default function PlansPage() {
         <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
           <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
             <h2
-              className="font-display font-extrabold text-[var(--ink)] leading-none"
-              style={{ fontSize: 'clamp(2rem, 5vw, 4.5rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+              className="font-display font-extrabold text-[var(--ink)] leading-tight"
+              style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
             >
               どのプランか迷ったら、
               <br />

@@ -46,9 +46,16 @@ export default function Hero() {
 
   return (
     <section
-      className="min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16 overflow-x-clip"
+      className="relative min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16 overflow-x-clip"
       aria-label="Hero"
     >
+      {/* Right-edge frame: signals intentional bleed crop */}
+      <div
+        className="absolute right-0 top-0 bottom-0 w-px pointer-events-none"
+        style={{ background: 'var(--border)' }}
+        aria-hidden="true"
+      />
+
       {/* Massive editorial name */}
       <div className="flex-1 flex flex-col justify-center py-8">
         <h1
@@ -58,7 +65,7 @@ export default function Hero() {
           <span ref={firstRef} className="block text-[var(--ink)]">
             KOSEI
           </span>
-          {/* Asymmetric indent — editorial signature move */}
+          {/* Asymmetric indent + bleed — editorial signature */}
           <span
             ref={lastRef}
             className="block text-[var(--ink)]"

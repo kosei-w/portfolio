@@ -46,12 +46,12 @@ export default function LoadingScreen() {
   return (
     <div
       ref={wrapRef}
-      className="fixed inset-0 z-[var(--z-loader)] flex items-center justify-center bg-[var(--c-bg)]"
+      className="fixed inset-0 z-[var(--z-loader)] flex items-center justify-center bg-[#0A0A0A]"
     >
       <div
         ref={logoRef}
         className="loader-text font-bold tracking-[0.2em] text-[var(--c-accent)]"
-        style={{ fontFamily: 'var(--f-serif)' }}
+        style={{ fontFamily: 'var(--f-mono)' }}
       >
         KI
       </div>

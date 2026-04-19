@@ -1,174 +1,222 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import ScrollReveal from '@/components/ScrollReveal'
-import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About — Kosei Idezuka',
-  description: '医療DXのコンサルタントがHP制作を始めた理由と、4つの強みをご紹介します。',
+  description: 'Freelance web designer combining consultative sales experience with modern web development.',
 }
 
-const strengths = [
-  {
-    num: '01',
-    title: '課題を掴むヒアリング力',
-    desc: '医療DX SaaS企業でのコンサルティングセールス経験から、「何を作るか」より「何のために作るか」を先に深掘りします。課題の本質を掴んでから設計するので、作ったあとに「なんか違う」が起きない。',
-  },
-  {
-    num: '02',
-    title: '独自の高速制作プロセス',
-    desc: '制作会社で2〜3ヶ月かかるところを、最短10日で対応。業界最先端の開発手法と、個人だからこそ実現できる意思決定の速さが、このスピードを生み出しています。',
-  },
-  {
-    num: '03',
-    title: '医療・ヘルスケア領域の知見',
-    desc: '医療DX業界に身を置いているから、クリニック・医療法人・ヘルスケアサービスの訴求ポイントをわかっています。「患者さんへの安心感をどう伝えるか」を業種理解ゼロの制作会社より深く考えられる。',
-  },
-  {
-    num: '04',
-    title: '作って終わりにしない設計',
-    desc: '公開がゴールではなく、「集客・問い合わせ獲得」がゴール。公開後の保守・更新・SEO対応まで一気通貫で担います。月¥15,000〜の保守プランで、サイトを「資産」として育て続けます。',
-  },
+const techStack = [
+  'Next.js', 'React', 'Tailwind CSS', 'Vercel', 'MongoDB', 'GitHub',
+  'TypeScript', 'Node.js',
 ]
 
-const qualities = [
-  { label: '表示速度', desc: '世界最高水準の配信インフラで、どこからアクセスしても爆速で表示' },
-  { label: 'デザイン品質', desc: 'テンプレートは使わない。ブランドに合わせたフルオーダーの設計' },
-  { label: 'アニメーション', desc: '見る人を引き込む、洗練されたスクロール演出' },
-  { label: 'メール通知', desc: '問い合わせが来たら即通知・自動返信まで自動化' },
-  { label: 'スマホ対応', desc: 'すべての画面サイズで崩れない、モバイルファースト設計' },
-  { label: 'SEO対応', desc: '検索エンジンに正しく認識される構造化・メタ設定' },
+const experience = [
+  {
+    year: '2026 — Present',
+    role: 'Freelance Web Designer & Developer',
+    desc: 'Building modern websites for Japanese businesses. Focus on performance, design quality, and conversion.',
+  },
+  {
+    year: '2024 — Present',
+    role: 'Consultative Sales — Healthcare DX SaaS',
+    desc: 'Enterprise sales for medical DX solutions. Visiting hospitals and clinics across Japan.',
+  },
+  {
+    year: '2023 — 2024',
+    role: 'Event Planning & Coordination',
+    desc: 'Large-scale event management across multiple verticals.',
+  },
 ]
 
 export default function AboutPage() {
   return (
     <>
       <Header />
-      <main className="pt-20">
+      <main className="pt-24">
 
         {/* Page header */}
-        <div className="px-8 md:px-14 section-py pb-0 border-b border-[var(--border)]">
-          <div className="max-w-[1200px] mx-auto pb-16">
-            <p className="eyebrow text-[var(--muted)] mb-10">ABOUT</p>
-            <h1
-              className="font-display font-extrabold text-[var(--ink)] leading-tight"
-              style={{ fontSize: 'clamp(3rem, 8vw, 7.5rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
+        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
+          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
+            <p
+              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-6"
+              style={{ fontFamily: 'var(--f-mono)' }}
             >
-              Kosei
-              <br />
-              Idezuka
+              ABOUT
+            </p>
+            <h1
+              className="font-bold text-[var(--c-text)] leading-none"
+              style={{
+                fontFamily: 'var(--f-mono)',
+                fontSize: 'clamp(2.5rem, 7vw, 5rem)',
+              }}
+            >
+              Kosei Idezuka
             </h1>
           </div>
-        </div>
+        </section>
 
-        {/* Story */}
-        <ScrollReveal className="px-8 md:px-14 section-py">
-          <div className="max-w-[1200px] mx-auto grid md:grid-cols-2 gap-16 md:gap-32">
+        {/* Profile */}
+        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
+          <div className="mx-auto w-full grid md:grid-cols-2 gap-16" style={{ maxWidth: 'var(--container-max)' }}>
             <div>
-              <p className="eyebrow text-[var(--muted)] mb-10">01 / STORY</p>
-              <h2
-                className="font-display font-extrabold text-[var(--ink)] leading-[1.1]"
-                style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', letterSpacing: '-0.03em', textWrap: 'balance' }}
+              <p
+                className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8"
+                style={{ fontFamily: 'var(--f-mono)' }}
               >
-                「なんでこんなに古いサイトのまま
-                商売してるんだろう」と思った。
-              </h2>
+                PROFILE
+              </p>
+              <div className="space-y-4">
+                <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
+                  I combine consultative sales expertise with modern web development. My background in Healthcare DX gives me a unique ability to understand what businesses actually need from their web presence — not just how it looks, but how it converts.
+                </p>
+                <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
+                  I build websites that are fast, well-designed, and built to last — using Next.js, Tailwind CSS, and Vercel. Every project starts with understanding your business goals first.
+                </p>
+              </div>
             </div>
-            <div className="space-y-7 md:pt-24 min-w-0">
-              <p className="body-text">
-                本業は医療DX SaaS企業のコンサルティングセールス。
-                病院・クリニック・医療法人を日々訪問して気づいたことがある。
+
+            <div>
+              <p
+                className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8"
+                style={{ fontFamily: 'var(--f-mono)' }}
+              >
+                STRENGTHS
               </p>
-              <p className="body-text">
-                <strong className="text-[var(--ink)] font-bold">「HPが信頼を大きく左右している」</strong>こと。
-                スマホで崩れていたり、2010年代のデザインのまま止まっていたり。
-              </p>
-              <p className="body-text">
-                同時に、「制作会社に頼むと高い・遅い・融通が利かない」という声も耳にした。
-                150万円・2ヶ月・更新できない——そんな話を何度も聞いた。
-              </p>
-              <p className="body-text">
-                最初のクライアントのサイトが公開されたとき、
-                「思ったより全然早かった。しかもかっこいい」という言葉をもらった。
-              </p>
-              <p className="body-text">
-                <strong className="text-[var(--ink)] font-bold">自分の知識とスキルで、この課題を解ける。</strong>
-                そう確信して、HP制作を始めた。
-              </p>
+              <div className="space-y-6">
+                {[
+                  {
+                    title: 'Consultative Approach',
+                    desc: 'I dig into your business goals before touching design. No "what should the button say?" surprises post-launch.',
+                  },
+                  {
+                    title: 'Fast Delivery',
+                    desc: 'Minimum 7-day turnaround. Solo operation means zero coordination overhead.',
+                  },
+                  {
+                    title: 'Healthcare Domain Knowledge',
+                    desc: 'I understand clinical environments, patient trust signals, and medical compliance needs.',
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="flex gap-4">
+                    <span
+                      className="text-[var(--c-accent)] shrink-0 mt-0.5"
+                      style={{ fontFamily: 'var(--f-mono)' }}
+                    >
+                      →
+                    </span>
+                    <div>
+                      <p
+                        className="text-sm font-medium text-[var(--c-text)] mb-1"
+                        style={{ fontFamily: 'var(--f-mono)' }}
+                      >
+                        {item.title}
+                      </p>
+                      <p
+                        className="text-sm text-[var(--c-muted)] leading-relaxed"
+                        style={{ fontFamily: 'var(--f-sans)' }}
+                      >
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </ScrollReveal>
+        </section>
 
-        {/* Strengths */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py">
-          <div className="max-w-[1200px] mx-auto">
-            <p className="eyebrow text-[var(--muted)] mb-16">02 / STRENGTHS</p>
-            <ScrollReveal stagger className="border-t border-[var(--border)]">
-              {strengths.map((item) => (
-                <div key={item.num} className="flex flex-col md:flex-row gap-6 md:gap-16 py-10 border-b border-[var(--border)] group">
-                  <span className="font-display font-bold text-[var(--gold)] text-xs shrink-0 mt-1">
-                    {item.num}
-                  </span>
-                  <p className="font-display font-bold text-[var(--ink)] text-xl md:w-56 shrink-0 group-hover:text-[var(--gold)] transition-colors duration-200 leading-snug">
-                    {item.title}
-                  </p>
-                  <p className="body-text min-w-0 break-words">{item.desc}</p>
-                </div>
-              ))}
-            </ScrollReveal>
-          </div>
-        </ScrollReveal>
-
-        {/* Quality pillars */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 section-py bg-[var(--ink)]">
-          <div className="max-w-[1200px] mx-auto">
-            <p className="eyebrow text-[var(--gold)] mb-16">03 / QUALITY</p>
-            <h2
-              className="font-display font-extrabold text-[var(--bg)] leading-tight mb-4"
-              style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+        {/* Tech Stack */}
+        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
+          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
+            <p
+              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8"
+              style={{ fontFamily: 'var(--f-mono)' }}
             >
-              品質を支える6つの柱
-            </h2>
-            <p className="body-text-dark mb-16">
-              エンタープライズ水準の技術基盤で、公開後も安定して動き続けるサイトを作ります。
+              TECH STACK
             </p>
-            <ScrollReveal stagger className="border-t border-white/10">
-              {qualities.map((item) => (
-                <div key={item.label} className="flex flex-col md:flex-row gap-4 md:gap-16 py-8 border-b border-white/10">
-                  <p className="font-display font-bold text-[var(--bg)] text-base md:w-40 shrink-0">{item.label}</p>
-                  <p className="body-text-dark">{item.desc}</p>
+            <div className="flex flex-wrap gap-3">
+              {techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="border px-4 py-2 text-[11px] tracking-[0.15em] text-[var(--c-muted)] hover:border-[var(--c-accent)] hover:text-[var(--c-accent)] transition-colors duration-300"
+                  style={{ borderColor: 'var(--c-border)', fontFamily: 'var(--f-mono)' }}
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Experience */}
+        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
+          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
+            <p
+              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8"
+              style={{ fontFamily: 'var(--f-mono)' }}
+            >
+              EXPERIENCE
+            </p>
+            <div className="border-t" style={{ borderColor: 'var(--c-border)' }}>
+              {experience.map((item) => (
+                <div
+                  key={item.role}
+                  className="flex flex-col md:flex-row gap-4 md:gap-10 py-8 border-b"
+                  style={{ borderColor: 'var(--c-border)' }}
+                >
+                  <p
+                    className="text-[11px] tracking-[0.1em] text-[var(--c-muted)] shrink-0 md:w-44"
+                    style={{ fontFamily: 'var(--f-mono)' }}
+                  >
+                    {item.year}
+                  </p>
+                  <div>
+                    <p
+                      className="text-sm font-medium text-[var(--c-text)] mb-2"
+                      style={{ fontFamily: 'var(--f-mono)' }}
+                    >
+                      {item.role}
+                    </p>
+                    <p
+                      className="text-sm text-[var(--c-muted)] leading-relaxed"
+                      style={{ fontFamily: 'var(--f-sans)' }}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
-            </ScrollReveal>
+            </div>
           </div>
-        </ScrollReveal>
+        </section>
 
-        {/* CTA — pb-0 で不要な底余白を排除 */}
-        <ScrollReveal className="border-t border-[var(--border)] px-8 md:px-14 pt-[clamp(80px,14vw,160px)] pb-[clamp(80px,14vw,120px)]">
-          <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row gap-10 items-start md:items-end justify-between">
+        {/* CTA */}
+        <section className="px-6 md:px-10 py-20">
+          <div className="mx-auto w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-8" style={{ maxWidth: 'var(--container-max)' }}>
             <div>
-              <p className="eyebrow text-[var(--muted)] mb-8">CONTACT</p>
-              <h2
-                className="font-display font-extrabold text-[var(--ink)] leading-tight"
-                style={{ fontSize: 'clamp(3rem, 6vw, 5.25rem)', letterSpacing: '-0.02em', textWrap: 'balance' }}
+              <p
+                className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-4"
+                style={{ fontFamily: 'var(--f-mono)' }}
               >
-                まずは話を
-                <br />
-                聞いてみませんか？
-              </h2>
-              <p className="body-text mt-6">
-                30分・無料・オンライン。「まだぼんやりしている」でも大丈夫です。
+                CONTACT
+              </p>
+              <p className="text-lg text-[var(--c-text)]" style={{ fontFamily: 'var(--f-sans)' }}>
+                Let&apos;s build something together.
               </p>
             </div>
             <Link
               href="/contact"
-              className="font-display font-bold text-sm tracking-[0.1em] bg-[var(--ink)] text-[var(--bg)] px-10 py-4 hover:bg-[var(--gold)] transition-colors duration-300 shrink-0"
+              className="inline-block border border-[var(--c-accent)] text-[var(--c-accent)] px-8 py-3 text-[11px] tracking-[0.3em] hover:bg-[var(--c-accent)] hover:text-[var(--c-bg)] transition-all duration-300"
+              style={{ fontFamily: 'var(--f-mono)' }}
             >
-              FREE CONSULTATION →
+              GET IN TOUCH
             </Link>
           </div>
-        </ScrollReveal>
+        </section>
+
       </main>
       <Footer />
     </>

@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navLinks = [
-  { href: '/works', label: 'WORKS' },
-  { href: '/about', label: 'ABOUT' },
-  { href: '/contact', label: 'CONTACT' },
+  { href: '#about', label: 'ABOUT' },
+  { href: '#works', label: 'WORKS' },
+  { href: '#contact', label: 'CONTACT' },
 ]
 
 export default function Header() {
@@ -16,7 +16,7 @@ export default function Header() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 100)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -26,35 +26,38 @@ export default function Header() {
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+        className="fixed top-0 left-0 right-0 z-[var(--z-nav)] transition-all duration-500"
         style={{
-          borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
-          backgroundColor: scrolled ? 'rgba(242,240,235,0.92)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          paddingTop: scrolled ? '1rem' : '2.5rem',
+          paddingBottom: scrolled ? '1rem' : '2.5rem',
+          backgroundColor: scrolled ? 'rgba(245,244,241,0.85)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(10px)' : 'none',
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-8 md:px-14 flex items-center justify-between h-16 md:h-20">
+        <div 
+          className="mx-auto flex items-center justify-between px-8 pad-x"
+          style={{ maxWidth: 'var(--container-max)' }}
+        >
 
-          {/* Logo monogram */}
+          {/* Logo */}
           <Link
             href="/"
-            className="font-display font-extrabold text-[var(--ink)] tracking-tight text-xl leading-none"
+            className="font-bold text-[var(--c-text)] tracking-widest text-xl leading-none"
+            style={{ fontFamily: 'var(--f-serif)' }}
             aria-label="Kosei Idezuka — Home"
           >
             KI
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-10" aria-label="Main navigation">
+          <nav className="header-nav" aria-label="Main navigation">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}
                 href={href}
-                className="font-display text-xs tracking-[0.2em] transition-colors duration-200 hover:text-[var(--gold)]"
-                style={{
-                  color: pathname === href ? 'var(--gold)' : 'var(--muted)',
-                  fontWeight: pathname === href ? 700 : 500,
-                }}
+                data-text={label}
+                className="nav-link text-sm tracking-widest text-[var(--c-text)]"
+                style={{ fontFamily: 'var(--f-sans)' }}
               >
                 {label}
               </Link>
@@ -66,19 +69,19 @@ export default function Header() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? 'メニューを閉じる' : 'メニューを開く'}
             aria-expanded={menuOpen}
-            className="md:hidden flex flex-col gap-[5px] p-2"
+            className="header-burger hover"
           >
             <span
-              className="block w-5 h-px bg-[var(--ink)] transition-all duration-300 origin-center"
-              style={{ transform: menuOpen ? 'translateY(6px) rotate(45deg)' : 'none' }}
+              className="block w-6 h-[1px] bg-[var(--c-text)] transition-transform duration-500 origin-center"
+              style={{ transform: menuOpen ? 'translateY(7px) rotate(45deg)' : 'none' }}
             />
             <span
-              className="block w-5 h-px bg-[var(--ink)] transition-all duration-300"
+              className="block w-6 h-[1px] bg-[var(--c-text)] transition-opacity duration-500"
               style={{ opacity: menuOpen ? 0 : 1 }}
             />
             <span
-              className="block w-5 h-px bg-[var(--ink)] transition-all duration-300 origin-center"
-              style={{ transform: menuOpen ? 'translateY(-6px) rotate(-45deg)' : 'none' }}
+              className="block w-6 h-[1px] bg-[var(--c-text)] transition-transform duration-500 origin-center"
+              style={{ transform: menuOpen ? 'translateY(-7px) rotate(-45deg)' : 'none' }}
             />
           </button>
         </div>
@@ -86,28 +89,35 @@ export default function Header() {
 
       {/* Mobile fullscreen menu */}
       <div
-        className="fixed inset-0 z-40 flex flex-col justify-center px-10 md:hidden transition-all duration-500"
+        className="fixed inset-0 flex flex-col justify-center mobile-nav flex flex-col justify-center"
         style={{
-          backgroundColor: 'var(--bg)',
-          opacity: menuOpen ? 1 : 0,
+          backgroundColor: 'var(--c-light)',
+          zIndex: 'calc(var(--z-nav) + 5)',
+          clipPath: menuOpen ? 'circle(150% at calc(100% - 3rem) 3rem)' : 'circle(0% at calc(100% - 3rem) 3rem)',
+          transition: 'clip-path 0.8s var(--ease-out-expo)',
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}
         aria-hidden={!menuOpen}
       >
-        <nav className="flex flex-col gap-8">
+        <nav className="flex flex-col gap-10">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="font-display font-extrabold text-[var(--ink)] leading-none hover:text-[var(--gold)] transition-colors duration-200"
-              style={{ fontSize: 'clamp(2.5rem, 10vw, 5rem)', letterSpacing: '-0.02em' }}
+              onClick={() => setMenuOpen(false)}
+              className="font-bold text-[var(--c-text)] leading-none"
+              style={{ 
+                fontFamily: 'var(--f-serif)',
+                fontSize: 'clamp(2.5rem, 10vw, 4rem)',
+              }}
             >
               {label}
             </Link>
           ))}
         </nav>
         <p
-          className="absolute bottom-10 left-10 font-display text-xs tracking-[0.2em] text-[var(--muted)]"
+          className="absolute bottom-10 left-10 text-xs tracking-widest text-[var(--c-gray)]"
+          style={{ fontFamily: 'var(--f-sans)' }}
         >
           © 2026 Kosei Idezuka
         </p>

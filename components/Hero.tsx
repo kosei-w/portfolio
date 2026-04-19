@@ -1,131 +1,130 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 import { gsap } from 'gsap'
 
 export default function Hero() {
-  const firstRef = useRef<HTMLSpanElement>(null)
-  const lastRef = useRef<HTMLSpanElement>(null)
-  const ruleRef = useRef<HTMLDivElement>(null)
-  const metaRef = useRef<HTMLDivElement>(null)
-  const imgRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    if (prefersReduced) {
+      gsap.set('.gsap-reveal', { y: '0%' })
+      const img = sectionRef.current?.querySelector('.img-reveal')
+      if (img) img.classList.add('is-inview')
+      return
+    }
 
-    /* Delay if Loader is running (first visit this session).
-       Hero's useEffect runs before Loader's (children before parents in React).
-       So on first visit sessionStorage is still empty here → apply delay. */
-    const firstVisit = !sessionStorage.getItem('ki_loaded')
-    const delay = firstVisit ? 2.75 : 0
+    const hasLoaded = sessionStorage.getItem('site-loaded')
+    const delay = hasLoaded ? 0.2 : 2.6
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay, defaults: { ease: 'power4.out' } })
+      gsap.fromTo(
+        '.gsap-reveal',
+        { y: '120%' },
+        { y: '0%', duration: 1.2, ease: 'power3.out', stagger: 0.1, delay }
+      )
 
-      tl.from([firstRef.current, lastRef.current], {
-        y: 90,
-        opacity: 0,
-        immediateRender: true,
-        stagger: 0.1,
-        duration: 1.1,
+      setTimeout(() => {
+        const img = sectionRef.current?.querySelector('.img-reveal')
+        if (img) img.classList.add('is-inview')
+      }, delay * 1000)
+
+      gsap.to('.rotating-badge', {
+        rotation: 360,
+        duration: 15,
+        repeat: -1,
+        ease: 'linear',
       })
-        .from(
-          ruleRef.current,
-          { scaleX: 0, immediateRender: true, duration: 1, ease: 'power3.inOut' },
-          '-=0.6',
-        )
-        .from(
-          metaRef.current?.children ?? [],
-          { y: 20, opacity: 0, immediateRender: true, stagger: 0.08, duration: 0.7 },
-          '-=0.5',
-        )
-        .from(
-          imgRef.current,
-          { opacity: 0, scale: 0.95, duration: 1, ease: 'power2.out' },
-          '-=0.8'
-        )
-    })
+    }, sectionRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
     <section
-      className="relative min-h-[100svh] flex flex-col justify-between px-8 md:px-14 pt-28 md:pt-36 pb-12 md:pb-16 overflow-x-clip"
-      aria-label="Hero"
+      ref={sectionRef}
+      className="relative min-h-[100svh] w-full pad-x hero-py flex items-center"
+      style={{ backgroundColor: 'var(--c-bg)' }}
+      id="hero"
     >
-      {/* Right-edge frame: signals intentional bleed crop */}
-      <div
-        className="absolute right-0 top-0 bottom-0 w-px pointer-events-none"
-        style={{ background: 'var(--border)' }}
-        aria-hidden="true"
-      />
-      {/* Editorial floating image */}
-      <div
-        ref={imgRef}
-        className="absolute top-[20%] right-8 md:right-24 w-[40vw] max-w-[400px] aspect-[4/3] grayscale opacity-90 mix-blend-multiply z-[-1]"
-      >
-        <img
-          src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200"
-          alt="Workspace"
-          className="w-full h-full object-cover"
-        />
-      </div>
-
-      {/* Massive editorial name */}
-      <div className="flex-1 flex flex-col justify-center py-8">
-        <h1
-          className="font-display font-extrabold leading-[0.86] select-none overflow-hidden"
-          style={{ fontSize: 'clamp(4.5rem, 16.5vw, 18rem)', letterSpacing: '-0.035em' }}
-        >
-          <span ref={firstRef} className="block text-[var(--ink)] whitespace-nowrap">
-            KOSEI
-          </span>
-          {/* Asymmetric indent + bleed — editorial signature */}
-          <span
-            ref={lastRef}
-            className="block text-[var(--ink)] whitespace-nowrap"
-            style={{ paddingLeft: 'clamp(1.5rem, 5.5vw, 9rem)' }}
+      <div className="mx-auto w-full max-w-[var(--container-max)] hero-grid">
+        {/* Texts - 55% */}
+        <div className="hero-col-text">
+          <p
+            className="text-[var(--c-gray)] text-[10px] tracking-widest uppercase hero-mb-label font-bold"
+            style={{ fontFamily: 'var(--f-sans)' }}
           >
-            IDEZUKA
-          </span>
-        </h1>
-      </div>
-
-      {/* Full-width ruled line */}
-      <div
-        ref={ruleRef}
-        className="w-full h-px bg-[var(--border)] origin-left mb-8 md:mb-10"
-      />
-
-      {/* Meta row: tagline left, CTAs right */}
-      <div
-        ref={metaRef}
-        className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6"
-      >
-        <div className="space-y-1.5">
-          <p className="font-display text-xs tracking-[0.22em] text-[var(--muted)] uppercase">
-            HP制作 / Web Designer &amp; Developer
+            <span className="reveal-wrap">
+              <span className="gsap-reveal">FREELANCE PORTFOLIO — Kosei Idezuka</span>
+            </span>
           </p>
-          <p className="font-display text-xs tracking-[0.15em] text-[var(--muted)]/60">
-            Based in Japan — Available for new projects
-          </p>
+
+          <h1
+            className="text-[var(--c-text)] font-bold leading-tight mb-8"
+            style={{ fontFamily: 'var(--f-serif)', fontSize: 'clamp(2.5rem, 6.5vw, 6.5rem)' }}
+          >
+            <span className="reveal-wrap">
+              <span className="gsap-reveal">可能性を、</span>
+            </span>
+            <span className="reveal-wrap">
+              <span className="gsap-reveal">開拓し続ける。</span>
+            </span>
+          </h1>
+
+          <div
+            className="text-[var(--c-text)] text-body-sm leading-relaxed mb-12"
+            style={{ fontFamily: 'var(--f-sans)' }}
+          >
+            <span className="reveal-wrap">
+              <span className="gsap-reveal">Sales / Buyer / Event Planner</span>
+            </span>
+            <span className="reveal-wrap">
+              <span className="gsap-reveal">自分と、誰かの一歩を後押しするために。</span>
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6">
+            <span className="reveal-wrap inline-block">
+              <Link
+                href="#works"
+                className="gsap-reveal block font-bold text-xs tracking-widest uppercase text-[var(--c-bg)] bg-[var(--c-text)] px-8 py-4 transition-colors duration-300 hover:bg-[var(--c-accent)]"
+              >
+                View Works
+              </Link>
+            </span>
+            <span className="reveal-wrap inline-block">
+              <Link
+                href="#contact"
+                className="gsap-reveal block font-bold text-xs tracking-widest uppercase text-[var(--c-text)] border border-[var(--c-text)] px-8 py-4 transition-colors duration-300 hover:bg-[var(--c-light)] hover:border-transparent"
+              >
+                Get in Touch
+              </Link>
+            </span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-5 shrink-0">
-          <a
-            href="/works"
-            className="font-display font-bold text-xs tracking-[0.15em] text-[var(--ink)] link-underline"
-          >
-            SEE WORKS →
-          </a>
-          <a
-            href="/contact"
-            className="font-display font-bold text-xs tracking-[0.1em] bg-[var(--ink)] text-[var(--bg)] px-5 py-2.5 hover:bg-[var(--gold)] transition-colors duration-300"
-          >
-            CONTACT
-          </a>
+        {/* Visual - 45% */}
+        <div className="hero-col-img">
+          <div className="w-full h-full relative overflow-hidden img-reveal bg-[var(--c-light)]">
+            <img
+              src="/images/hero.png"
+              alt="Brand Visual"
+              className="absolute inset-0 w-full h-full object-cover mix-blend-multiply grayscale opacity-90"
+            />
+          </div>
+
+          <div className="hero-badge">
+            <svg viewBox="0 0 200 200" className="rotating-badge w-full h-full fill-[var(--c-text)]">
+              <path id="curve" d="M 100, 100 m -75, 0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" fill="transparent" />
+              <text fontSize="22" letterSpacing="5.5" fontWeight="bold">
+                <textPath href="#curve" startOffset="0">
+                  SCROLL DOWN ↓ SCROLL DOWN ↓
+                </textPath>
+              </text>
+            </svg>
+          </div>
         </div>
       </div>
     </section>

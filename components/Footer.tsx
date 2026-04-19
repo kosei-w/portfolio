@@ -1,35 +1,63 @@
 import Link from 'next/link'
 
-const navLinks = [
-  { href: '/works', label: 'WORKS' },
-  { href: '/about', label: 'ABOUT' },
-  { href: '/plans', label: 'PLANS' },
-  { href: '/contact', label: 'CONTACT' },
+const SOCIAL_LINKS = [
+  { label: 'GitHub', href: 'https://github.com/kosei-w' },
+  // { label: 'X', href: 'https://x.com/your_handle' },        // TODO: Add X URL
+  // { label: 'Instagram', href: 'https://instagram.com/your_handle' }, // TODO: Add Instagram URL
 ]
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] px-8 md:px-14 py-10">
-      <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <p className="font-display font-extrabold text-[var(--ink)] text-sm tracking-tight">
-          KI
-        </p>
+    <footer
+      className="footer-pad border-t border-[var(--c-bg)]/20"
+      style={{ backgroundColor: 'var(--c-dark)' }}
+    >
+      <div className="mx-auto w-full max-w-[var(--container-max)] footer-flex">
+        {/* Left */}
+        <div className="footer-left">
+          <span
+            className="text-[var(--c-bg)] font-bold tracking-widest text-sm"
+            style={{ fontFamily: 'var(--f-serif)' }}
+          >
+            KOSEI IDEZUKA
+          </span>
+          <span
+            className="text-[var(--c-gray)] tracking-widest text-fine uppercase font-medium"
+            style={{ fontFamily: 'var(--f-sans)' }}
+          >
+            © 2026 All rights reserved.
+          </span>
+        </div>
 
-        <nav className="flex flex-wrap gap-x-8 gap-y-3" aria-label="Footer navigation">
-          {navLinks.map(({ href, label }) => (
+        {/* Center */}
+        <nav className="footer-center">
+          {['ABOUT', 'WORKS', 'CONTACT'].map((label) => (
             <Link
-              key={href}
-              href={href}
-              className="font-display text-[10px] tracking-[0.2em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors duration-200"
+              key={label}
+              href={`#${label.toLowerCase()}`}
+              className="text-fine tracking-widest text-[var(--c-bg)] uppercase hover:text-[var(--c-accent)] transition-colors duration-300 font-bold"
+              style={{ fontFamily: 'var(--f-sans)' }}
             >
               {label}
             </Link>
           ))}
         </nav>
 
-        <p className="font-display text-[10px] tracking-[0.15em] text-[var(--muted)]">
-          © 2026 Kosei Idezuka
-        </p>
+        {/* Right */}
+        <div className="footer-right">
+          {SOCIAL_LINKS.map((sns) => (
+            <Link
+              key={sns.label}
+              href={sns.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-fine tracking-widest text-[var(--c-bg)] uppercase hover:text-[var(--c-accent)] transition-colors duration-300 font-bold"
+              style={{ fontFamily: 'var(--f-sans)' }}
+            >
+              {sns.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </footer>
   )

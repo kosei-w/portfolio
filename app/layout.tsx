@@ -1,39 +1,45 @@
 import type { Metadata } from 'next'
-import { Syne, Noto_Sans_JP } from 'next/font/google'
-import Loader from '@/components/Loader'
+import { Inter, Noto_Sans_JP, Shippori_Mincho, Playfair_Display } from 'next/font/google'
+import LoadingScreen from '@/components/LoadingScreen'
+import CustomCursor from '@/components/CustomCursor'
 import './globals.css'
 
-const syne = Syne({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-syne',
-  display: 'swap',
-})
+const notoSansJP = Noto_Sans_JP({ 
+  subsets: ['latin'], 
+  weight: ['300','400','500','700'],
+  variable: '--font-noto-sans-jp' 
+})                                                               
 
-const notoSansJP = Noto_Sans_JP({
-  subsets: ['latin'],
-  weight: ['400', '500', '700', '900'],
-  variable: '--font-noto',
-  display: 'swap',
-})
+const inter = Inter({        
+  subsets: ['latin'], 
+  weight: ['300','400','500','600'],
+  variable: '--font-inter' 
+})                                                                      
+
+const shipporiMincho = Shippori_Mincho({ 
+  subsets: ['latin'], 
+  weight: ['400','500','700'],
+  variable: '--font-shippori' 
+})                                                                   
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'], 
+  weight: ['400','700'], 
+  style: ['normal','italic'], 
+  variable: '--font-playfair' 
+})                                              
 
 export const metadata: Metadata = {
-  title: 'Kosei Idezuka — HP制作',
-  description:
-    '中小企業・個人事業主向けのHP制作。最短10日納品・明瞭な料金体系。医療DX出身のコンサルタントが、集客につながるサイトを一気通貫で担います。',
-  keywords: 'HP制作, ホームページ制作, Web制作, フリーランス, 中小企業',
-  openGraph: {
-    title: 'Kosei Idezuka — HP制作',
-    description: '中小企業・個人事業主向けのHP制作。最短10日納品で、集客につながるサイトを作ります。',
-    type: 'website',
-  },
+  title: 'Kosei Idezuka — Freelance Portfolio',
+  description: '可能性を開拓する全ての人に捧ぐHP。Sales / Buyer / Event Planner',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${syne.variable} ${notoSansJP.variable}`}>
+    <html lang="ja" className={`${notoSansJP.variable} ${inter.variable} ${shipporiMincho.variable} ${playfair.variable}`}>
       <body className="antialiased">
-        <Loader />
+        <CustomCursor />
+        <LoadingScreen />
         {children}
       </body>
     </html>

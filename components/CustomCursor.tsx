@@ -1,103 +1,72 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { useEffect, useRef } from 'react';
 
 export default function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 })
-  const [isHovering, setIsHovering] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [isPointerFine, setIsPointerFine] = useState(false)
-  const pathname = usePathname()
+  const dotRef     = useRef<HTMLDivElement>(null);
+  const outlineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if the device uses a fine pointer (like a mouse) vs coarse (touch)
-    const mediaQuery = window.matchMedia('(pointer: fine)')
-    setIsPointerFine(mediaQuery.matches)
+    const dot     = dotRef.current;
+    const outline = outlineRef.current;
+    if (!dot || !outline) return;
 
-    const updateMedia = (e: MediaQueryListEvent) => setIsPointerFine(e.matches)
-    mediaQuery.addEventListener('change', updateMedia)
-
-    return () => mediaQuery.removeEventListener('change', updateMedia)
-  }, [])
-
-  useEffect(() => {
-    if (!isPointerFine) return
-
-    let rafId: number
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isVisible) setIsVisible(true)
-      // Using requestAnimationFrame for smooth cursor following
-      rafId = requestAnimationFrame(() => {
-        setPosition({ x: e.clientX, y: e.clientY })
-      })
+    // Touch devices: keep hidden
+    if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024) {
+      dot.style.display     = 'none';
+      outline.style.display = 'none';
+      return;
     }
 
-    const checkHover = () => {
-      const hoveredElements = document.querySelectorAll(':hover')
-      let hoveringInteractable = false
-      hoveredElements.forEach((el) => {
-        const tag = el.tagName.toLowerCase()
-        if (tag === 'a' || tag === 'button' || el.classList.contains('hover') || el.closest('a') || el.closest('button')) {
-          hoveringInteractable = true
-        }
-      })
-      setIsHovering(hoveringInteractable)
-    }
+    let visible = false;
 
-    const onMouseOver = () => {
-      checkHover()
-    }
-    
-    const onMouseOut = () => {
-      checkHover()
-    }
+    const onMove = (e: MouseEvent) => {
+      // Show on first move
+      if (!visible) {
+        dot.style.opacity     = '1';
+        outline.style.opacity = '1';
+        visible = true;
+      }
+      dot.style.left     = `${e.clientX}px`;
+      dot.style.top      = `${e.clientY}px`;
+      outline.style.left = `${e.clientX}px`;
+      outline.style.top  = `${e.clientY}px`;
+    };
 
-    const onMouseLeave = () => {
-      setIsVisible(false)
-    }
+    window.addEventListener('mousemove', onMove);
 
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
-    window.addEventListener('mouseover', onMouseOver, { passive: true })
-    window.addEventListener('mouseout', onMouseOut, { passive: true })
-    document.addEventListener('mouseleave', onMouseLeave)
+    const addHover    = () => outline.classList.add('hover');
+    const removeHover = () => outline.classList.remove('hover');
+
+    // Delegate hover to document so dynamically added elements are also covered
+    const onEnter = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button')) addHover();
+    };
+    const onLeave = (e: MouseEvent) => {
+      if ((e.target as Element).closest('a, button')) removeHover();
+    };
+    document.addEventListener('mouseover',  onEnter);
+    document.addEventListener('mouseout',   onLeave);
 
     return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mouseover', onMouseOver)
-      window.removeEventListener('mouseout', onMouseOut)
-      document.removeEventListener('mouseleave', onMouseLeave)
-      cancelAnimationFrame(rafId)
-    }
-  }, [isPointerFine, pathname])
-
-  if (!isPointerFine) return null
+      window.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseover',  onEnter);
+      document.removeEventListener('mouseout',   onLeave);
+    };
+  }, []);
 
   return (
     <>
-      {/* Outer Ring */}
-      <div 
-        className="fixed top-0 left-0 pointer-events-none rounded-full border border-[var(--c-accent)] z-[var(--z-cursor)]"
-        style={{
-          width: isHovering ? '60px' : '40px',
-          height: isHovering ? '60px' : '40px',
-          transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))`,
-          backgroundColor: isHovering ? 'rgba(184,146,106,0.1)' : 'transparent',
-          opacity: isVisible ? 1 : 0,
-          transition: 'width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), background-color 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo), transform 0.1s ease-out'
-        }}
+      <div
+        ref={dotRef}
+        className="cursor-dot"
+        style={{ opacity: 0, transition: 'opacity 0.3s' }}
       />
-      {/* Inner Dot */}
-      <div 
-        className="fixed top-0 left-0 pointer-events-none rounded-full bg-[var(--c-accent)] z-[var(--z-cursor)]"
-        style={{
-          width: '6px',
-          height: '6px',
-          transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%)) scale(${isHovering ? 0 : 1})`,
-          opacity: isVisible ? 1 : 0,
-          transition: 'transform 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo)'
-        }}
+      <div
+        ref={outlineRef}
+        className="cursor-outline"
+        style={{ opacity: 0, transition: 'opacity 0.3s, width 0.2s, height 0.2s, background-color 0.2s' }}
       />
     </>
-  )
+  );
 }

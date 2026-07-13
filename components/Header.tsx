@@ -3,12 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-const navLinks = [
-  { href: '/works', label: 'WORKS' },
-  { href: '/about', label: 'ABOUT' },
-  { href: '/contact', label: 'CONTACT' },
-]
+import { navLinks } from '@/lib/nav'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)

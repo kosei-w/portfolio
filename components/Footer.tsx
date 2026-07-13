@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { navLinks } from '@/lib/nav'
 
 export default function Footer() {
   return (
@@ -15,10 +16,10 @@ export default function Footer() {
         </span>
 
         <nav className="flex items-center gap-8">
-          {['WORKS', 'ABOUT', 'CONTACT'].map((label) => (
+          {navLinks.map(({ href, label }) => (
             <Link
-              key={label}
-              href={`/${label.toLowerCase()}`}
+              key={href}
+              href={href}
               className="text-[11px] tracking-[0.2em] text-[var(--c-muted)] hover:text-[var(--c-text)] transition-colors duration-300"
               style={{ fontFamily: 'var(--f-mono)' }}
             >

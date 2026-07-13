@@ -13,3 +13,6 @@
 .DS_Store
 *.pem
 .vercel
+
+# typescript
+*.tsbuildinfo

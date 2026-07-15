@@ -3,37 +3,24 @@ import { navLinks } from '@/lib/nav'
 
 export default function Footer() {
   return (
-    <footer
-      className="border-t px-6 md:px-10 py-10"
-      style={{ borderColor: 'var(--c-border)' }}
-    >
-      <div className="mx-auto flex flex-col md:flex-row items-center md:justify-between gap-6" style={{ maxWidth: 'var(--container-max)' }}>
-        <span
-          className="text-[var(--c-text)] font-bold tracking-[0.2em] text-sm"
-          style={{ fontFamily: 'var(--f-mono)' }}
-        >
-          KI
-        </span>
+    <footer className="border-t border-line px-6 py-10 md:px-10">
+      <div className="mx-auto flex max-w-shell flex-col items-center gap-6 md:flex-row md:justify-between">
+        <span className="font-mono text-sm font-bold tracking-[0.2em] text-ink">KI</span>
 
-        <nav className="flex items-center gap-8">
+        <nav className="flex items-center gap-8" aria-label="Footer navigation">
           {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-[11px] tracking-[0.2em] text-[var(--c-muted)] hover:text-[var(--c-text)] transition-colors duration-300"
-              style={{ fontFamily: 'var(--f-mono)' }}
+              data-text={label}
+              className="nav-link py-2 text-label font-mono text-ink-faint"
             >
               {label}
             </Link>
           ))}
         </nav>
 
-        <span
-          className="text-[11px] tracking-[0.15em] text-[var(--c-subtle)]"
-          style={{ fontFamily: 'var(--f-mono)' }}
-        >
-          © 2026 All rights reserved.
-        </span>
+        <span className="text-meta font-mono text-ink-faint">© 2026 All rights reserved.</span>
       </div>
     </footer>
   )

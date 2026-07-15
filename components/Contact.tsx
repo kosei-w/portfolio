@@ -21,7 +21,9 @@ const initialForm: FormData = {
 }
 
 const inputClass =
-  'w-full bg-[var(--c-surface)] border px-4 py-3 text-[var(--c-text)] placeholder:text-[var(--c-subtle)] focus:outline-none transition-all'
+  'w-full bg-surface border border-line px-4 py-3 text-ink placeholder:text-ink-faint transition-colors duration-300 focus:border-accent'
+
+const labelClass = 'block text-meta font-mono text-ink-muted mb-2'
 
 export default function Contact() {
   const [form, setForm] = useState<FormData>(initialForm)
@@ -52,24 +54,22 @@ export default function Contact() {
 
   if (status === 'success') {
     return (
-      <div className="border p-10 text-center" style={{ borderColor: 'var(--c-accent)' }}>
-        <div className="text-4xl mb-4" style={{ color: 'var(--c-accent)' }}>✓</div>
-        <h3 className="font-bold text-xl mb-3" style={{ color: 'var(--c-text)', fontFamily: 'var(--f-mono)' }}>Sent.</h3>
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--c-muted)', fontFamily: 'var(--f-sans)' }}>
+      <div className="border border-accent p-10 text-center">
+        <div className="text-4xl mb-4 text-accent">✓</div>
+        <h3 className="font-bold font-mono text-xl mb-3 text-ink">Sent.</h3>
+        <p className="text-body text-ink-muted">
           I&apos;ll get back to you within 1–2 business days.
         </p>
       </div>
     )
   }
 
-  const fieldStyle = { borderColor: 'var(--c-border)', fontFamily: 'var(--f-sans)' }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="contact-name" className="block text-[11px] tracking-[0.15em] text-[var(--c-muted)] mb-2" style={{ fontFamily: 'var(--f-mono)' }}>
-            お名前 <span className="text-[#ef4444]" aria-label="必須">*</span>
+          <label htmlFor="contact-name" className={labelClass}>
+            お名前 <span className="text-accent" aria-label="必須">*</span>
           </label>
           <input
             id="contact-name"
@@ -81,11 +81,10 @@ export default function Contact() {
             onChange={handleChange}
             placeholder="山田 太郎"
             className={inputClass}
-            style={fieldStyle}
           />
         </div>
         <div>
-          <label htmlFor="contact-company" className="block text-[11px] tracking-[0.15em] text-[var(--c-muted)] mb-2" style={{ fontFamily: 'var(--f-mono)' }}>
+          <label htmlFor="contact-company" className={labelClass}>
             会社名・屋号
           </label>
           <input
@@ -97,14 +96,13 @@ export default function Contact() {
             onChange={handleChange}
             placeholder="株式会社〇〇"
             className={inputClass}
-            style={fieldStyle}
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="contact-email" className="block text-[11px] tracking-[0.15em] text-[var(--c-muted)] mb-2" style={{ fontFamily: 'var(--f-mono)' }}>
-          メールアドレス <span className="text-[#ef4444]" aria-label="必須">*</span>
+        <label htmlFor="contact-email" className={labelClass}>
+          メールアドレス <span className="text-accent" aria-label="必須">*</span>
         </label>
         <input
           id="contact-email"
@@ -116,12 +114,11 @@ export default function Contact() {
           onChange={handleChange}
           placeholder="your@email.com"
           className={inputClass}
-          style={fieldStyle}
         />
       </div>
 
       <div>
-        <label htmlFor="contact-plan" className="block text-[11px] tracking-[0.15em] text-[var(--c-muted)] mb-2" style={{ fontFamily: 'var(--f-mono)' }}>
+        <label htmlFor="contact-plan" className={labelClass}>
           気になるプラン
         </label>
         <select
@@ -130,7 +127,6 @@ export default function Contact() {
           value={form.plan}
           onChange={handleChange}
           className={inputClass}
-          style={fieldStyle}
         >
           <option value="">選択してください（任意）</option>
           <option value="starter">スターター ¥128,000〜</option>
@@ -141,7 +137,7 @@ export default function Contact() {
       </div>
 
       <div>
-        <label htmlFor="contact-message" className="block text-[11px] tracking-[0.15em] text-[var(--c-muted)] mb-2" style={{ fontFamily: 'var(--f-mono)' }}>
+        <label htmlFor="contact-message" className={labelClass}>
           現状の課題・ご要望
         </label>
         <textarea
@@ -152,16 +148,11 @@ export default function Contact() {
           rows={5}
           placeholder="例：サイトが古くてスマホで崩れている、そもそもHPがない、問い合わせが来ないなど、何でもお気軽に"
           className={`${inputClass} resize-none`}
-          style={fieldStyle}
         />
       </div>
 
       {status === 'error' && (
-        <p
-          className="text-sm border px-4 py-3"
-          style={{ color: '#ef4444', borderColor: 'rgba(239,68,68,0.3)', fontFamily: 'var(--f-mono)' }}
-          role="alert"
-        >
+        <p className="text-sm font-mono text-accent border border-accent/30 px-4 py-3" role="alert">
           Failed to send. Please try again later.
         </p>
       )}
@@ -169,16 +160,12 @@ export default function Contact() {
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="w-full border border-[var(--c-accent)] text-[var(--c-accent)] py-4 text-[11px] tracking-[0.3em] hover:bg-[var(--c-accent)] hover:text-[var(--c-bg)] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-        style={{ fontFamily: 'var(--f-mono)' }}
+        className="w-full border border-accent text-accent py-4 text-label font-mono hover:bg-accent hover:text-bg transition-all duration-300 active:scale-[0.97] active:duration-100 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'loading' ? 'SENDING…' : 'SEND MESSAGE →'}
       </button>
 
-      <p
-        className="text-center text-[11px] tracking-[0.1em]"
-        style={{ color: 'var(--c-subtle)', fontFamily: 'var(--f-mono)' }}
-      >
+      <p className="text-center text-label font-mono text-ink-faint">
         Reply within 1–2 business days.
       </p>
     </form>

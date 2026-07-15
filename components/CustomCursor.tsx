@@ -11,8 +11,13 @@ export default function CustomCursor() {
     const outline = outlineRef.current;
     if (!dot || !outline) return;
 
-    // Touch devices: keep hidden
-    if (window.matchMedia('(pointer: coarse)').matches || window.innerWidth <= 1024) {
+    // globals.cssのcursor:noneゲート（pointer:fine）と条件を完全一致させる。
+    // 旧innerWidth<=1024条件は「fineポインタ×狭幅でカーソル消失」バグの原因だった。
+    // reduced-motionではネイティブカーソル（CSS側でcursor:auto復帰）。
+    if (
+      !window.matchMedia('(pointer: fine)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
       dot.style.display     = 'none';
       outline.style.display = 'none';
       return;

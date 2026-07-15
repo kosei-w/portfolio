@@ -6,7 +6,7 @@ import WorkCard from '@/components/WorkCard'
 
 export const metadata: Metadata = {
   title: 'Kosei Idezuka — Web Designer & Developer',
-  description: 'Freelance web designer and developer. Next.js + Tailwind CSS + Vercel. Helping businesses in Japan build modern, high-performance web experiences.',
+  description: '営業出身のフリーランスWebデザイナー。デザインではなく「問い合わせが来る」サイトを納品。最短7日、AI検索（ChatGPT等）対応の設計。Next.js + Vercel。',
 }
 
 export default function Home() {
@@ -21,7 +21,7 @@ export default function Home() {
               className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8 fade-up fade-up-1"
               style={{ fontFamily: 'var(--f-mono)' }}
             >
-              FREELANCE WEB DESIGNER
+              SALES-DRIVEN WEB DESIGN
             </p>
 
             <h1
@@ -36,10 +36,10 @@ export default function Home() {
             </h1>
 
             <p
-              className="text-base text-[var(--c-muted)] mb-8 fade-up fade-up-3"
-              style={{ fontFamily: 'var(--f-mono)' }}
+              className="text-base text-[var(--c-text)] mb-8 fade-up fade-up-3"
+              style={{ fontFamily: 'var(--f-sans)', fontWeight: 500 }}
             >
-              Web Design / Development / Consulting
+              デザインではなく、&ldquo;問い合わせ&rdquo;を納品する。
             </p>
 
             <div
@@ -47,10 +47,17 @@ export default function Home() {
             />
 
             <p
-              className="text-sm text-[var(--c-muted)] max-w-lg leading-relaxed fade-up fade-up-4"
+              className="text-sm text-[var(--c-muted)] max-w-lg leading-relaxed mb-8 fade-up fade-up-4"
               style={{ fontFamily: 'var(--f-sans)' }}
             >
-              Next.js + Tailwind CSS + Vercel. Helping businesses in Japan build modern, high-performance web experiences.
+              本業はB2Bのコンサルティングセールス。数字を追う営業の現場から、&ldquo;見た目がいいだけ&rdquo;のサイトでは問い合わせが来ないことを知っています。ヒアリングから公開まで最短7日。Google検索とAI検索の両方から見つかる設計で、サイトをあなたの営業資産に変えます。
+            </p>
+
+            <p
+              className="text-[11px] tracking-[0.2em] text-[var(--c-muted)] fade-up fade-up-5"
+              style={{ fontFamily: 'var(--f-mono)' }}
+            >
+              最短7日納品 / LIGHTHOUSE 95+ / AI検索（AIAO）対応
             </p>
           </div>
         </section>

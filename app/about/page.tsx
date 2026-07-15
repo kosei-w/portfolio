@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'About — Kosei Idezuka',
-  description: 'Freelance web designer combining consultative sales experience with modern web development.',
+  description: '営業出身のフリーランスWebデザイナー。ヒアリング力とAI活用の制作フローで、問い合わせにつながるサイトをつくります。',
 }
 
 const techStack = [
@@ -17,17 +17,17 @@ const experience = [
   {
     year: '2026 — Present',
     role: 'Freelance Web Designer & Developer',
-    desc: 'Building modern websites for Japanese businesses. Focus on performance, design quality, and conversion.',
+    desc: '中小企業・個人事業主向けのサイト制作。表示速度1秒未満・Lighthouse 95+を標準ラインに、公開後の運用まで伴走。',
   },
   {
     year: '2024 — Present',
-    role: 'Consultative Sales — Healthcare DX SaaS',
-    desc: 'Enterprise sales for medical DX solutions. Visiting hospitals and clinics across Japan.',
+    role: 'Consultative Sales — B2B SaaS',
+    desc: '企業向けSaaSの提案営業。ヒアリング・提案書づくり・商談構築が日常業務。',
   },
   {
     year: '2023 — 2024',
     role: 'Event Planning & Coordination',
-    desc: 'Large-scale event management across multiple verticals.',
+    desc: '大規模イベントの企画・運営。多職種チームのコーディネーションを担当。',
   },
 ]
 
@@ -70,10 +70,10 @@ export default function AboutPage() {
               </p>
               <div className="space-y-4">
                 <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
-                  I combine consultative sales expertise with modern web development. My background in Healthcare DX gives me a unique ability to understand what businesses actually need from their web presence — not just how it looks, but how it converts.
+                  本業はB2Bのコンサルティングセールス。企業の課題を聞き出して提案する仕事を毎日しています。だからWeb制作でも、最初に聞くのは&ldquo;どんなサイトにしたいか&rdquo;ではなく&ldquo;誰から問い合わせが欲しいか&rdquo;。デザインはそのための手段だと考えています。
                 </p>
                 <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
-                  I build websites that are fast, well-designed, and built to last — using Next.js, Tailwind CSS, and Vercel. Every project starts with understanding your business goals first.
+                  制作はNext.js + Tailwind CSS + Vercel。AIを全面活用した制作フローで、ヒアリングから公開まで最短7日。公開して終わりではなく、サイトを&ldquo;営業資産&rdquo;として育てるところまで伴走します。
                 </p>
               </div>
             </div>
@@ -88,16 +88,16 @@ export default function AboutPage() {
               <div className="space-y-6">
                 {[
                   {
-                    title: 'Consultative Approach',
-                    desc: 'I dig into your business goals before touching design. No "what should the button say?" surprises post-launch.',
+                    title: '営業出身のヒアリング',
+                    desc: '商談・提案が本業。要件定義はヒアリングそのものなので、公開後に"なんか違う"が起きる前に潰します。制作期間中の修正は回数無制限。',
                   },
                   {
-                    title: 'Fast Delivery',
-                    desc: 'Minimum 7-day turnaround. Solo operation means zero coordination overhead.',
+                    title: 'AI-Nativeなスピード',
+                    desc: 'AIを軸にした制作フローで最短7日納品。初案件のクライアントからは"思ったより全然早かった。しかもかっこいい"の声をいただきました。',
                   },
                   {
-                    title: 'Healthcare Domain Knowledge',
-                    desc: 'I understand clinical environments, patient trust signals, and medical compliance needs.',
+                    title: 'AI検索時代の集客設計',
+                    desc: 'Google検索（SEO）に加えて、ChatGPTなどのAI検索に引用される構造設計（AIAO）まで対応。検索の入り口が変わる時代を先回りします。',
                   },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-4">

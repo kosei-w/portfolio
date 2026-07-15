@@ -55,7 +55,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansJP.variable} ${shipporiMincho.variable}`}>
-      <body className="antialiased bg-[#0A0A0A] text-[#E8E6E0]">
+      <body className="antialiased bg-bg text-ink">
+        {/* revealの初期非表示ゲート。JS無効環境ではコンテンツを隠さない */}
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />
         <Loader />
         <CustomCursor />
         {children}

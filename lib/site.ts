@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://portfolio-ten-pi.vercel.app'
+export const SITE_URL = 'https://portfolio-kosei-ws-projects.vercel.app'
 
 export const SITE_NAME = 'Kosei Idezuka — Web Designer & Developer'
 

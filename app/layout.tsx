@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google'
 import Loader from '@/components/Loader/Loader'
 import CustomCursor from '@/components/CustomCursor'
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
 import './globals.css'
 
 const inter = Inter({
@@ -33,8 +34,22 @@ const shipporiMincho = Shippori_Mincho({
 })
 
 export const metadata: Metadata = {
-  title: 'Kosei Idezuka — Web Designer & Developer',
-  description: 'Freelance web designer and developer. Next.js + Tailwind CSS + Vercel. Helping businesses in Japan build modern, high-performance web experiences.',
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: 'Kosei Idezuka',
+    locale: 'ja_JP',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

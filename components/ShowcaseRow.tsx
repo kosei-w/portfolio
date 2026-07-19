@@ -15,7 +15,8 @@ interface ShowcaseRowProps {
 
 /**
  * フルブリード没入型ショーケース行 — NOT A HOTEL構成の翻訳。
- * メディアが主役（clip-path reveal）、タイトルは巨大、メタは極小mono。
+ * メディアが主役（clip-path reveal）。ライトテーマのスクショでも破綻しないよう
+ * タイトル・メタは画像の下（オーバーレイしない）。hoverで赤の一閃下線。
  */
 export default function ShowcaseRow({
   title,
@@ -29,19 +30,19 @@ export default function ShowcaseRow({
 }: ShowcaseRowProps) {
   if (comingSoon) {
     return (
-      <div className="border-t border-line py-s4 px-6 md:px-10">
+      <div className="border-t border-line px-6 py-s3 md:px-10">
         <div className="mx-auto flex max-w-shell items-baseline justify-between gap-6 opacity-50">
-          <span className="text-title font-display font-light text-ink-faint">{title}</span>
-          <span className="text-label font-mono text-ink-faint shrink-0">COMING SOON</span>
+          <span className="text-lead font-display font-light text-ink-faint">{title}</span>
+          <span className="shrink-0 text-label font-mono text-ink-faint">COMING SOON</span>
         </div>
       </div>
     )
   }
 
   return (
-    <InView as="div" className="group">
+    <InView as="div" className="group pb-s4">
       <Link href={href} className="block">
-        <div className="media-reveal relative h-[70vh] max-h-[45rem] min-h-[20rem] w-full overflow-hidden bg-surface">
+        <div className="media-reveal relative h-[65vh] max-h-[42rem] min-h-[18rem] w-full overflow-hidden bg-surface">
           <div data-zoom className="absolute inset-0">
             {imageSrc ? (
               <Image
@@ -58,19 +59,23 @@ export default function ShowcaseRow({
               </div>
             )}
           </div>
-          {/* タイトル可読性のためのスクリム */}
-          <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/70 to-transparent" aria-hidden="true" />
-          <div className="absolute inset-x-0 bottom-0 px-6 pb-8 md:px-10 md:pb-10">
-            <div className="mx-auto max-w-shell">
-              <h3 className="text-title font-display font-light text-ink">{title}</h3>
-              <span className="mt-3 block h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-500 group-hover:scale-x-100" aria-hidden="true" />
-              <div className="mt-4 flex flex-wrap gap-x-8 gap-y-1 text-meta font-mono text-ink-faint">
-                <span>YEAR — {year}</span>
-                {role && <span>ROLE — {role}</span>}
-                <span className="text-accent transition-transform duration-300 group-hover:translate-x-1">VIEW CASE →</span>
-              </div>
+        </div>
+
+        <div className="mx-auto max-w-shell px-6 md:px-10">
+          <div className="mt-8 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+            <h3 className="text-title font-display font-light text-ink">{title}</h3>
+            <div className="flex flex-wrap gap-x-8 gap-y-1 text-meta font-mono text-ink-faint">
+              <span>YEAR — {year}</span>
+              {role && <span>ROLE — {role}</span>}
+              <span className="text-accent transition-transform duration-300 group-hover:translate-x-1">
+                VIEW CASE →
+              </span>
             </div>
           </div>
+          <span
+            className="mt-5 block h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-500 group-hover:scale-x-100"
+            aria-hidden="true"
+          />
         </div>
       </Link>
     </InView>

@@ -1,125 +1,95 @@
 import type { Metadata } from 'next'
+import type { CSSProperties } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import WorkCard from '@/components/WorkCard'
+import ShowcaseRow from '@/components/ShowcaseRow'
+import SectionHeading from '@/components/SectionHeading'
+import Button from '@/components/Button'
+import InView from '@/components/motion/InView'
 
 export const metadata: Metadata = {
   title: 'Kosei Idezuka — Web Designer & Developer',
   description: '営業出身のフリーランスWebデザイナー。デザインではなく「問い合わせが来る」サイトを納品。最短7日、AI検索（ChatGPT等）対応の設計。Next.js + Vercel。',
 }
 
+const delay = (s: number) => ({ '--reveal-delay': `${s}s` } as CSSProperties)
+
 export default function Home() {
   return (
     <>
       <Header />
       <main>
-        {/* Hero */}
-        <section className="min-h-screen flex flex-col justify-center px-6 md:px-10 pt-24 pb-20">
-          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-8 fade-up fade-up-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              SALES-DRIVEN WEB DESIGN
+        {/* Hero — ローダーのパネル分割と連続して下から突き上げる（.hero-reveal契約） */}
+        <section className="flex min-h-screen flex-col justify-center px-6 pt-24 md:px-10">
+          <div className="hero-reveal mx-auto w-full max-w-shell">
+            <p className="reveal-wrap mb-8">
+              <span className="reveal-line text-label font-mono text-ink-faint">
+                SALES-DRIVEN WEB DESIGN
+              </span>
             </p>
 
-            <h1
-              className="font-bold text-[var(--c-text)] leading-none mb-6 fade-up fade-up-2"
-              style={{
-                fontFamily: 'var(--f-sans)',
-                fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Kosei Idezuka
+            <h1 className="mb-8 text-display font-display font-light text-ink">
+              <span className="reveal-wrap">
+                <span className="reveal-line" style={delay(0.08)}>Kosei</span>
+              </span>{' '}
+              <span className="reveal-wrap">
+                <span className="reveal-line" style={delay(0.16)}>Idezuka</span>
+              </span>
             </h1>
 
-            <p
-              className="text-base text-[var(--c-text)] mb-8 fade-up fade-up-3"
-              style={{ fontFamily: 'var(--f-sans)', fontWeight: 500 }}
-            >
-              デザインではなく、&ldquo;問い合わせ&rdquo;を納品する。
+            <p className="reveal-wrap mb-10">
+              <span className="reveal-line text-lead font-medium text-ink" style={delay(0.26)}>
+                デザインではなく、<span className="font-serif">&ldquo;問い合わせ&rdquo;</span>を納品する。
+              </span>
             </p>
 
-            <div
-              className="w-10 border-t border-[var(--c-text)] mb-8 fade-up fade-up-3"
-            />
+            <span className="strike-line mb-10 max-w-[26rem]" style={delay(0.4)} aria-hidden="true" />
 
-            <p
-              className="text-sm text-[var(--c-muted)] max-w-lg leading-relaxed mb-8 fade-up fade-up-4"
-              style={{ fontFamily: 'var(--f-sans)' }}
-            >
+            <p className="rise mb-8 max-w-lg text-body text-ink-muted" style={delay(0.5)}>
               本業はB2Bのコンサルティングセールス。数字を追う営業の現場から、&ldquo;見た目がいいだけ&rdquo;のサイトでは問い合わせが来ないことを知っています。ヒアリングから公開まで最短7日。Google検索とAI検索の両方から見つかる設計で、サイトをあなたの営業資産に変えます。
             </p>
 
-            <p
-              className="text-[11px] tracking-[0.2em] text-[var(--c-muted)] fade-up fade-up-5"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
+            <p className="rise text-meta font-mono text-ink-faint" style={delay(0.6)}>
               最短7日納品 / LIGHTHOUSE 95+ / AI検索（AIAO）対応
             </p>
           </div>
         </section>
 
-        {/* Works Preview */}
-        <section
-          className="px-6 md:px-10 py-20 border-t"
-          style={{ borderColor: 'var(--c-border)' }}
-        >
-          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
-            <div className="flex items-center justify-between mb-10">
-              <p
-                className="text-[11px] tracking-[0.3em] text-[var(--c-muted)]"
-                style={{ fontFamily: 'var(--f-mono)' }}
-              >
-                WORKS
-              </p>
-              <Link
-                href="/works"
-                className="text-[11px] tracking-[0.15em] text-[var(--c-muted)] hover:text-[var(--c-accent)] transition-colors duration-300"
-                style={{ fontFamily: 'var(--f-mono)' }}
-              >
-                VIEW ALL →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <WorkCard
-                title="HIGHER LLC"
-                year="2026"
-                href="/works/higher"
-              />
-              <WorkCard
-                title="Coming Soon"
-                year="—"
-                href="/works"
-                comingSoon
-              />
-            </div>
+        {/* Selected Work — フルブリード没入型ショーケース */}
+        <section className="border-t border-line py-s5">
+          <div className="mx-auto mb-s3 flex w-full max-w-shell items-end justify-between px-6 md:px-10">
+            <SectionHeading no="01" label="SELECTED WORK" />
+            <Link
+              href="/works"
+              className="text-label font-mono text-ink-faint transition-colors duration-300 hover:text-accent"
+            >
+              VIEW ALL →
+            </Link>
           </div>
+
+          <ShowcaseRow
+            title="HIGHER LLC"
+            year="2026"
+            role="Design / Development"
+            href="/works/higher"
+            imageSrc="/images/works/higher/hero.png"
+            imageAlt="HIGHER LLC コーポレートサイトのヒーロー画面"
+          />
+          <ShowcaseRow title="Next Project" year="—" href="/works" comingSoon />
         </section>
 
         {/* CTA */}
-        <section
-          className="px-6 md:px-10 py-24 border-t"
-          style={{ borderColor: 'var(--c-border)' }}
-        >
-          <div className="mx-auto w-full text-center" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-xl md:text-2xl text-[var(--c-text)] mb-8 font-medium"
-              style={{ fontFamily: 'var(--f-sans)' }}
-            >
-              Let&apos;s build something together.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-block border border-[var(--c-accent)] text-[var(--c-accent)] px-8 py-3 text-[11px] tracking-[0.3em] hover:bg-[var(--c-accent)] hover:text-[var(--c-bg)] transition-all duration-300"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              GET IN TOUCH
-            </Link>
-          </div>
+        <section className="border-t border-line px-6 py-s5 md:px-10">
+          <InView className="rise mx-auto flex max-w-shell flex-col items-start justify-between gap-10 md:flex-row md:items-end">
+            <div>
+              <SectionHeading no="02" label="CONTACT" className="mb-6" />
+              <p className="text-title font-display font-light text-ink">
+                Let&apos;s build something together.
+              </p>
+            </div>
+            <Button href="/contact">GET IN TOUCH</Button>
+          </InView>
         </section>
       </main>
       <Footer />

@@ -54,7 +54,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansJP.variable} ${shipporiMincho.variable}`}>
+    // suppressHydrationWarning: bodyのインラインスクリプトがhydration前にjsクラスを足すため
+    <html lang="ja" className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansJP.variable} ${shipporiMincho.variable}`} suppressHydrationWarning>
       <body className="antialiased bg-bg text-ink">
         {/* revealの初期非表示ゲート。JS無効環境ではコンテンツを隠さない */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />

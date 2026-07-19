@@ -84,11 +84,7 @@
    BASE
    ============================================================ */
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* リセットはTailwind preflightに委譲（unlayeredの自前リセットは@layer utilitiesを潰すため置かない） */
 
 html {
   scroll-behavior: smooth;
@@ -169,6 +165,11 @@ body.is-loading main { opacity: 0; }
     transform: translateY(0);
   }
 
+  /* heroはInViewでなくローダー契約（body.is-loading解除）で一斉振り付け */
+  .js body.is-loading .hero-reveal .strike-line { transform: scaleX(0); }
+  .js body:not(.is-loading) .hero-reveal .strike-line { transform: scaleX(1); }
+  .js body:not(.is-loading) .hero-reveal .rise { opacity: 1; transform: translateY(0); }
+
   /* フェード+リフト（汎用ブロック） */
   .js .rise {
     opacity: 0;
@@ -182,13 +183,14 @@ body.is-loading main { opacity: 0; }
     transform: translateY(0);
   }
 
-  /* 画像reveal — clip-pathワイプ + 内側ズーム戻し */
+  /* 画像reveal — clip-pathワイプ + 内側ズーム戻し（ズームは[data-zoom]ラッパー。
+     img自体のhover zoomユーティリティとtransform競合させない） */
   .js .media-reveal {
     clip-path: inset(100% 0 0 0);
     transition: clip-path 1.2s var(--ease-out-expo);
     transition-delay: var(--reveal-delay, 0s);
   }
-  .js .media-reveal img {
+  .js .media-reveal [data-zoom] {
     transform: scale(1.06);
     transition: transform 1.4s var(--ease-out-expo);
   }
@@ -196,8 +198,8 @@ body.is-loading main { opacity: 0; }
   .js .is-inview .media-reveal {
     clip-path: inset(0 0 0 0);
   }
-  .js .media-reveal.is-inview img,
-  .js .is-inview .media-reveal img {
+  .js .media-reveal.is-inview [data-zoom],
+  .js .is-inview .media-reveal [data-zoom] {
     transform: scale(1);
   }
 
@@ -271,6 +273,59 @@ body.is-loading main { opacity: 0; }
 }
 
 /* ============================================================
+   SITE HEADER — 固定高さ・スクロールでマテリアル化（scroll edge effect）
+   ============================================================ */
+
+.site-header {
+  background: transparent;
+  transition: background-color 0.5s var(--ease-out-expo);
+}
+.site-header[data-scrolled] {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+/* ハードボーダーの代わりに下端フェード */
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 24px;
+  pointer-events: none;
+  background: linear-gradient(rgba(10, 10, 10, 0.55), transparent);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+.site-header[data-scrolled]::after { opacity: 1; }
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-header[data-scrolled] {
+    background: var(--color-bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* モバイルメニュー — ハンバーガー起点のサークル展開（空間的整合） */
+.mobile-menu {
+  clip-path: circle(0% at calc(100% - 2.75rem) 2.5rem);
+  transition: clip-path 0.7s var(--ease-out-expo);
+  pointer-events: none;
+}
+.mobile-menu[data-open] {
+  clip-path: circle(150% at calc(100% - 2.75rem) 2.5rem);
+  pointer-events: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu {
+    clip-path: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .mobile-menu[data-open] { opacity: 1; }
+}
+
+/* ============================================================
    NAV LINK — 2枚重ね完全スワップ（accent色が下からせり上がる）
    ============================================================ */
 
@@ -288,8 +343,9 @@ body.is-loading main { opacity: 0; }
   .js .nav-link::after {
     content: attr(data-text);
     position: absolute;
-    left: 0; top: 0;
-    width: 100%;
+    inset: 0;
+    display: flex;
+    align-items: center;
     transition: transform 0.4s var(--ease-out-expo);
   }
   .js .nav-link::before {

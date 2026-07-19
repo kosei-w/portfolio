@@ -66,18 +66,6 @@
   --z-loader: 9999;
   --z-cursor: 99999;
   --glow-accent: 0 0 14px rgba(229, 57, 53, 0.85), 0 0 36px rgba(229, 57, 53, 0.5);
-
-  /* ── 移行期エイリアス（旧マークアップ互換・Phase 5で削除） ── */
-  --c-bg: var(--color-bg);
-  --c-surface: var(--color-surface);
-  --c-border: var(--color-line);
-  --c-accent: var(--color-accent);
-  --c-text: var(--color-ink);
-  --c-muted: var(--color-ink-muted);
-  --c-subtle: var(--color-ink-faint);
-  --f-mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
-  --f-sans: var(--font-noto-sans-jp), sans-serif;
-  --container-max: 75rem;
 }
 
 /* ============================================================
@@ -94,7 +82,7 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-ink);
-  font-family: var(--f-sans);
+  font-family: var(--font-noto-sans-jp), sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -362,20 +350,3 @@ body.is-loading main { opacity: 0; }
   .js .nav-link:focus-visible::after { transform: translateY(-100%); }
 }
 
-/* ============================================================
-   移行期の互換（Phase 4完了後に削除）
-   ============================================================ */
-
-/* Home heroの旧エントリーアニメ（Phase 4aでreveal-wrapに置換） */
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up { animation: fadeUp 0.7s var(--ease-out-expo) both; }
-  .fade-up-1 { animation-delay: 0.1s; }
-  .fade-up-2 { animation-delay: 0.25s; }
-  .fade-up-3 { animation-delay: 0.4s; }
-  .fade-up-4 { animation-delay: 0.55s; }
-  .fade-up-5 { animation-delay: 0.7s; }
-}

@@ -1,7 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SectionHeading from '@/components/SectionHeading'
+import StrikeLine from '@/components/StrikeLine'
+import Button from '@/components/Button'
+import InView from '@/components/motion/InView'
 
 export const metadata: Metadata = {
   title: 'HIGHER LLC — Case Study | Kosei Idezuka',
@@ -15,43 +20,47 @@ const techStack = [
   { name: 'MongoDB', desc: 'Contact form storage' },
 ]
 
+const challenges = [
+  'No existing web presence — building from zero with no brand guidelines.',
+  'The brand needed to convey premium quality and trustworthiness while remaining approachable.',
+  'Required both Japanese and global audience considerations in design language.',
+  'Contact form with reliable delivery and spam protection.',
+]
+
+const learnings = [
+  'Deep brand discovery upfront eliminates design revisions downstream.',
+  'GSAP ScrollTrigger with Next.js App Router requires careful client-component scoping.',
+  'MongoDB Atlas free tier is sufficient for personal portfolio contact forms.',
+  'Vercel Edge Network makes performance optimization largely automatic.',
+]
+
+const resultStats = [
+  { value: '<1s', label: 'LOAD TIME' },
+  { value: '95+', label: 'LIGHTHOUSE' },
+]
+
 export default function HigherCaseStudy() {
   return (
     <>
       <Header />
-      <main className="pt-24">
-
+      <main>
         {/* Hero */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
+        <section className="border-b border-line px-6 pb-s4 pt-40 md:px-10">
+          <div className="mx-auto w-full max-w-shell">
             <Link
               href="/works"
-              className="inline-block text-[11px] tracking-[0.2em] text-[var(--c-muted)] hover:text-[var(--c-accent)] transition-colors duration-300 mb-12"
-              style={{ fontFamily: 'var(--f-mono)' }}
+              className="mb-12 inline-block text-label font-mono text-ink-faint transition-colors duration-300 hover:text-accent"
             >
               ← WORKS
             </Link>
 
-            <div className="flex flex-wrap items-start gap-6 mb-8">
-              <p
-                className="text-[11px] tracking-[0.3em] text-[var(--c-accent)]"
-                style={{ fontFamily: 'var(--f-mono)' }}
-              >
-                CASE STUDY
-              </p>
-            </div>
+            <p className="mb-6 text-label font-mono text-accent">CASE STUDY</p>
 
-            <h1
-              className="font-bold text-[var(--c-text)] leading-none mb-6"
-              style={{
-                fontFamily: 'var(--f-mono)',
-                fontSize: 'clamp(2.5rem, 7vw, 5rem)',
-              }}
-            >
-              HIGHER LLC
-            </h1>
+            <h1 className="mb-8 text-display font-display font-light text-ink">HIGHER LLC</h1>
 
-            <div className="flex flex-wrap gap-8 text-[11px] tracking-[0.15em] text-[var(--c-muted)]" style={{ fontFamily: 'var(--f-mono)' }}>
+            <StrikeLine className="mb-8 max-w-[26rem]" />
+
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-meta font-mono text-ink-faint">
               <span>CLIENT — HIGHER LLC</span>
               <span>YEAR — 2026</span>
               <span>ROLE — Design / Development</span>
@@ -60,226 +69,168 @@ export default function HigherCaseStudy() {
         </section>
 
         {/* Overview */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              01 / OVERVIEW
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="01" label="OVERVIEW" className="pt-1" />
+            <p className="max-w-2xl text-body text-ink-muted">
+              HIGHER LLC is a company dedicated to helping people realize their full potential. They needed a modern, high-performance website that embodied their brand philosophy — clean, elegant, and aspirational. The project involved a full design and development rebuild from scratch using the latest web technologies.
             </p>
-            <div>
-              <p className="text-base text-[var(--c-muted)] leading-relaxed max-w-2xl" style={{ fontFamily: 'var(--f-sans)' }}>
-                HIGHER LLC is a company dedicated to helping people realize their full potential. They needed a modern, high-performance website that embodied their brand philosophy — clean, elegant, and aspirational. The project involved a full design and development rebuild from scratch using the latest web technologies.
-              </p>
-            </div>
           </div>
-        </section>
+        </InView>
 
         {/* Challenge */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              02 / CHALLENGE
-            </p>
-            <div className="space-y-4 max-w-2xl">
-              {[
-                'No existing web presence — building from zero with no brand guidelines.',
-                'The brand needed to convey premium quality and trustworthiness while remaining approachable.',
-                'Required both Japanese and global audience considerations in design language.',
-                'Contact form with reliable delivery and spam protection.',
-              ].map((item) => (
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="02" label="CHALLENGE" className="pt-1" />
+            <div className="max-w-2xl space-y-4">
+              {challenges.map((item) => (
                 <div key={item} className="flex gap-4">
-                  <span className="text-[var(--c-accent)] mt-1 shrink-0" style={{ fontFamily: 'var(--f-mono)' }}>—</span>
-                  <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>{item}</p>
+                  <span className="mt-1 shrink-0 font-mono text-accent">—</span>
+                  <p className="text-body text-ink-muted">{item}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Approach */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              03 / APPROACH
-            </p>
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="03" label="APPROACH" className="pt-1" />
             <div className="max-w-2xl space-y-5">
-              <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
+              <p className="text-body text-ink-muted">
                 Started with a deep brand discovery session to understand HIGHER&apos;s values, audience, and aspirations. Defined a warm beige-and-serif visual language that communicates trust and sophistication without feeling corporate.
               </p>
-              <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
+              <p className="text-body text-ink-muted">
                 Built a single-page architecture optimized for conversion — guiding visitors from brand story to services to contact with deliberate scroll pacing. Implemented GSAP-powered scroll animations for premium feel, and integrated a MongoDB-backed contact form with server-side validation and email notifications.
               </p>
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Tech Stack */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              04 / TECH STACK
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="04" label="TECH STACK" className="pt-1" />
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               {techStack.map((tech) => (
-                <div
-                  key={tech.name}
-                  className="border p-4"
-                  style={{ borderColor: 'var(--c-border)' }}
-                >
-                  <p
-                    className="text-sm font-bold text-[var(--c-text)] mb-1"
-                    style={{ fontFamily: 'var(--f-mono)' }}
-                  >
-                    {tech.name}
-                  </p>
-                  <p
-                    className="text-[11px] text-[var(--c-muted)]"
-                    style={{ fontFamily: 'var(--f-mono)' }}
-                  >
-                    {tech.desc}
-                  </p>
+                <div key={tech.name} className="border border-line p-4">
+                  <p className="mb-1 font-mono text-sm font-bold text-ink">{tech.name}</p>
+                  <p className="text-label font-mono text-ink-faint">{tech.desc}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Result */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              05 / RESULT
-            </p>
-            <div className="max-w-2xl space-y-5">
-              <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="05" label="RESULT" className="pt-1" />
+            <div className="max-w-2xl space-y-8">
+              <div className="flex flex-wrap gap-x-12 gap-y-6">
+                {resultStats.map((stat) => (
+                  <div key={stat.label}>
+                    <p className="text-counter font-display font-light text-accent">{stat.value}</p>
+                    <p className="mt-1 text-label font-mono text-ink-faint">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-body text-ink-muted">
                 Delivered a production-ready website from concept to launch. The site loads in under 1 second on Vercel&apos;s edge network and scores 95+ on Lighthouse across all categories. The client received their first inbound inquiry within days of launch.
               </p>
-              <blockquote
-                className="border-l-2 border-[var(--c-accent)] pl-6 py-2"
-              >
-                <p className="text-base text-[var(--c-text)] italic mb-2" style={{ fontFamily: 'var(--f-sans)' }}>
+              <blockquote className="border-l-2 border-accent py-2 pl-6">
+                <p className="mb-2 font-serif text-lead text-ink">
                   &ldquo;思ったより全然早かった。しかもかっこいい。&rdquo;
                 </p>
-                <cite className="text-[11px] tracking-[0.15em] text-[var(--c-muted)] not-italic" style={{ fontFamily: 'var(--f-mono)' }}>
+                <cite className="text-label font-mono not-italic text-ink-faint">
                   — HIGHER LLC, Representative
                 </cite>
               </blockquote>
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Screenshots */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              06 / SCREENSHOTS
-            </p>
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="06" label="SCREENSHOTS" className="pt-1" />
             <div className="space-y-4">
-              <div
-                className="w-full aspect-video bg-[var(--c-surface)] border flex items-center justify-center"
-                style={{ borderColor: 'var(--c-border)' }}
-              >
-                <p
-                  className="text-[11px] tracking-[0.2em] text-[var(--c-subtle)]"
-                  style={{ fontFamily: 'var(--f-mono)' }}
-                >
-                  SCREENSHOT — COMING SOON
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div
-                  className="aspect-video bg-[var(--c-surface)] border flex items-center justify-center"
-                  style={{ borderColor: 'var(--c-border)' }}
-                >
-                  <p
-                    className="text-[11px] text-[var(--c-subtle)]"
-                    style={{ fontFamily: 'var(--f-mono)' }}
-                  >
-                    DETAIL 01
-                  </p>
+              <div className="media-reveal relative aspect-[16/10] w-full overflow-hidden bg-surface">
+                <div data-zoom className="absolute inset-0">
+                  <Image
+                    src="/images/works/higher/hero.png"
+                    alt="HIGHER LLC トップページ"
+                    fill
+                    sizes="(min-width: 768px) 60vw, 100vw"
+                    className="object-cover object-top"
+                  />
                 </div>
-                <div
-                  className="aspect-video bg-[var(--c-surface)] border flex items-center justify-center"
-                  style={{ borderColor: 'var(--c-border)' }}
-                >
-                  <p
-                    className="text-[11px] text-[var(--c-subtle)]"
-                    style={{ fontFamily: 'var(--f-mono)' }}
-                  >
-                    DETAIL 02
-                  </p>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="media-reveal relative aspect-video w-full overflow-hidden bg-surface">
+                  <div data-zoom className="absolute inset-0">
+                    <Image
+                      src="/images/works/higher/services.png"
+                      alt="HIGHER LLC サービス紹介セクション"
+                      fill
+                      sizes="(min-width: 768px) 30vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+                <div className="media-reveal relative aspect-video w-full overflow-hidden bg-surface">
+                  <div data-zoom className="absolute inset-0">
+                    <Image
+                      src="/images/works/higher/contact.png"
+                      alt="HIGHER LLC お問い合わせフォーム"
+                      fill
+                      sizes="(min-width: 768px) 30vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="media-reveal relative aspect-[390/844] w-40 overflow-hidden bg-surface sm:w-48">
+                <div data-zoom className="absolute inset-0">
+                  <Image
+                    src="/images/works/higher/mobile.png"
+                    alt="HIGHER LLC モバイル表示"
+                    fill
+                    sizes="200px"
+                    className="object-cover object-top"
+                  />
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Learnings */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full grid md:grid-cols-[200px_1fr] gap-10" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] pt-1"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              07 / LEARNINGS
-            </p>
-            <div className="space-y-4 max-w-2xl">
-              {[
-                'Deep brand discovery upfront eliminates design revisions downstream.',
-                'GSAP ScrollTrigger with Next.js App Router requires careful client-component scoping.',
-                'MongoDB Atlas free tier is sufficient for personal portfolio contact forms.',
-                'Vercel Edge Network makes performance optimization largely automatic.',
-              ].map((item) => (
+        <InView as="section" className="rise border-b border-line px-6 py-s4 md:px-10">
+          <div className="mx-auto grid w-full max-w-shell gap-10 md:grid-cols-[200px_1fr]">
+            <SectionHeading no="07" label="LEARNINGS" className="pt-1" />
+            <div className="max-w-2xl space-y-4">
+              {learnings.map((item) => (
                 <div key={item} className="flex gap-4">
-                  <span className="text-[var(--c-accent)] mt-1 shrink-0" style={{ fontFamily: 'var(--f-mono)' }}>→</span>
-                  <p className="text-sm text-[var(--c-muted)] leading-relaxed" style={{ fontFamily: 'var(--f-sans)' }}>{item}</p>
+                  <span className="mt-1 shrink-0 font-mono text-accent">→</span>
+                  <p className="text-body text-ink-muted">{item}</p>
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </InView>
 
         {/* Next project CTA */}
-        <section className="px-6 md:px-10 py-20">
-          <div className="mx-auto w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-8" style={{ maxWidth: 'var(--container-max)' }}>
+        <section className="px-6 py-s5 md:px-10">
+          <InView className="rise mx-auto flex w-full max-w-shell flex-col items-start justify-between gap-8 md:flex-row md:items-center">
             <div>
-              <p
-                className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-4"
-                style={{ fontFamily: 'var(--f-mono)' }}
-              >
-                NEXT
-              </p>
-              <p className="text-lg text-[var(--c-text)]" style={{ fontFamily: 'var(--f-sans)' }}>
-                Want to work together?
-              </p>
+              <p className="mb-4 text-label font-mono text-ink-faint">NEXT</p>
+              <p className="text-lead text-ink">Want to work together?</p>
             </div>
-            <Link
-              href="/contact"
-              className="inline-block border border-[var(--c-accent)] text-[var(--c-accent)] px-8 py-3 text-[11px] tracking-[0.3em] hover:bg-[var(--c-accent)] hover:text-[var(--c-bg)] transition-all duration-300"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              GET IN TOUCH
-            </Link>
-          </div>
+            <Button href="/contact">GET IN TOUCH</Button>
+          </InView>
         </section>
-
       </main>
       <Footer />
     </>

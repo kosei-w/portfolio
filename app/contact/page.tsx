@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Contact from '@/components/Contact'
+import InView from '@/components/motion/InView'
 
 export const metadata: Metadata = {
   title: 'Contact — Kosei Idezuka',
@@ -12,43 +13,35 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <main className="pt-24">
-
+      <main>
         {/* Page header */}
-        <section className="px-6 md:px-10 py-16 border-b" style={{ borderColor: 'var(--c-border)' }}>
-          <div className="mx-auto w-full" style={{ maxWidth: 'var(--container-max)' }}>
-            <p
-              className="text-[11px] tracking-[0.3em] text-[var(--c-muted)] mb-6"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              CONTACT
+        <InView as="section" className="border-b border-line px-6 pb-s4 pt-40 md:px-10">
+          <div className="mx-auto w-full max-w-shell">
+            <p className="mb-8">
+              <span className="reveal-wrap">
+                <span className="reveal-line text-label font-mono text-ink-faint">CONTACT</span>
+              </span>
             </p>
-            <h1
-              className="font-bold text-[var(--c-text)] leading-none mb-6"
-              style={{
-                fontFamily: 'var(--f-mono)',
-                fontSize: 'clamp(2.5rem, 7vw, 5rem)',
-              }}
-            >
-              Let&apos;s work together.
+            <h1 className="mb-6 text-display font-display font-light text-ink">
+              <span className="reveal-wrap">
+                <span className="reveal-line">Let&apos;s work together.</span>
+              </span>
             </h1>
             <a
               href="mailto:Kosei.idezuka@navislab.jp"
-              className="text-sm text-[var(--c-muted)] hover:text-[var(--c-accent)] transition-colors duration-300"
-              style={{ fontFamily: 'var(--f-mono)' }}
+              className="text-meta font-mono text-ink-faint transition-colors duration-300 hover:text-accent"
             >
               Kosei.idezuka@navislab.jp
             </a>
           </div>
-        </section>
+        </InView>
 
         {/* Form */}
-        <section className="px-6 md:px-10 py-16">
-          <div className="mx-auto w-full" style={{ maxWidth: '640px' }}>
+        <section className="px-6 py-s4 md:px-10">
+          <div className="mx-auto w-full max-w-[40rem]">
             <Contact />
           </div>
         </section>
-
       </main>
       <Footer />
     </>

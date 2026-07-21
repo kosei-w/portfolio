@@ -37,9 +37,9 @@ export default function WorksPage() {
             href="/works/higher"
             imageSrc="/images/works/higher/hero.png"
             imageAlt="HIGHER LLC コーポレートサイトのヒーロー画面"
+            stats={['公開数日で初の問い合わせ', '表示速度 1秒未満', 'LIGHTHOUSE 95+']}
             priority
           />
-          <ShowcaseRow title="Next Project" year="—" href="/works" comingSoon />
         </section>
       </main>
       <Footer />

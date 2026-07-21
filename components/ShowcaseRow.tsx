@@ -10,7 +10,8 @@ interface ShowcaseRowProps {
   imageSrc?: string
   imageAlt?: string
   priority?: boolean
-  comingSoon?: boolean
+  /** 成果メタ（例: '公開数日で初の問い合わせ'）— 画像下メタ行の下に表示 */
+  stats?: string[]
 }
 
 /**
@@ -26,19 +27,8 @@ export default function ShowcaseRow({
   imageSrc,
   imageAlt,
   priority = false,
-  comingSoon = false,
+  stats,
 }: ShowcaseRowProps) {
-  if (comingSoon) {
-    return (
-      <div className="border-t border-line px-6 py-s3 md:px-10">
-        <div className="mx-auto flex max-w-shell items-baseline justify-between gap-6 opacity-50">
-          <span className="text-lead font-display font-light text-ink-faint">{title}</span>
-          <span className="shrink-0 text-label font-mono text-ink-faint">COMING SOON</span>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <InView as="div" className="group pb-s4">
       <TransitionLink href={href} className="block" data-cursor="view">
@@ -72,6 +62,13 @@ export default function ShowcaseRow({
               </span>
             </div>
           </div>
+          {stats && (
+            <p className="mt-4 flex flex-wrap gap-x-6 gap-y-1 text-meta font-mono text-ink-muted">
+              {stats.map((stat) => (
+                <span key={stat}>{stat}</span>
+              ))}
+            </p>
+          )}
           <span
             className="mt-5 block h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-500 group-hover:scale-x-100"
             aria-hidden="true"

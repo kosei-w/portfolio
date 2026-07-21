@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import TransitionLink from '@/components/motion/TransitionLink'
 import { navLinks } from '@/lib/nav'
 
 const SCROLL_THRESHOLD = 60
@@ -43,25 +43,25 @@ export default function Header() {
         data-scrolled={scrolled || undefined}
       >
         <div className="mx-auto flex h-20 max-w-shell items-center justify-between px-6 md:px-10">
-          <Link
+          <TransitionLink
             href="/"
             className="font-mono text-xl font-bold leading-none tracking-[0.2em] text-ink"
             aria-label="Kosei Idezuka — Home"
           >
             KI
-          </Link>
+          </TransitionLink>
 
           {/* Desktop nav */}
           <nav className="hidden items-center gap-10 md:flex" aria-label="Main navigation">
             {navLinks.map(({ href, label }) => (
-              <Link
+              <TransitionLink
                 key={href}
                 href={href}
                 data-text={label}
                 className="nav-link py-3 text-label font-mono text-ink-faint"
               >
                 {label}
-              </Link>
+              </TransitionLink>
             ))}
           </nav>
 
@@ -96,7 +96,7 @@ export default function Header() {
       >
         <nav className="flex flex-col gap-8">
           {navLinks.map(({ href, label }, i) => (
-            <Link
+            <TransitionLink
               key={href}
               href={href}
               ref={i === 0 ? firstMenuLinkRef : undefined}
@@ -105,7 +105,7 @@ export default function Header() {
               className="font-mono text-5xl font-bold leading-none tracking-tight text-ink"
             >
               {label}
-            </Link>
+            </TransitionLink>
           ))}
         </nav>
         <p className="absolute bottom-10 left-10 text-label font-mono text-ink-faint">

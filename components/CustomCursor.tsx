@@ -40,15 +40,17 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', onMove);
 
-    const addHover    = () => outline.classList.add('hover');
-    const removeHover = () => outline.classList.remove('hover');
-
-    // Delegate hover to document so dynamically added elements are also covered
+    // Delegate hover to document so dynamically added elements are also covered.
+    // [data-cursor="view"]（ShowcaseRow等のメディアリンク）ではVIEWラベル付きに拡大。
     const onEnter = (e: MouseEvent) => {
-      if ((e.target as Element).closest('a, button')) addHover();
+      const target = e.target as Element;
+      if (target.closest('[data-cursor="view"]')) outline.classList.add('view');
+      if (target.closest('a, button')) outline.classList.add('hover');
     };
     const onLeave = (e: MouseEvent) => {
-      if ((e.target as Element).closest('a, button')) removeHover();
+      const target = e.target as Element;
+      if (target.closest('[data-cursor="view"]')) outline.classList.remove('view');
+      if (target.closest('a, button')) outline.classList.remove('hover');
     };
     document.addEventListener('mouseover',  onEnter);
     document.addEventListener('mouseout',   onLeave);
@@ -71,7 +73,9 @@ export default function CustomCursor() {
         ref={outlineRef}
         className="cursor-outline"
         style={{ opacity: 0, transition: 'opacity 0.3s, width 0.2s, height 0.2s, background-color 0.2s' }}
-      />
+      >
+        <span className="cursor-label">VIEW</span>
+      </div>
     </>
   );
 }

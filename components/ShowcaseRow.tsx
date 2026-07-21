@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import TransitionLink from './motion/TransitionLink'
 import InView from './motion/InView'
 
 interface ShowcaseRowProps {
@@ -41,7 +41,7 @@ export default function ShowcaseRow({
 
   return (
     <InView as="div" className="group pb-s4">
-      <Link href={href} className="block">
+      <TransitionLink href={href} className="block" data-cursor="view">
         <div className="media-reveal relative h-[65vh] max-h-[42rem] min-h-[18rem] w-full overflow-hidden bg-surface">
           <div data-zoom className="absolute inset-0">
             {imageSrc ? (
@@ -77,7 +77,7 @@ export default function ShowcaseRow({
             aria-hidden="true"
           />
         </div>
-      </Link>
+      </TransitionLink>
     </InView>
   )
 }

@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google'
 import Loader from '@/components/Loader/Loader'
 import CustomCursor from '@/components/CustomCursor'
+import SmoothScroll from '@/components/motion/SmoothScroll'
+import TransitionProvider from '@/components/motion/TransitionProvider'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
 import './globals.css'
 
@@ -61,7 +63,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />
         <Loader />
         <CustomCursor />
-        {children}
+        <SmoothScroll />
+        <TransitionProvider>{children}</TransitionProvider>
       </body>
     </html>
   )

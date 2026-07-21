@@ -1,5 +1,6 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import TransitionLink from './motion/TransitionLink'
+import Magnetic from './motion/Magnetic'
 
 const VARIANT_CLASSES = {
   outline: 'border border-accent text-accent hover:bg-accent hover:text-bg',
@@ -8,6 +9,7 @@ const VARIANT_CLASSES = {
 
 /**
  * 統一CTA。押下の瞬間に反応する（:active scale 0.97 / 100ms — apple-design §1 Response）。
+ * カーソルに吸着し（Magnetic）、抜刀トランジションで遷移する。
  */
 export default function Button({
   href,
@@ -21,11 +23,13 @@ export default function Button({
   className?: string
 }) {
   return (
-    <Link
-      href={href}
-      className={`inline-block px-8 py-4 text-label font-mono text-center transition-all duration-300 active:scale-[0.97] active:duration-100 ${VARIANT_CLASSES[variant]} ${className}`}
-    >
-      {children}
-    </Link>
+    <Magnetic className={className}>
+      <TransitionLink
+        href={href}
+        className={`inline-block px-8 py-4 text-label font-mono text-center transition-all duration-300 active:scale-[0.97] active:duration-100 ${VARIANT_CLASSES[variant]}`}
+      >
+        {children}
+      </TransitionLink>
+    </Magnetic>
   )
 }

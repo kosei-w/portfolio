@@ -58,7 +58,7 @@ export default function Contact() {
         <div className="text-4xl mb-4 text-accent">✓</div>
         <h3 className="font-bold font-mono text-xl mb-3 text-ink">Sent.</h3>
         <p className="text-body text-ink-muted">
-          I&apos;ll get back to you within 1–2 business days.
+          送信できました。1営業日以内にご返信します。
         </p>
       </div>
     )
@@ -153,7 +153,7 @@ export default function Contact() {
 
       {status === 'error' && (
         <p className="text-sm font-mono text-accent border border-accent/30 px-4 py-3" role="alert">
-          Failed to send. Please try again later.
+          送信に失敗しました。時間をおいて再度お試しいただくか、メールで直接ご連絡ください。
         </p>
       )}
 
@@ -166,7 +166,7 @@ export default function Contact() {
       </button>
 
       <p className="text-center text-label font-mono text-ink-faint">
-        Reply within 1–2 business days.
+        1営業日以内に返信します
       </p>
     </form>
   )

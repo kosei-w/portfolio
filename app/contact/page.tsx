@@ -27,12 +27,21 @@ export default function ContactPage() {
                 <span className="reveal-line">Let&apos;s work together.</span>
               </span>
             </h1>
-            <a
-              href="mailto:Kosei.idezuka@navislab.jp"
-              className="text-meta font-mono text-ink-faint transition-colors duration-300 hover:text-accent"
-            >
-              Kosei.idezuka@navislab.jp
-            </a>
+            <p className="mb-6 max-w-md text-body text-ink-muted">
+              相談だけでも歓迎です。&ldquo;何から始めればいいか分からない&rdquo;の段階からどうぞ。
+            </p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-2 text-meta font-mono text-ink-faint">
+              <a
+                href="mailto:Kosei.idezuka@navislab.jp"
+                className="transition-colors duration-300 hover:text-accent"
+              >
+                Kosei.idezuka@navislab.jp
+              </a>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-pulse" aria-hidden="true" />
+                REPLY WITHIN 1 BUSINESS DAY
+              </span>
+            </div>
           </div>
         </InView>
 

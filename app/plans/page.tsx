@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import SectionHeading from '@/components/SectionHeading'
 import Button from '@/components/Button'
 import InView from '@/components/motion/InView'
+import TransitionLink from '@/components/motion/TransitionLink'
 
 export const metadata: Metadata = {
   title: 'Plans — Kosei Idezuka',
@@ -68,6 +68,61 @@ const plans = [
   },
 ]
 
+// 制作の流れ完全版 — 「任せて大丈夫」の可視化。お客様側の負担も先に明示する
+const processSteps = [
+  {
+    no: '01',
+    title: 'ヒアリング',
+    days: 'DAY 0',
+    you: '現状の課題とお客様像を話すだけ。資料の準備は不要です',
+    me: '"誰から問い合わせが欲しいか"を一緒に固め、構成と見積もりを提示',
+  },
+  {
+    no: '02',
+    title: '設計',
+    days: 'DAY 1–2',
+    you: '既存の素材（写真・文章）があれば共有。なくても大丈夫',
+    me: '集客導線とページ構成の設計。文章の下書き・写真の手配もこちらで',
+  },
+  {
+    no: '03',
+    title: 'デザイン',
+    days: 'DAY 2–4',
+    you: '途中経過を見て、率直なフィードバック',
+    me: '世界観と読みやすさの両立。修正は回数無制限で対応',
+  },
+  {
+    no: '04',
+    title: '実装',
+    days: 'DAY 4–6',
+    you: '公開前の最終確認',
+    me: '表示速度1秒未満・スマホ最優先で実装。AI検索対応の構造も',
+  },
+  {
+    no: '05',
+    title: '公開・運用',
+    days: 'DAY 7–',
+    you: '公開の承認',
+    me: 'ドメイン設定と公開作業。公開後サポート・保守プランで伴走',
+  },
+]
+
+// リスク逆転 — すべて既存の約束の集約（新しいコミットは作らない）
+const assurances = [
+  {
+    title: '追加費用なし',
+    desc: '見積もり提示額以外の費用は発生しません。発生しうる実費（ドメイン等）は事前にお伝えします。',
+  },
+  {
+    title: '修正は回数無制限',
+    desc: '制作期間中の修正に回数制限はありません。"なんか違う"を残したまま公開しません。',
+  },
+  {
+    title: '公開後サポート付き',
+    desc: '全プランに公開後サポート（1〜6ヶ月）が含まれます。作って終わりにしません。',
+  },
+]
+
 const maintenance = {
   price: '¥15,000',
   unit: '/月',
@@ -104,6 +159,18 @@ const faqs = [
   {
     q: '分割払いはできますか？',
     a: '基本は一括払い（前払い50%・公開時残50%）ですが、ご相談ください。状況に応じて柔軟に対応します。',
+  },
+  {
+    q: '公開後の修正や更新はいくらかかりますか？',
+    a: '各プランに公開後サポート（1〜6ヶ月）が付いており、期間中の軽微な修正は無料です。その後は保守プラン（月¥15,000）か、単発のお見積もりで対応します。"更新費が後から高かった"は起こしません。',
+  },
+  {
+    q: 'AIを使うから安い、ということですか？',
+    a: 'いいえ。AIで浮いた時間を、設計・文章・作り込みに再投資しています。「同じ予算で、より高い品質を」がAIを使う理由です。速さは、品質を削らずに手に入れています。',
+  },
+  {
+    q: '打ち合わせはオンラインですか？',
+    a: 'オンライン（Zoom等）で全国対応しています。都内近郊であれば対面のご相談も可能です。ご連絡には1営業日以内に返信します。',
   },
 ]
 
@@ -181,13 +248,64 @@ export default function PlansPage() {
             <p className="mt-6 text-meta text-ink-faint">
               ※ 表示価格はすべて税抜きです。ドメイン・ホスティング費用は別途。
             </p>
+
+            {/* リスク逆転 — 発注の恐怖を消す3つの約束 */}
+            <div className="mt-10 grid gap-px border border-line bg-line md:grid-cols-3">
+              {assurances.map((item) => (
+                <div key={item.title} className="bg-bg p-6 md:p-8">
+                  <p className="mb-2 font-mono text-sm font-medium text-ink">
+                    <span className="mr-3 text-accent">✓</span>
+                    {item.title}
+                  </p>
+                  <p className="text-meta text-ink-muted">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </InView>
+
+        {/* (01) Process — 完全版 */}
+        <InView as="section" className="rise border-t border-line px-6 py-s5 md:px-10">
+          <div className="mx-auto w-full max-w-shell">
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <SectionHeading no="01" label="PROCESS" className="mb-6" />
+                <h2 className="text-title font-display font-light tracking-jp text-ink">制作の流れ</h2>
+              </div>
+              <p className="text-meta font-mono text-ink-faint">ご連絡には1営業日以内に返信します</p>
+            </div>
+            <ol className="border-t border-line">
+              {processSteps.map((step) => (
+                <li
+                  key={step.no}
+                  className="grid gap-4 border-b border-line py-8 md:grid-cols-[200px_1fr_1fr] md:gap-10"
+                >
+                  <div>
+                    <p className="mb-2 text-label font-mono text-accent">({step.no})</p>
+                    <p className="mb-1 font-mono text-sm font-medium text-ink">{step.title}</p>
+                    <p className="text-label font-mono text-ink-faint">{step.days}</p>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-label font-mono text-ink-faint">お客様がすること</p>
+                    <p className="text-meta text-ink-muted">{step.you}</p>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-label font-mono text-ink-faint">こちらがやること</p>
+                    <p className="text-meta text-ink-muted">{step.me}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-6 text-meta text-ink-faint">
+              ※ 日数はスターター（最短7日）の目安です。スタンダードは最短10日、プレミアムは最短14日。
+            </p>
           </div>
         </InView>
 
         {/* Maintenance */}
         <InView as="section" className="rise border-t border-line px-6 py-s5 md:px-10">
           <div className="mx-auto w-full max-w-shell">
-            <SectionHeading no="01" label="MAINTENANCE" className="mb-10" />
+            <SectionHeading no="02" label="MAINTENANCE" className="mb-10" />
             <div className="grid items-start gap-16 md:grid-cols-2">
               <div>
                 <h2 className="mb-4 text-title font-display font-light text-ink">保守プラン</h2>
@@ -215,7 +333,7 @@ export default function PlansPage() {
         {/* FAQ */}
         <InView as="section" className="rise border-t border-line px-6 py-s5 md:px-10">
           <div className="mx-auto w-full max-w-shell">
-            <SectionHeading no="02" label="FAQ" className="mb-10" />
+            <SectionHeading no="03" label="FAQ" className="mb-10" />
             <div className="border-t border-line">
               {faqs.map((faq) => (
                 <details key={faq.q} className="group border-b border-line">
@@ -240,12 +358,12 @@ export default function PlansPage() {
               <br />
               まず相談を。
             </h2>
-            <Link
+            <TransitionLink
               href="/contact"
               className="shrink-0 border border-ink bg-ink px-10 py-4 text-label font-mono text-bg transition-all duration-300 hover:bg-accent hover:border-accent active:scale-[0.97] active:duration-100"
             >
               FREE CONSULTATION →
-            </Link>
+            </TransitionLink>
           </InView>
         </section>
       </main>

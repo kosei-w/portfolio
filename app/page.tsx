@@ -183,7 +183,7 @@ export default function Home() {
                 <SectionHeading no="03" label="PROCESS" className="mb-6" />
                 <h2 className="text-title font-display font-light tracking-jp text-ink">制作の流れ</h2>
               </div>
-              <p className="text-meta font-mono text-ink-faint">ご連絡には1営業日以内に返信します</p>
+              <p className="text-meta font-mono text-ink-faint">ご連絡には2営業日以内に返信します</p>
             </div>
             <ol className="grid gap-px border border-line bg-line sm:grid-cols-2 md:grid-cols-5">
               {processSteps.map((step) => (

@@ -170,7 +170,7 @@ const faqs = [
   },
   {
     q: '打ち合わせはオンラインですか？',
-    a: 'オンライン（Zoom等）で全国対応しています。都内近郊であれば対面のご相談も可能です。ご連絡には1営業日以内に返信します。',
+    a: 'オンライン（Zoom等）で全国対応しています。都内近郊であれば対面のご相談も可能です。ご連絡には2営業日以内に返信します。',
   },
 ]
 
@@ -272,7 +272,7 @@ export default function PlansPage() {
                 <SectionHeading no="01" label="PROCESS" className="mb-6" />
                 <h2 className="text-title font-display font-light tracking-jp text-ink">制作の流れ</h2>
               </div>
-              <p className="text-meta font-mono text-ink-faint">ご連絡には1営業日以内に返信します</p>
+              <p className="text-meta font-mono text-ink-faint">ご連絡には2営業日以内に返信します</p>
             </div>
             <ol className="border-t border-line">
               {processSteps.map((step) => (

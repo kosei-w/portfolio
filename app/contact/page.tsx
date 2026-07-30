@@ -39,7 +39,7 @@ export default function ContactPage() {
               </a>
               <span className="inline-flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-pulse" aria-hidden="true" />
-                REPLY WITHIN 1 BUSINESS DAY
+                REPLY WITHIN 2 BUSINESS DAYS
               </span>
             </div>
           </div>

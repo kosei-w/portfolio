@@ -58,7 +58,7 @@ export default function Contact() {
         <div className="text-4xl mb-4 text-accent">✓</div>
         <h3 className="font-bold font-mono text-xl mb-3 text-ink">Sent.</h3>
         <p className="text-body text-ink-muted">
-          送信できました。1営業日以内にご返信します。
+          送信できました。2営業日以内にご返信します。
         </p>
       </div>
     )
@@ -166,7 +166,7 @@ export default function Contact() {
       </button>
 
       <p className="text-center text-label font-mono text-ink-faint">
-        1営業日以内に返信します
+        2営業日以内に返信します
       </p>
     </form>
   )

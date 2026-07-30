@@ -130,7 +130,7 @@ export default function AboutPage() {
           <InView className="rise mx-auto flex w-full max-w-shell flex-col items-start justify-between gap-10 md:flex-row md:items-center">
             <div>
               <p className="mb-4 text-label font-mono text-ink-faint">CONTACT</p>
-              <p className="text-lead tracking-jp text-ink">相談だけでも歓迎です。1営業日以内に返信します。</p>
+              <p className="text-lead tracking-jp text-ink">相談だけでも歓迎です。2営業日以内に返信します。</p>
             </div>
             <Button href="/contact">GET IN TOUCH</Button>
           </InView>

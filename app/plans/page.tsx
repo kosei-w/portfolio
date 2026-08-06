@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import JsonLd from '@/components/JsonLd'
 import SectionHeading from '@/components/SectionHeading'
 import Button from '@/components/Button'
 import InView from '@/components/motion/InView'
@@ -174,9 +175,21 @@ const faqs = [
   },
 ]
 
+// 画面表示中のfaqs配列から生成（データの二重管理をしない）
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.q,
+    acceptedAnswer: { '@type': 'Answer', text: faq.a },
+  })),
+}
+
 export default function PlansPage() {
   return (
     <>
+      <JsonLd data={faqJsonLd} />
       <Header />
       <main>
         {/* Page header */}

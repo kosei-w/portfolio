@@ -46,7 +46,7 @@ export default function Header() {
           <TransitionLink
             href="/"
             className="font-mono text-xl font-bold leading-none tracking-[0.2em] text-ink"
-            aria-label="Kosei Idezuka — Home"
+            aria-label="KI — Kosei Idezuka, Home"
           >
             KI
           </TransitionLink>

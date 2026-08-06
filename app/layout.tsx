@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, JetBrains_Mono, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google'
 import Loader from '@/components/Loader/Loader'
 import CustomCursor from '@/components/CustomCursor'
+import JsonLd from '@/components/JsonLd'
 import SmoothScroll from '@/components/motion/SmoothScroll'
 import TransitionProvider from '@/components/motion/TransitionProvider'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
@@ -48,10 +49,38 @@ export const metadata: Metadata = {
     type: 'website',
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
   },
+}
+
+// サイトに掲載済みの事実だけをミラーする（新情報をここに足さない）
+const siteJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'Kosei Idezuka',
+      alternateName: '出塚航世',
+      jobTitle: 'Web Designer & Developer',
+      email: 'Kosei.idezuka@navislab.jp',
+      url: SITE_URL,
+      image: `${SITE_URL}/avatar.png`,
+      address: { '@type': 'PostalAddress', addressLocality: 'Tokyo', addressCountry: 'JP' },
+      knowsAbout: ['Web Design', 'Next.js', 'SEO', 'AI検索最適化（AIAO）'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      inLanguage: 'ja',
+      publisher: { '@id': `${SITE_URL}/#person` },
+    },
+  ],
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -61,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased bg-bg text-ink">
         {/* revealの初期非表示ゲート。JS無効環境ではコンテンツを隠さない */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />
+        <JsonLd data={siteJsonLd} />
         <Loader />
         <CustomCursor />
         <SmoothScroll />

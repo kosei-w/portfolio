@@ -3,9 +3,9 @@ import Section from './Section'
 
 const FACTS = [
   { term: '拠点', value: '東京' },
-  { term: '本業', value: '医療SaaS コンサルティングセールス（正社員）' },
+  { term: '会社員の仕事', value: '医療SaaS コンサルティングセールス（正社員）' },
   { term: '個人の活動', value: 'ギフトショップの共同経営／飲食店のMEO・GEO支援／STARTUP SAIL' },
-  { term: '目指すもの', value: '日本に、昼寝の文化をつくる' },
+  { term: 'やりたいこと', value: '日本発のPayPalマフィアを生むこと、シエスタの国産化' },
 ]
 
 export default function ProfileSection() {
@@ -18,7 +18,9 @@ export default function ProfileSection() {
           </Phrase>
         </p>
         <p>
-          <Phrase>いつか、日本に昼寝の文化をつくる。そこへ向かう途中を、そのまま見せるためのサイトです。</Phrase>
+          <Phrase>
+            いちばんやりたいのは、日本発のPayPalマフィアを生むことと、シエスタを日本の文化にすること。そこへ向かう途中を、そのまま見せるためのサイトです。
+          </Phrase>
         </p>
       </div>
 

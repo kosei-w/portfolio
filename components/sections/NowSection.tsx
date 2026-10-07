@@ -8,7 +8,7 @@ export default function NowSection() {
       <div className="phrase space-y-6 text-body text-ink-2 md:text-lead">
         <p>
           <Phrase>
-            本業は、医療DXを進めるSaaS企業のコンサルティングセールス。商談・提案・関係づくりを担当しています。入社した会社は、のちに上場しました。
+            会社員としての仕事は、医療DXを進めるSaaS企業のコンサルティングセールス。商談・提案・関係づくりを担当しています。入社した会社は、のちに上場しました。
           </Phrase>
         </p>
         <p>

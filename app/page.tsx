@@ -3,15 +3,14 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Stage from '@/components/stage/Stage'
 import ProfileSection from '@/components/sections/ProfileSection'
-import NowSection from '@/components/sections/NowSection'
 import StorySection from '@/components/sections/StorySection'
 import VisionSection from '@/components/sections/VisionSection'
 import ContactSection from '@/components/sections/ContactSection'
 
 const delay = (s: number) => ({ '--reveal-delay': `${s}s` }) as CSSProperties
 
-// ヒーローで「誰が・何をしている人か」まで言い切る（NOWの4項目と同じ並び）
-const ROLES = ['医療SaaS コンサルティングセールス', 'ギフトショップ 共同経営', '飲食店のMEO・GEO支援', 'STARTUP SAIL 運営']
+// ヒーローで「誰が・何をしている人か」まで言い切る（PROFILEの「活動」と同じ並び）
+const ROLES = ['医療SaaS コンサルティングセールス', 'ギフトショップ 共同経営', '飲食店のMEO・GEO支援', 'スタートアップメディア「STARTUP SAIL」運営']
 
 export default function Home() {
   return (
@@ -54,7 +53,6 @@ export default function Home() {
 
         {/* ここから写真B：霧の奥へ、背中で進んでいく */}
         <ProfileSection />
-        <NowSection />
         <StorySection />
         <VisionSection />
         <ContactSection />

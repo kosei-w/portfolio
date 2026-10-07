@@ -1,38 +1,31 @@
 import type { Metadata } from 'next'
-import { Inter, JetBrains_Mono, Noto_Sans_JP, Shippori_Mincho } from 'next/font/google'
-import Loader from '@/components/Loader/Loader'
-import CustomCursor from '@/components/CustomCursor'
+import { Geist, Geist_Mono, Zen_Kaku_Gothic_New } from 'next/font/google'
 import JsonLd from '@/components/JsonLd'
 import SmoothScroll from '@/components/motion/SmoothScroll'
-import TransitionProvider from '@/components/motion/TransitionProvider'
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
 import './globals.css'
 
-const inter = Inter({
+// 英字見出し。硬質で細部が締まったサンセリフ
+const geist = Geist({
   subsets: ['latin'],
-  weight: ['200', '300', '400', '500', '600'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500'],
+  variable: '--font-geist',
   display: 'swap',
 })
 
-const jetbrainsMono = JetBrains_Mono({
+// ラベルと数字。等幅で桁をそろえる
+const geistMono = Geist_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-jetbrains-mono',
+  weight: ['400', '500'],
+  variable: '--font-geist-mono',
   display: 'swap',
 })
 
-const notoSansJP = Noto_Sans_JP({
+// 和文。見出しも500まで（太すぎる和文は写真の繊細さとぶつかる）
+const zenKaku = Zen_Kaku_Gothic_New({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
-  variable: '--font-noto-sans-jp',
-  display: 'swap',
-})
-
-const shipporiMincho = Shippori_Mincho({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-shippori',
+  weight: ['400', '500'],
+  variable: '--font-zen-kaku',
   display: 'swap',
 })
 
@@ -55,7 +48,7 @@ export const metadata: Metadata = {
   },
 }
 
-// サイトに掲載済みの事実だけをミラーする（新情報をここに足さない）
+// サイトに掲載している事実だけをミラーする（新情報をここに足さない）
 const siteJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -64,12 +57,9 @@ const siteJsonLd = {
       '@id': `${SITE_URL}/#person`,
       name: 'Kosei Idezuka',
       alternateName: '出塚航世',
-      jobTitle: 'Web Designer & Developer',
       email: 'Kosei.idezuka@navislab.jp',
       url: SITE_URL,
-      image: `${SITE_URL}/avatar.png`,
       address: { '@type': 'PostalAddress', addressLocality: 'Tokyo', addressCountry: 'JP' },
-      knowsAbout: ['Web Design', 'Next.js', 'SEO', 'AI検索最適化（AIAO）'],
     },
     {
       '@type': 'WebSite',
@@ -86,15 +76,17 @@ const siteJsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // suppressHydrationWarning: bodyのインラインスクリプトがhydration前にjsクラスを足すため
-    <html lang="ja" className={`${inter.variable} ${jetbrainsMono.variable} ${notoSansJP.variable} ${shipporiMincho.variable}`} suppressHydrationWarning>
-      <body className="antialiased bg-bg text-ink">
+    <html
+      lang="ja"
+      className={`${geist.variable} ${geistMono.variable} ${zenKaku.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="antialiased">
         {/* revealの初期非表示ゲート。JS無効環境ではコンテンツを隠さない */}
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js')` }} />
         <JsonLd data={siteJsonLd} />
-        <Loader />
-        <CustomCursor />
         <SmoothScroll />
-        <TransitionProvider>{children}</TransitionProvider>
+        {children}
       </body>
     </html>
   )

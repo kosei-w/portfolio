@@ -13,7 +13,8 @@ export default function SmoothScroll() {
     if (!window.matchMedia('(pointer: fine)').matches) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const lenis = new Lenis({ autoRaf: true })
+    // anchors: 目次のページ内リンクもLenisでなめらかに移動させる
+    const lenis = new Lenis({ autoRaf: true, anchors: true })
     return () => lenis.destroy()
   }, [])
 

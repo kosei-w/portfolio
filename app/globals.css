@@ -1,449 +1,299 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN TOKENS — 黄泉ワールド（Yomi-Strike）
-   Source of truth: DESIGN.md / loader.css の視覚言語
+   DESIGN TOKENS — 開拓進行形（霧の宇宙飛行士）
+   Source of truth: DESIGN.md
+   色は霧のグラファイト1色＋白の不透明度3段。強い色は dawn だけ。
    ============================================================ */
 
 @theme {
   /* ── Color ── */
-  --color-bg: #0A0A0A;
-  --color-surface: #141414;
-  --color-line: rgba(255, 255, 255, 0.08);
-  --color-ink: #E8E6E0;
-  --color-ink-muted: rgba(255, 255, 255, 0.62);
-  --color-ink-faint: rgba(255, 255, 255, 0.45);
-  --color-accent: #E53935;
-  --color-accent-hot: #FF3B30;
+  --color-bg: #0c0d0f;
+  --color-ink: rgba(255, 255, 255, 0.88);
+  --color-ink-2: rgba(255, 255, 255, 0.72);
+  --color-ink-3: rgba(255, 255, 255, 0.5);
+  --color-line: rgba(255, 255, 255, 0.14);
+  --color-dawn: #ff7a3d;
 
-  /* ── Type scale（lh/lsを内包 — text-*一発でトラッキングまで揃う） ── */
+  /* ── Type scale（lh/lsを内包） ── */
   --text-label: 0.6875rem;
   --text-label--line-height: 1.6;
-  --text-label--letter-spacing: 0.3em;
-  --text-meta: 0.75rem;
-  --text-meta--line-height: 1.6;
-  --text-meta--letter-spacing: 0.15em;
+  --text-label--letter-spacing: 0.24em;
   --text-body: 0.9375rem;
-  --text-body--line-height: 1.8;
-  --text-body--letter-spacing: 0.02em;
-  --text-lead: clamp(1.125rem, 1.6vw, 1.375rem);
-  --text-lead--line-height: 1.6;
-  --text-lead--letter-spacing: 0;
-  --text-title: clamp(2rem, 4.5vw, 3.5rem);
-  --text-title--line-height: 1.1;
-  --text-title--letter-spacing: -0.02em;
-  --text-display: clamp(3rem, 9vw, 8rem);
-  --text-display--line-height: 1;
-  --text-display--letter-spacing: -0.03em;
-  --text-counter: clamp(2.5rem, 6vw, 5rem);
-  --text-counter--line-height: 1;
-  --text-counter--letter-spacing: -0.03em;
+  --text-body--line-height: 2;
+  --text-body--letter-spacing: 0.04em;
+  --text-lead: clamp(0.9375rem, 1.3vw, 1.125rem);
+  --text-lead--line-height: 1.9;
+  --text-lead--letter-spacing: 0.04em;
+  /* 英字の見出し（Geist）。ヒーローの一文とセクション名 */
+  --text-statement: clamp(3rem, 8.4vw, 8rem);
+  --text-statement--line-height: 0.98;
+  --text-statement--letter-spacing: -0.045em;
+  --text-title: clamp(2.5rem, 6vw, 5rem);
+  --text-title--line-height: 1;
+  --text-title--letter-spacing: -0.04em;
+  /* 和文の見出し（Zen Kaku Gothic New 500） */
+  --text-headline: clamp(1.375rem, 2.4vw, 2rem);
+  --text-headline--line-height: 1.55;
+  --text-headline--letter-spacing: 0.04em;
 
-  /* ── Spacing rhythm（セクション縦リズムは s5/s6） ── */
-  --spacing-s1: 0.5rem;
-  --spacing-s2: 1rem;
-  --spacing-s3: 2rem;
-  --spacing-s4: clamp(2.5rem, 5vw, 4rem);
-  --spacing-s5: clamp(4rem, 9vw, 8rem);
-  --spacing-s6: clamp(6rem, 13vw, 12rem);
 
-  /* ── Tracking（和文見出し用 — 和欧混植ルール） ── */
-  --tracking-jp: 0.06em;
-
-  /* ── Container / Motion ── */
-  --container-shell: 75rem;
+  /* ── Motion ── */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-strike: cubic-bezier(0.16, 0.84, 0.2, 1);
   --default-transition-timing-function: var(--ease-out-expo);
 }
 
 @theme inline {
-  --font-mono: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
-  --font-sans: var(--font-noto-sans-jp), sans-serif;
-  --font-display: var(--font-inter), 'Inter', sans-serif;
-  --font-serif: var(--font-shippori), 'Shippori Mincho', serif;
+  --font-sans: var(--font-zen-kaku), sans-serif;
+  --font-display: var(--font-geist), sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 :root {
-  --z-nav: 1000;
-  --z-transition: 5000;
-  --z-loader: 9999;
-  --z-cursor: 99999;
-  --glow-accent: 0 0 14px rgba(229, 57, 53, 0.85), 0 0 36px rgba(229, 57, 53, 0.5);
+  --z-scene: 0;
+  --z-content: 10;
+  --z-nav: 100;
 }
 
 /* ============================================================
    BASE
    ============================================================ */
 
-/* リセットはTailwind preflightに委譲（unlayeredの自前リセットは@layer utilitiesを潰すため置かない） */
-
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+}
+/* Lenisが動かない環境（タッチ端末）でも目次のリンクはなめらかに */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-ink);
-  font-family: var(--font-noto-sans-jp), sans-serif;
+  font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-accent);
+  background: rgba(255, 255, 255, 0.88);
   color: var(--color-bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
+  outline: 1px solid var(--color-ink);
+  outline-offset: 4px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
-
-/* ============================================================
-   LOADER BODY CONTRACT — Loader.tsx が toggle する（セレクタ変更禁止）
-   ============================================================ */
-
-body.is-loading { overflow: hidden; }
-body.is-loading main { opacity: 0; }
-
-@media (prefers-reduced-motion: no-preference) {
-  body:not(.is-loading) main {
-    animation: contentIn 0.8s var(--ease-out-expo) both;
-  }
-}
-@keyframes contentIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* reduced-motion時はloader自体がdisplay:none（loader.css）のため、
-   シーケンス中もコンテンツを隠さない（9秒白画面バグの修正） */
-@media (prefers-reduced-motion: reduce) {
-  body.is-loading main { opacity: 1; }
-  body.is-loading { overflow: auto; }
+/* 見出しは文節単位で折る（BudouXの<wbr>と併用。対応ブラウザはauto-phraseが効く） */
+.phrase {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  word-break: auto-phrase;
+  text-wrap: balance;
 }
 
 /* ============================================================
-   MOTION PRIMITIVES — ローダーと同じ機構（クラストグル＋transition）
-   初期非表示は「html.js（スクリプト実行済）× motion可」の時だけ。
-   JS死亡・reduced-motion・SSR素のHTMLでは常に全文表示。
-   駆動: components/motion/InView（.is-inview付与）/ ローダー契約（.hero-reveal）
+   STAGE — 画面に固定した背景（components/stage/Stage.tsx）
+   写真A（柱）→ B（背中で奥へ）の転換、霧、夜明け。文章はこの上を流れる。
+   Stage.tsx が --t / --walk / --dawn を書き込み、ここで transform / opacity に変換する
    ============================================================ */
 
-/* テキストreveal — 下から突き上げ（ローダーVisionと同じ動き） */
-.reveal-wrap {
-  display: inline-flex;
-  overflow: hidden;
-  vertical-align: bottom;
-}
-.reveal-line { display: inline-block; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .js .reveal-line {
-    transform: translateY(120%);
-    transition: transform 1.1s var(--ease-out-expo);
-    transition-delay: var(--reveal-delay, 0s);
-    will-change: transform;
-  }
-  .js .is-inview .reveal-line,
-  .js .reveal-line.is-inview,
-  .js body:not(.is-loading) .hero-reveal .reveal-line {
-    transform: translateY(0);
-  }
-
-  /* heroはInViewでなくローダー契約（body.is-loading解除）で一斉振り付け */
-  .js body.is-loading .hero-reveal .strike-line { transform: scaleX(0); }
-  .js body:not(.is-loading) .hero-reveal .strike-line { transform: scaleX(1); }
-  .js body:not(.is-loading) .hero-reveal .rise { opacity: 1; transform: translateY(0); }
-
-  /* フェード+リフト（汎用ブロック） */
-  .js .rise {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
-    transition-delay: var(--reveal-delay, 0s);
-  }
-  .js .rise.is-inview,
-  .js .is-inview .rise {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* 画像reveal — clip-pathワイプ + 内側ズーム戻し（ズームは[data-zoom]ラッパー。
-     img自体のhover zoomユーティリティとtransform競合させない） */
-  .js .media-reveal {
-    clip-path: inset(100% 0 0 0);
-    transition: clip-path 1.2s var(--ease-out-expo);
-    transition-delay: var(--reveal-delay, 0s);
-  }
-  .js .media-reveal [data-zoom] {
-    transform: scale(1.06);
-    transition: transform 1.4s var(--ease-out-expo);
-  }
-  .js .media-reveal.is-inview,
-  .js .is-inview .media-reveal {
-    clip-path: inset(0 0 0 0);
-  }
-  .js .media-reveal.is-inview [data-zoom],
-  .js .is-inview .media-reveal [data-zoom] {
-    transform: scale(1);
-  }
-
-  /* 赤の一閃 — scaleXストライク（ローダーstreakと同言語） */
-  .js .strike-line {
-    transform: scaleX(0);
-    transition: transform 0.9s var(--ease-strike);
-    transition-delay: var(--reveal-delay, 0s);
-  }
-  .js .strike-line.is-inview,
-  .js .is-inview .strike-line {
-    transform: scaleX(1);
-  }
-}
-
-/* strike-lineの見た目（motion設定に関わらず常に描画） */
-.strike-line {
-  display: block;
-  height: 2px;
-  width: 100%;
-  transform-origin: left center;
-  background: linear-gradient(90deg,
-    rgba(229, 57, 53, 0)   0%,
-    rgba(229, 57, 53, 0.6) 8%,
-    #FF3B30                55%,
-    #FFFFFF                92%,
-    rgba(255, 255, 255, 0) 100%);
-  box-shadow: var(--glow-accent);
-}
-
-/* ============================================================
-   PAGE TRANSITION — 抜刀（TransitionProvider が stage-* を付与）
-   ローダーの sweep/split と同じ言語：一閃→パネル閉→分割して開帳
-   ============================================================ */
-
-.page-transition {
+.stage {
+  --t: 0;
+  --walk: 0;
+  --dawn: 0;
   position: fixed;
   inset: 0;
-  z-index: var(--z-transition);
-  visibility: hidden;
-  pointer-events: none;
-}
-.page-transition.stage-covering,
-.page-transition.stage-covered {
-  visibility: visible;
-  pointer-events: auto; /* 遷移中の誤クリック防止 */
-}
-.page-transition.stage-revealing {
-  visibility: visible;
-}
-
-.pt-panel {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 50.2%; /* 中央で僅かに重ね、シーム抜け防止 */
+  z-index: var(--z-scene);
+  overflow: hidden;
   background: var(--color-bg);
-  transform: scaleY(0);
 }
-.pt-top { top: 0; transform-origin: center top; }
-.pt-bottom { bottom: 0; transform-origin: center bottom; }
 
-.pt-strike {
+.scene,
+.scene-move {
   position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  margin-top: -1px;
-  background: linear-gradient(90deg,
-    rgba(229, 57, 53, 0)   0%,
-    rgba(229, 57, 53, 0.6) 8%,
-    #FF3B30                55%,
-    #FFFFFF                92%,
-    rgba(255, 255, 255, 0) 100%);
-  box-shadow: var(--glow-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
+  inset: 0;
+}
+.scene-img {
+  object-fit: cover;
 }
 
-.stage-covering .pt-strike,
-.stage-covered .pt-strike {
-  transform: scaleX(1);
-  transition: transform 0.3s var(--ease-strike);
+/* A：ヒーロー。スクロールで手前へ抜けるように拡大しながら消える */
+.scene-a {
+  opacity: calc(1 - var(--t));
+  transform: scale(calc(1 + var(--t) * 0.28));
 }
-.stage-covering .pt-panel,
-.stage-covered .pt-panel {
-  transform: scaleY(1);
-  transition: transform 0.32s var(--ease-out-expo) 0.14s;
+.scene-a .scene-img {
+  object-position: 50% 38%;
 }
 
-.stage-revealing .pt-panel {
-  transform: scaleY(0);
-  transition: transform 0.6s var(--ease-out-expo);
+/* B：霧の中から現れ、スクロールに合わせて奥へ寄っていく（背中を追うカメラ） */
+.scene-b {
+  opacity: var(--t);
+  transform: scale(calc(1.14 - var(--t) * 0.14 + var(--walk) * 0.22));
+  transform-origin: 50% 58%;
 }
-.stage-revealing .pt-strike {
-  transform: scaleX(1);
+.scene-b .scene-img {
+  object-position: 50% 60%;
+}
+
+/* 読み込めた写真からフェードイン（JSが動く環境だけ隠しておく） */
+.js .scene .scene-move {
   opacity: 0;
-  transition: opacity 0.45s ease 0.1s;
+  transition: opacity 1.6s var(--ease-out-expo);
 }
-
-/* ============================================================
-   CUSTOM CURSOR
-   ============================================================ */
-
-@media (pointer: fine) {
-  body, a, button, input, textarea { cursor: none; }
-}
-/* reduced-motionではネイティブカーソルに戻す（CustomCursor側も非表示化） */
-@media (prefers-reduced-motion: reduce) {
-  body, a, button, input, textarea { cursor: auto; }
-}
-
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: var(--z-cursor);
-  transition: background-color 0.2s;
-}
-
-.cursor-outline {
-  position: fixed;
-  top: 0; left: 0;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(229, 57, 53, 0.5);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: var(--z-cursor);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
-}
-
-.cursor-outline.hover {
-  width: 48px;
-  height: 48px;
-  background-color: rgba(229, 57, 53, 0.1);
-}
-
-/* メディアリンク上（[data-cursor="view"]）: 赤円+VIEWラベルに拡大 */
-.cursor-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.cursor-outline.view {
-  width: 72px;
-  height: 72px;
-  border-color: transparent;
-  background-color: rgba(229, 57, 53, 0.92);
-}
-.cursor-outline.view .cursor-label {
+.js .scene[data-loaded] .scene-move {
   opacity: 1;
 }
 
-/* ============================================================
-   SITE HEADER — 固定高さ・スクロールでマテリアル化（scroll edge effect）
-   ============================================================ */
-
-.site-header {
-  background: transparent;
-  transition: background-color 0.5s var(--ease-out-expo);
-}
-.site-header[data-scrolled] {
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-}
-/* ハードボーダーの代わりに下端フェード */
-.site-header::after {
-  content: '';
+/* 夜明け：写真はモノクロのまま、惑星と地平線のあたりにだけ光を重ねる。サイトで唯一の色 */
+.dawn {
   position: absolute;
-  left: 0; right: 0; top: 100%;
-  height: 24px;
-  pointer-events: none;
-  background: linear-gradient(rgba(10, 10, 10, 0.55), transparent);
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-out-expo);
+  inset: 0;
+  opacity: var(--dawn);
+  /* 地平線（宇宙飛行士の背後）から横に広がる光の帯。screenで重ねて、写真の暗部は濁らせない */
+  background:
+    radial-gradient(ellipse 95% 16% at 50% 47%, rgba(255, 122, 61, 0.55), transparent 70%),
+    radial-gradient(ellipse 140% 40% at 50% 44%, rgba(255, 122, 61, 0.18), transparent 70%);
+  mix-blend-mode: screen;
 }
-.site-header[data-scrolled]::after { opacity: 1; }
 
-@media (prefers-reduced-transparency: reduce) {
-  .site-header[data-scrolled] {
-    background: var(--color-bg);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+/* 霧：横に継ぎ目なくループするテクスチャ（scripts/prepare-images.mjs）を2層、速さを変えて流す */
+.fog {
+  --fog-h: 60vh;
+  position: absolute;
+  left: 0;
+  width: calc(var(--fog-h) * 8);
+  height: var(--fog-h);
+  background: url('/images/fog.webp') repeat-x;
+  background-size: calc(var(--fog-h) * 4) 100%;
+  pointer-events: none;
+}
+.fog-far {
+  bottom: 18vh;
+  opacity: 0.28;
+}
+.fog-near {
+  --fog-h: 80vh;
+  bottom: -14vh;
+  opacity: calc(0.22 + var(--walk) * 0.18);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fog-far { animation: fog-drift 140s linear infinite; }
+  .fog-near { animation: fog-drift 80s linear infinite reverse; }
+  .js .scene-a .scene-move { animation: breathe 24s ease-in-out infinite alternate; }
+}
+@keyframes fog-drift {
+  to { transform: translateX(calc(var(--fog-h) * -4)); }
+}
+/* ヒーローの静かな寄り。往復なので継ぎ目が出ない */
+@keyframes breathe {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+/* 動きを減らす設定：寄り・抜けは止め、シーンは重なりの入れ替え（クロスフェード）だけ */
+@media (prefers-reduced-motion: reduce) {
+  .scene-a,
+  .scene-b {
+    transform: none;
   }
 }
 
-/* モバイルメニュー — ハンバーガー起点のサークル展開（空間的整合） */
-.mobile-menu {
-  clip-path: circle(0% at calc(100% - 2.75rem) 2.5rem);
-  transition: clip-path 0.7s var(--ease-out-expo);
+/* ヒーローより下は文字量が増えるので、シーン転換に合わせて写真を一段落とす */
+.stage-dim {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
+  background: var(--color-bg);
+  opacity: calc(var(--t) * 0.38);
+}
+
+/* 文字を読ませるための減光。四隅と下、デスクトップでは文章が乗る左側も落とす */
+.stage-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 70% at 55% 40%, transparent 35%, rgba(6, 7, 8, 0.7) 100%),
+    linear-gradient(to bottom, rgba(6, 7, 8, 0.35) 0%, transparent 18%, transparent 52%, rgba(6, 7, 8, 0.82) 100%);
+}
+@media (min-width: 768px) {
+  .stage-shade {
+    background:
+      radial-gradient(ellipse 80% 70% at 55% 40%, transparent 35%, rgba(6, 7, 8, 0.7) 100%),
+      linear-gradient(to right, rgba(6, 7, 8, 0.55) 0%, transparent 55%),
+      linear-gradient(to bottom, rgba(6, 7, 8, 0.35) 0%, transparent 18%, transparent 60%, rgba(6, 7, 8, 0.75) 100%);
+  }
+}
+
+.content-layer {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+/* スマホの目次（components/MobileMenu.tsx） */
+.mobile-menu {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-out-expo), visibility 0s linear 0.5s;
 }
 .mobile-menu[data-open] {
-  clip-path: circle(150% at calc(100% - 2.75rem) 2.5rem);
-  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s var(--ease-out-expo);
 }
-@media (prefers-reduced-motion: reduce) {
-  .mobile-menu {
-    clip-path: none;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .mobile-menu[data-open] { opacity: 1; }
+
+/* 目次リンクで飛んだとき、固定ヘッダーの下に見出しが隠れないように */
+.content-layer section[id] {
+  scroll-margin-top: 4.5rem;
 }
 
 /* ============================================================
-   NAV LINK — 2枚重ね完全スワップ（accent色が下からせり上がる）
+   MOTION PRIMITIVES — 初期非表示は html.js × motion可 のときだけ
    ============================================================ */
 
-.nav-link {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  text-decoration: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .js .nav-link { color: transparent; }
-  .js .nav-link::before,
-  .js .nav-link::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    transition: transform 0.4s var(--ease-out-expo);
+  .js .rise {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.9s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0s);
   }
-  .js .nav-link::before {
-    color: var(--color-accent);
-    transform: translateY(100%);
-  }
-  .js .nav-link::after {
-    color: var(--color-ink-faint);
+  .js .rise.is-inview,
+  .js .is-inview .rise,
+  .js.is-ready .hero .rise {
+    opacity: 1;
     transform: translateY(0);
   }
-  .js .nav-link:hover::before,
-  .js .nav-link:focus-visible::before { transform: translateY(0); }
-  .js .nav-link:hover::after,
-  .js .nav-link:focus-visible::after { transform: translateY(-100%); }
 }
 
+/* 下へ続く合図。1.8秒で1周、継ぎ目なく流れる線 */
+.scroll-cue {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background: var(--color-line);
+}
+.scroll-cue::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
+  transform: translateY(-100%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue::after {
+    animation: cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+}
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}

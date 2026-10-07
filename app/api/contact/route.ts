@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getResend, CONTACT_TO } from '@/lib/resend'
 
-const ALLOWED_PLANS = ['starter', 'standard', 'premium', 'undecided'] as const
-type AllowedPlan = typeof ALLOWED_PLANS[number]
-
 const FIELD_LIMITS = {
   name: 100,
-  company: 100,
   email: 254,
   message: 2000,
 } as const
 
 type ContactBody = {
   name: string
-  company?: string
   email: string
-  plan?: string
   message?: string
 }
 
@@ -68,7 +62,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { name, company, email, plan, message } = body
+  const { name, email, message } = body
 
   if (!name?.trim() || !email?.trim()) {
     return NextResponse.json({ error: 'name and email are required' }, { status: 400 })
@@ -86,23 +80,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'email is too long' }, { status: 400 })
   }
 
-  if (company && company.length > FIELD_LIMITS.company) {
-    return NextResponse.json({ error: 'company is too long' }, { status: 400 })
-  }
-
   if (message && message.length > FIELD_LIMITS.message) {
     return NextResponse.json({ error: 'message is too long' }, { status: 400 })
-  }
-
-  if (plan && !ALLOWED_PLANS.includes(plan as AllowedPlan)) {
-    return NextResponse.json({ error: 'Invalid plan value' }, { status: 400 })
-  }
-
-  const planLabel: Record<AllowedPlan, string> = {
-    starter: 'スターター ¥128,000〜',
-    standard: 'スタンダード ¥198,000〜',
-    premium: 'プレミアム ¥350,000〜',
-    undecided: 'まだ決めていない',
   }
 
   try {
@@ -110,15 +89,13 @@ export async function POST(req: NextRequest) {
     await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: CONTACT_TO,
-      subject: `【HP制作相談】${name}様より`,
+      subject: `【ポートフォリオ】${name}様よりメッセージ`,
       html: `
         <h2>新しいお問い合わせが届きました</h2>
         <table style="border-collapse:collapse;width:100%">
           <tr><td style="padding:8px;font-weight:bold;width:120px">お名前</td><td style="padding:8px">${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold">会社名</td><td style="padding:8px">${company ? escapeHtml(company) : '—'}</td></tr>
           <tr><td style="padding:8px;font-weight:bold">メール</td><td style="padding:8px">${escapeHtml(email)}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold">プラン</td><td style="padding:8px">${plan ? planLabel[plan as AllowedPlan] : '—'}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold;vertical-align:top">ご要望</td><td style="padding:8px;white-space:pre-wrap">${message ? escapeHtml(message) : '—'}</td></tr>
+          <tr><td style="padding:8px;font-weight:bold;vertical-align:top">メッセージ</td><td style="padding:8px;white-space:pre-wrap">${message ? escapeHtml(message) : '—'}</td></tr>
         </table>
       `,
     })
@@ -126,14 +103,13 @@ export async function POST(req: NextRequest) {
     await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
-      subject: 'お問い合わせありがとうございます — Kosei',
+      subject: 'メッセージありがとうございます — 出塚航世',
       html: `
         <p>${escapeHtml(name)} 様</p>
-        <p>お問い合わせいただき、ありがとうございます。<br>
-        1〜2営業日以内にご連絡いたします。</p>
-        <p>少しお待ちください😊</p>
+        <p>メッセージをありがとうございます。<br>
+        2営業日以内に返信します。</p>
         <hr>
-        <p style="color:#6b7280;font-size:12px">Kosei | HP制作</p>
+        <p style="color:#6b7280;font-size:12px">出塚航世 / Kosei Idezuka</p>
       `,
     })
 

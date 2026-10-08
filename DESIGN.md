@@ -4,7 +4,7 @@
 
 ## コンセプト
 
-霧の中の宇宙飛行士。光の柱を背に身を潜める（写真A）→ スクロールで霧の奥の惑星へ、背中で進んでいく（写真B）。
+霧の中の宇宙飛行士。光の柱の間に立つ（写真A）→ スクロールで霧の奥の惑星へ、背中で進んでいく（写真B）。
 人物サイト（ポートフォリオ）として、**最初の画面で「誰が・何をしている人か」まで言い切る**。
 
 ## 構成（1ページ）
@@ -64,5 +64,8 @@
 
 ## 素材
 
-- 写真A・B：Alex Shuper（Unsplash License）。元データは `assets-src/`（git管理外）、`node scripts/prepare-images.mjs` で `public/images/` と `app/opengraph-image.jpg` を書き出す
-- フッターに「PHOTOS: ALEX SHUPER / UNSPLASH」を残す
+- 写真A（柱）：Alex Shuper（Unsplash License）。フッターに「PHOTOS: ALEX SHUPER / UNSPLASH」を残す
+- 写真B（背中）：画像生成AIで作ったオリジナル（`assets-src/ai-walk.png`、1086px）。書き出し時に2倍へ拡大する
+  - 横長の画面は縦78%の位置で切り取る（歩く全身と奥の光が入る。惑星は縦長の画面でだけ見える）
+  - 夜明けの光（`.dawn`）は、写真Bの地平線が光っている位置に合わせる（PC 60%/57%、スマホ 66%/68%）
+- 元データは `assets-src/`（git管理外）。`node scripts/prepare-images.mjs` で `public/images/` と `app/opengraph-image.jpg` を書き出す

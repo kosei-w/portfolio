@@ -145,10 +145,12 @@ body {
 .scene-b {
   opacity: var(--t);
   transform: scale(calc(1.14 - var(--t) * 0.14 + var(--walk) * 0.22));
-  transform-origin: 50% 58%;
+  /* 寄っていく先は、宇宙飛行士の背中とその奥の光 */
+  transform-origin: 50% 72%;
 }
+/* 横長の画面では、歩く全身と奥の光が入る高さで切り取る（惑星は縦長の画面でだけ見える） */
 .scene-b .scene-img {
-  object-position: 50% 60%;
+  object-position: 50% 78%;
 }
 
 /* 読み込めた写真からフェードイン（JSが動く環境だけ隠しておく） */
@@ -165,11 +167,20 @@ body {
   position: absolute;
   inset: 0;
   opacity: var(--dawn);
-  /* 地平線（宇宙飛行士の背後）から横に広がる光の帯。screenで重ねて、写真の暗部は濁らせない */
+  /* 地平線（宇宙飛行士の右奥で霧が光っているところ）から横に広がる光の帯。
+     screenで重ねて、写真の暗部は濁らせない。位置は写真Bの光の位置に合わせる */
+  --dawn-x: 66%;
+  --dawn-y: 68%;
   background:
-    radial-gradient(ellipse 95% 16% at 50% 47%, rgba(255, 122, 61, 0.55), transparent 70%),
-    radial-gradient(ellipse 140% 40% at 50% 44%, rgba(255, 122, 61, 0.18), transparent 70%);
+    radial-gradient(ellipse 95% 16% at var(--dawn-x) var(--dawn-y), rgba(255, 122, 61, 0.55), transparent 70%),
+    radial-gradient(ellipse 140% 40% at var(--dawn-x) calc(var(--dawn-y) - 3%), rgba(255, 122, 61, 0.18), transparent 70%);
   mix-blend-mode: screen;
+}
+@media (min-width: 768px) {
+  .dawn {
+    --dawn-x: 60%;
+    --dawn-y: 57%;
+  }
 }
 
 /* 霧：横に継ぎ目なくループするテクスチャ（scripts/prepare-images.mjs）を2層、速さを変えて流す */

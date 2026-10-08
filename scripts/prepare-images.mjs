@@ -13,17 +13,17 @@ const OUT = 'public/images'
 const PHOTOS = [
   // Unsplash License / Alex Shuper — https://unsplash.com/photos/JA14fUcNKFE
   { src: 'assets-src/unsplash-JA14fUcNKFE-pillars.jpg', out: 'scene-pillars.jpg' },
-  // Unsplash License / Alex Shuper — https://unsplash.com/photos/wJZb5F1qANc
-  { src: 'assets-src/unsplash-wJZb5F1qANc-walk.jpg', out: 'scene-walk.jpg' },
+  // 画像生成AIで作ったオリジナル（霧の奥の惑星へ歩く背中）。元が1086pxと小さいので2倍に拡大する
+  { src: 'assets-src/ai-walk.png', out: 'scene-walk.jpg', upscale: true },
 ]
 
 const CONTRAST = 1.12
 const PHOTO_WIDTH = 2400
 const PHOTO_QUALITY = 84
 
-async function bakeMonochrome({ src, out }) {
+async function bakeMonochrome({ src, out, upscale = false }) {
   await sharp(src)
-    .resize({ width: PHOTO_WIDTH, withoutEnlargement: true })
+    .resize({ width: PHOTO_WIDTH, withoutEnlargement: !upscale, kernel: 'lanczos3' })
     .grayscale()
     .linear(CONTRAST, -(CONTRAST - 1) * 128)
     .toColourspace('b-w')

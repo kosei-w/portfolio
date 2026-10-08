@@ -17,3 +17,6 @@
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 素材の元データ（加工前・大容量。scripts/prepare-images.mjs の入力）
+/assets-src/

@@ -1,148 +1,321 @@
 @import "tailwindcss";
 
+/* ============================================================
+   DESIGN TOKENS — 開拓進行形（霧の宇宙飛行士）
+   Source of truth: DESIGN.md
+   色は霧のグラファイト1色＋白の不透明度3段。強い色は dawn だけ。
+   ============================================================ */
+
 @theme {
-  --color-dark-bg: #0A0A0A;
-  --color-dark-surface: #141414;
-  --color-dark-border: rgba(255,255,255,0.06);
-  --color-accent: #D85A30;
-  --color-text-primary: #E8E6E0;
+  /* ── Color ── */
+  --color-bg: #0c0d0f;
+  --color-ink: rgba(255, 255, 255, 0.88);
+  --color-ink-2: rgba(255, 255, 255, 0.72);
+  --color-ink-3: rgba(255, 255, 255, 0.5);
+  --color-line: rgba(255, 255, 255, 0.14);
+  --color-dawn: #ff7a3d;
+
+  /* ── Type scale（lh/lsを内包） ── */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.6;
+  --text-label--letter-spacing: 0.24em;
+  --text-body: 0.9375rem;
+  --text-body--line-height: 2;
+  --text-body--letter-spacing: 0.04em;
+  --text-lead: clamp(0.9375rem, 1.3vw, 1.125rem);
+  --text-lead--line-height: 1.9;
+  --text-lead--letter-spacing: 0.04em;
+  /* 英字の見出し（Geist）。ヒーローの一文とセクション名 */
+  --text-statement: clamp(3rem, 8.4vw, 8rem);
+  --text-statement--line-height: 0.98;
+  --text-statement--letter-spacing: -0.045em;
+  --text-title: clamp(2.5rem, 6vw, 5rem);
+  --text-title--line-height: 1;
+  --text-title--letter-spacing: -0.04em;
+  /* 和文の見出し（Zen Kaku Gothic New 500） */
+  --text-headline: clamp(1.375rem, 2.4vw, 2rem);
+  --text-headline--line-height: 1.55;
+  --text-headline--letter-spacing: 0.04em;
+
+
+  /* ── Motion ── */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --default-transition-timing-function: var(--ease-out-expo);
+}
+
+@theme inline {
+  --font-sans: var(--font-zen-kaku), sans-serif;
+  --font-display: var(--font-geist), sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 :root {
-  /* Dark theme */
-  --c-bg:        #0A0A0A;
-  --c-surface:   #141414;
-  --c-border:    rgba(255,255,255,0.06);
-  --c-accent:    #D85A30;
-  --c-text:      #E8E6E0;
-  --c-muted:     rgba(255,255,255,0.4);
-  --c-subtle:    rgba(255,255,255,0.15);
-
-  --f-mono:  var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
-  --f-sans:  var(--font-noto-sans-jp), sans-serif;
-
-  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-
-  --container-max: 1200px;
-
-  --z-cursor: 99999;
-  --z-loader: 9000;
-  --z-nav:    1000;
+  --z-scene: 0;
+  --z-content: 10;
+  --z-nav: 100;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ============================================================
+   BASE
+   ============================================================ */
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+}
+/* Lenisが動かない環境（タッチ端末）でも目次のリンクはなめらかに */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
-  background-color: var(--c-bg);
-  color: var(--c-text);
-  font-family: var(--f-sans);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--c-accent);
-  color: var(--c-bg);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--color-bg);
 }
 
-/* ─── Fade-in animations ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+:focus-visible {
+  outline: 1px solid var(--color-ink);
+  outline-offset: 4px;
 }
 
-.fade-up {
-  animation: fadeUp 0.7s var(--ease-out-expo) both;
+/* 見出しは文節単位で折る（BudouXの<wbr>と併用。対応ブラウザはauto-phraseが効く） */
+.phrase {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  word-break: auto-phrase;
+  text-wrap: balance;
 }
-.fade-up-1 { animation-delay: 0.1s; }
-.fade-up-2 { animation-delay: 0.25s; }
-.fade-up-3 { animation-delay: 0.4s; }
-.fade-up-4 { animation-delay: 0.55s; }
-.fade-up-5 { animation-delay: 0.7s; }
 
-/* ─── Custom Cursor ─── */
-@media (pointer: fine) {
-  body, a, button, input, textarea {
-    cursor: none;
+/* 白地に黒文字の帯。行ごとに帯を切り直す（折り返しても1行ずつ箱になる）。
+   サイトで唯一のベタ面なので、使うのはPROFILEのリードだけ */
+.lead-inverse {
+  background: #f2f2f0;
+  color: var(--color-bg);
+  padding: 0.12em 0.4em;
+  line-height: 1.9;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ============================================================
+   STAGE — 画面に固定した背景（components/stage/Stage.tsx）
+   写真A（柱）→ B（背中で奥へ）の転換、霧、夜明け。文章はこの上を流れる。
+   Stage.tsx が --t / --walk / --dawn を書き込み、ここで transform / opacity に変換する
+   ============================================================ */
+
+.stage {
+  --t: 0;
+  --walk: 0;
+  --dawn: 0;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scene);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.scene,
+.scene-move {
+  position: absolute;
+  inset: 0;
+}
+.scene-img {
+  object-fit: cover;
+}
+
+/* A：ヒーロー。スクロールで手前へ抜けるように拡大しながら消える */
+.scene-a {
+  opacity: calc(1 - var(--t));
+  transform: scale(calc(1 + var(--t) * 0.28));
+}
+.scene-a .scene-img {
+  object-position: 50% 38%;
+}
+
+/* B：霧の中から現れ、スクロールに合わせて奥へ寄っていく（背中を追うカメラ） */
+.scene-b {
+  opacity: var(--t);
+  transform: scale(calc(1.14 - var(--t) * 0.14 + var(--walk) * 0.22));
+  /* 寄っていく先は、宇宙飛行士の背中とその奥の光 */
+  transform-origin: 50% 72%;
+}
+/* 横長の画面では、歩く全身と奥の光が入る高さで切り取る（惑星は縦長の画面でだけ見える） */
+.scene-b .scene-img {
+  object-position: 50% 78%;
+}
+
+/* 読み込めた写真からフェードイン（JSが動く環境だけ隠しておく） */
+.js .scene .scene-move {
+  opacity: 0;
+  transition: opacity 1.6s var(--ease-out-expo);
+}
+.js .scene[data-loaded] .scene-move {
+  opacity: 1;
+}
+
+/* 夜明け：写真はモノクロのまま、惑星と地平線のあたりにだけ光を重ねる。サイトで唯一の色 */
+.dawn {
+  position: absolute;
+  inset: 0;
+  opacity: var(--dawn);
+  /* 地平線（宇宙飛行士の右奥で霧が光っているところ）から横に広がる光の帯。
+     screenで重ねて、写真の暗部は濁らせない。位置は写真Bの光の位置に合わせる */
+  --dawn-x: 66%;
+  --dawn-y: 68%;
+  background:
+    radial-gradient(ellipse 95% 16% at var(--dawn-x) var(--dawn-y), rgba(255, 122, 61, 0.55), transparent 70%),
+    radial-gradient(ellipse 140% 40% at var(--dawn-x) calc(var(--dawn-y) - 3%), rgba(255, 122, 61, 0.18), transparent 70%);
+  mix-blend-mode: screen;
+}
+@media (min-width: 768px) {
+  .dawn {
+    --dawn-x: 60%;
+    --dawn-y: 57%;
   }
 }
 
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--c-accent);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: var(--z-cursor);
-  transition: background-color 0.2s;
-}
-
-.cursor-outline {
-  position: fixed;
-  top: 0; left: 0;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(216, 90, 48, 0.5);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: var(--z-cursor);
-  transition: width 0.2s, height 0.2s, background-color 0.2s;
-}
-
-.cursor-outline.hover {
-  width: 48px;
-  height: 48px;
-  background-color: rgba(216, 90, 48, 0.1);
-}
-
-/* ─── Nav link hover effect ─── */
-.nav-link {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  text-decoration: none;
-}
-.nav-link::before,
-.nav-link::after {
-  content: attr(data-text);
-  display: block;
-  transition: transform 0.4s var(--ease-out-expo);
-}
-.nav-link::before {
+/* 霧：横に継ぎ目なくループするテクスチャ（scripts/prepare-images.mjs）を2層、速さを変えて流す */
+.fog {
+  --fog-h: 60vh;
   position: absolute;
-  top: 100%;
   left: 0;
-  color: var(--c-accent);
+  width: calc(var(--fog-h) * 8);
+  height: var(--fog-h);
+  background: url('/images/fog.webp') repeat-x;
+  background-size: calc(var(--fog-h) * 4) 100%;
+  pointer-events: none;
 }
-.nav-link:hover::before,
-.nav-link:hover::after {
+.fog-far {
+  bottom: 18vh;
+  opacity: 0.28;
+}
+.fog-near {
+  --fog-h: 80vh;
+  bottom: -14vh;
+  opacity: calc(0.22 + var(--walk) * 0.18);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fog-far { animation: fog-drift 140s linear infinite; }
+  .fog-near { animation: fog-drift 80s linear infinite reverse; }
+  .js .scene-a .scene-move { animation: breathe 24s ease-in-out infinite alternate; }
+}
+@keyframes fog-drift {
+  to { transform: translateX(calc(var(--fog-h) * -4)); }
+}
+/* ヒーローの静かな寄り。往復なので継ぎ目が出ない */
+@keyframes breathe {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+/* 動きを減らす設定：寄り・抜けは止め、シーンは重なりの入れ替え（クロスフェード）だけ */
+@media (prefers-reduced-motion: reduce) {
+  .scene-a,
+  .scene-b {
+    transform: none;
+  }
+}
+
+/* ヒーローより下は文字量が増えるので、シーン転換に合わせて写真を一段落とす */
+.stage-dim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--color-bg);
+  opacity: calc(var(--t) * 0.38);
+}
+
+/* 文字を読ませるための減光。四隅と下、デスクトップでは文章が乗る左側も落とす */
+.stage-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 70% at 55% 40%, transparent 35%, rgba(6, 7, 8, 0.7) 100%),
+    linear-gradient(to bottom, rgba(6, 7, 8, 0.35) 0%, transparent 18%, transparent 52%, rgba(6, 7, 8, 0.82) 100%);
+}
+@media (min-width: 768px) {
+  .stage-shade {
+    background:
+      radial-gradient(ellipse 80% 70% at 55% 40%, transparent 35%, rgba(6, 7, 8, 0.7) 100%),
+      linear-gradient(to right, rgba(6, 7, 8, 0.55) 0%, transparent 55%),
+      linear-gradient(to bottom, rgba(6, 7, 8, 0.35) 0%, transparent 18%, transparent 60%, rgba(6, 7, 8, 0.75) 100%);
+  }
+}
+
+.content-layer {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+/* スマホの目次（components/MobileMenu.tsx） */
+.mobile-menu {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-out-expo), visibility 0s linear 0.5s;
+}
+.mobile-menu[data-open] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s var(--ease-out-expo);
+}
+
+/* 目次リンクで飛んだとき、固定ヘッダーの下に見出しが隠れないように */
+.content-layer section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+/* ============================================================
+   MOTION PRIMITIVES — 初期非表示は html.js × motion可 のときだけ
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .rise {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.9s var(--ease-out-expo),
+      transform 0.9s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .js .rise.is-inview,
+  .js .is-inview .rise,
+  .js.is-ready .hero .rise {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 下へ続く合図。1.8秒で1周、継ぎ目なく流れる線 */
+.scroll-cue {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  overflow: hidden;
+  background: var(--color-line);
+}
+.scroll-cue::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-ink);
   transform: translateY(-100%);
 }
-
-/* ─── Loader body lock ─── */
-body.is-loading { overflow: hidden; }
-body.is-loading main { opacity: 0; }
-body:not(.is-loading) main {
-  animation: contentIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) both;
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue::after {
+    animation: cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
 }
-@keyframes contentIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ─── Section divider ─── */
-.section-divider {
-  border-top: 1px solid var(--c-border);
+@keyframes cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }

@@ -9,6 +9,8 @@ type Props = {
   title: string
   /** 和文のリード。セクションの言いたいことを1文で */
   lead?: string
+  /** リードを白地に黒文字の帯で見せる。サイトでいちばん伝えたい一文だけに使う（ベタ面は1か所） */
+  leadInverse?: boolean
   /** Stage.tsx の目印。walk＝写真Bの区間の始まり、dawn＝夜明けの光 */
   stage?: 'walk' | 'dawn'
   children: ReactNode
@@ -20,7 +22,7 @@ const delay = (s: number) => ({ '--reveal-delay': `${s}s` }) as CSSProperties
  * セクションの共通の骨格。番号と細い線 → 英字の見出し → 和文のリード → 中身、を左の1列に積む。
  * 右側は空けて、背景の宇宙飛行士が文字に隠れないようにする
  */
-export default function Section({ id, title, lead, stage, children }: Props) {
+export default function Section({ id, title, lead, leadInverse, stage, children }: Props) {
   const no = String(SECTIONS.findIndex((s) => s.id === id) + 1).padStart(2, '0')
 
   return (
@@ -33,7 +35,13 @@ export default function Section({ id, title, lead, stage, children }: Props) {
           </h2>
           {lead && (
             <p className="rise phrase mt-5 text-headline font-medium text-ink" style={delay(0.12)}>
-              <Phrase>{lead}</Phrase>
+              {leadInverse ? (
+                <span className="lead-inverse">
+                  <Phrase>{lead}</Phrase>
+                </span>
+              ) : (
+                <Phrase>{lead}</Phrase>
+              )}
             </p>
           )}
         </header>

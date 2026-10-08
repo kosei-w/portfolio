@@ -95,6 +95,17 @@ body {
   text-wrap: balance;
 }
 
+/* 白地に黒文字の帯。行ごとに帯を切り直す（折り返しても1行ずつ箱になる）。
+   サイトで唯一のベタ面なので、使うのはPROFILEのリードだけ */
+.lead-inverse {
+  background: #f2f2f0;
+  color: var(--color-bg);
+  padding: 0.12em 0.4em;
+  line-height: 1.9;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /* ============================================================
    STAGE — 画面に固定した背景（components/stage/Stage.tsx）
    写真A（柱）→ B（背中で奥へ）の転換、霧、夜明け。文章はこの上を流れる。

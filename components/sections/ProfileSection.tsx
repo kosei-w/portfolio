@@ -17,10 +17,15 @@ const FACTS: { term: string; value: string | string[] }[] = [
 
 export default function ProfileSection() {
   return (
-    <Section id="profile" title="Profile" lead="開拓進行形を歩む、すべての人の背中を押す。" stage="walk">
+    <Section id="profile" title="Profile" lead="開拓進行形を歩む、すべての人の背中を押す。" leadInverse stage="walk">
       <div className="phrase space-y-5 text-body text-ink-2 md:text-lead">
         <p>
           <Phrase>出塚航世（いでづか こうせい）。4つの仕事を並行して動かしている、パラレルワーカーです。</Phrase>
+        </p>
+        <p>
+          <Phrase>
+            VUCAと呼ばれる、先の読めない時代。正しい生き方を、僕自身もいまなお模索しています。だからこそ、僕の活動を通じて、開拓進行形を歩むすべての人の背中を押せたらと思っています。
+          </Phrase>
         </p>
         <p>
           <Phrase>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getResend, CONTACT_TO } from '@/lib/resend'
+import { getResend, CONTACT_TO, NOTIFY_FROM, AUTOREPLY_FROM } from '@/lib/resend'
 
 const FIELD_LIMITS = {
   name: 100,
@@ -84,12 +84,28 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'message is too long' }, { status: 400 })
   }
 
+  if (!CONTACT_TO) {
+    console.error('[contact] CONTACT_EMAIL is not set')
+    return NextResponse.json({ error: 'Contact is not configured' }, { status: 500 })
+  }
+
+  let resend
   try {
-    const resend = getResend()
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    resend = getResend()
+  } catch (err) {
+    console.error('[contact] resend setup error:', err instanceof Error ? err.message : 'unknown')
+    return NextResponse.json({ error: 'Contact is not configured' }, { status: 500 })
+  }
+
+  // 通知メール（Kose宛て）。Resendは送信失敗でも例外を投げず { error } を返すので、必ず確認する。
+  // 届かなかったら画面にエラーを出し、メールで直接連絡してもらう
+  try {
+    const { error } = await resend.emails.send({
+      from: NOTIFY_FROM,
       to: CONTACT_TO,
-      subject: `【ポートフォリオ】${name}様よりメッセージ`,
+      replyTo: email,
+      // 件名に改行が入るとヘッダが崩れるので、1行にそろえる
+      subject: `【ポートフォリオ】${name.trim().replace(/[\r\n]+/g, ' ')}様よりメッセージ`,
       html: `
         <h2>新しいお問い合わせが届きました</h2>
         <table style="border-collapse:collapse;width:100%">
@@ -99,23 +115,36 @@ export async function POST(req: NextRequest) {
         </table>
       `,
     })
-
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'メッセージありがとうございます — 出塚航世',
-      html: `
-        <p>${escapeHtml(name)} 様</p>
-        <p>メッセージをありがとうございます。<br>
-        2営業日以内に返信します。</p>
-        <hr>
-        <p style="color:#6b7280;font-size:12px">出塚航世 / Kosei Idezuka</p>
-      `,
-    })
-
-    return NextResponse.json({ success: true })
+    if (error) {
+      console.error('[contact] notification failed:', error.name, error.message)
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 502 })
+    }
   } catch (err) {
-    console.error('[contact] resend error:', err instanceof Error ? err.message : 'unknown')
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    console.error('[contact] notification error:', err instanceof Error ? err.message : 'unknown')
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 502 })
   }
+
+  // 自動返信（送ってくれた人宛て）。独自ドメインの送信元（CONTACT_AUTOREPLY_FROM）を設定するまでは送らない。
+  // 通知はもう届いているので、ここで失敗しても利用者にはエラーを返さず、ログにだけ残す
+  if (AUTOREPLY_FROM) {
+    try {
+      const { error } = await resend.emails.send({
+        from: AUTOREPLY_FROM,
+        to: email,
+        subject: 'メッセージありがとうございます — 出塚航世',
+        html: `
+          <p>${escapeHtml(name)} 様</p>
+          <p>メッセージをありがとうございます。<br>
+          2営業日以内に返信します。</p>
+          <hr>
+          <p style="color:#6b7280;font-size:12px">出塚航世 / Kosei Idezuka</p>
+        `,
+      })
+      if (error) console.error('[contact] auto-reply failed:', error.name, error.message)
+    } catch (err) {
+      console.error('[contact] auto-reply error:', err instanceof Error ? err.message : 'unknown')
+    }
+  }
+
+  return NextResponse.json({ success: true })
 }

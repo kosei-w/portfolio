@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono, Zen_Kaku_Gothic_New } from 'next/font/google'
 import JsonLd from '@/components/JsonLd'
 import SmoothScroll from '@/components/motion/SmoothScroll'
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/site'
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, CONTACT_EMAIL } from '@/lib/site'
 import './globals.css'
 
 // 英字見出し。硬質で細部が締まったサンセリフ
@@ -57,7 +57,7 @@ const siteJsonLd = {
       '@id': `${SITE_URL}/#person`,
       name: 'Kosei Idezuka',
       alternateName: '出塚航世',
-      email: 'Kosei.idezuka@navislab.jp',
+      email: CONTACT_EMAIL,
       url: SITE_URL,
       address: { '@type': 'PostalAddress', addressLocality: 'Tokyo', addressCountry: 'JP' },
     },

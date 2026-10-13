@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
@@ -24,10 +24,13 @@ const MARK = {
  *   --t    シーンA→Bの転換（0〜1）
  *   --walk シーンBの中をどれだけ奥へ進んだか（0〜1）
  *   --dawn 夜明けの光（0〜1）
- * 実際の動き（transform / opacity）は globals.css の .stage 配下が担う。Reactの再描画は起こさない。
+ * 実際の動き（transform / opacity）は globals.css の .stage 配下が担う。スクロールでReactの再描画は起こさない。
  */
 export default function Stage() {
   const ref = useRef<HTMLDivElement>(null)
+  // 写真Bは画面に固定した背景の中にあり、loading="lazy" では後回しにならない。
+  // 最初の表示（写真A）の帯域を奪わないよう、Aが出てから読み込みを始める
+  const [shouldLoadWalk, setShouldLoadWalk] = useState(false)
 
   useEffect(() => {
     const el = ref.current
@@ -70,14 +73,20 @@ export default function Stage() {
 
   // ヒーローの写真が出たら見出しも立ち上げる（.is-ready → globals.css の .hero .rise）
   useEffect(() => {
-    const fallback = setTimeout(markReady, READY_FALLBACK_MS)
+    const fallback = setTimeout(() => {
+      markReady()
+      setShouldLoadWalk(true)
+    }, READY_FALLBACK_MS)
     return () => clearTimeout(fallback)
   }, [])
 
   const markLoaded = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const scene = e.currentTarget.closest('.scene')
     scene?.setAttribute('data-loaded', '')
-    if (scene?.classList.contains('scene-a')) markReady()
+    if (scene?.classList.contains('scene-a')) {
+      markReady()
+      setShouldLoadWalk(true)
+    }
   }
 
   return (
@@ -100,14 +109,16 @@ export default function Stage() {
       {/* B — 霧の奥の惑星へ、背中で進んでいく */}
       <div className="scene scene-b">
         <div className="scene-move">
-          <Image
-            src="/images/scene-walk.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="scene-img"
-            onLoad={markLoaded}
-          />
+          {shouldLoadWalk && (
+            <Image
+              src="/images/scene-walk.jpg"
+              alt=""
+              fill
+              sizes="100vw"
+              className="scene-img"
+              onLoad={markLoaded}
+            />
+          )}
         </div>
         <div className="dawn" />
       </div>

@@ -1,21 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getResend, CONTACT_TO } from '@/lib/resend'
-
-const ALLOWED_PLANS = ['starter', 'standard', 'premium', 'undecided'] as const
-type AllowedPlan = typeof ALLOWED_PLANS[number]
+import { getResend, CONTACT_TO, NOTIFY_FROM, AUTOREPLY_FROM } from '@/lib/resend'
 
 const FIELD_LIMITS = {
   name: 100,
-  company: 100,
   email: 254,
   message: 2000,
 } as const
 
 type ContactBody = {
   name: string
-  company?: string
   email: string
-  plan?: string
   message?: string
 }
 
@@ -68,7 +62,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { name, company, email, plan, message } = body
+  const { name, email, message } = body
 
   if (!name?.trim() || !email?.trim()) {
     return NextResponse.json({ error: 'name and email are required' }, { status: 400 })
@@ -86,60 +80,71 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'email is too long' }, { status: 400 })
   }
 
-  if (company && company.length > FIELD_LIMITS.company) {
-    return NextResponse.json({ error: 'company is too long' }, { status: 400 })
-  }
-
   if (message && message.length > FIELD_LIMITS.message) {
     return NextResponse.json({ error: 'message is too long' }, { status: 400 })
   }
 
-  if (plan && !ALLOWED_PLANS.includes(plan as AllowedPlan)) {
-    return NextResponse.json({ error: 'Invalid plan value' }, { status: 400 })
+  if (!CONTACT_TO) {
+    console.error('[contact] CONTACT_EMAIL is not set')
+    return NextResponse.json({ error: 'Contact is not configured' }, { status: 500 })
   }
 
-  const planLabel: Record<AllowedPlan, string> = {
-    starter: 'スターター ¥128,000〜',
-    standard: 'スタンダード ¥198,000〜',
-    premium: 'プレミアム ¥350,000〜',
-    undecided: 'まだ決めていない',
-  }
-
+  let resend
   try {
-    const resend = getResend()
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    resend = getResend()
+  } catch (err) {
+    console.error('[contact] resend setup error:', err instanceof Error ? err.message : 'unknown')
+    return NextResponse.json({ error: 'Contact is not configured' }, { status: 500 })
+  }
+
+  // 通知メール（Kose宛て）。Resendは送信失敗でも例外を投げず { error } を返すので、必ず確認する。
+  // 届かなかったら画面にエラーを出し、メールで直接連絡してもらう
+  try {
+    const { error } = await resend.emails.send({
+      from: NOTIFY_FROM,
       to: CONTACT_TO,
-      subject: `【HP制作相談】${name}様より`,
+      replyTo: email,
+      // 件名に改行が入るとヘッダが崩れるので、1行にそろえる
+      subject: `【ポートフォリオ】${name.trim().replace(/[\r\n]+/g, ' ')}様よりメッセージ`,
       html: `
         <h2>新しいお問い合わせが届きました</h2>
         <table style="border-collapse:collapse;width:100%">
           <tr><td style="padding:8px;font-weight:bold;width:120px">お名前</td><td style="padding:8px">${escapeHtml(name)}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold">会社名</td><td style="padding:8px">${company ? escapeHtml(company) : '—'}</td></tr>
           <tr><td style="padding:8px;font-weight:bold">メール</td><td style="padding:8px">${escapeHtml(email)}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold">プラン</td><td style="padding:8px">${plan ? planLabel[plan as AllowedPlan] : '—'}</td></tr>
-          <tr><td style="padding:8px;font-weight:bold;vertical-align:top">ご要望</td><td style="padding:8px;white-space:pre-wrap">${message ? escapeHtml(message) : '—'}</td></tr>
+          <tr><td style="padding:8px;font-weight:bold;vertical-align:top">メッセージ</td><td style="padding:8px;white-space:pre-wrap">${message ? escapeHtml(message) : '—'}</td></tr>
         </table>
       `,
     })
-
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: 'お問い合わせありがとうございます — Kosei',
-      html: `
-        <p>${escapeHtml(name)} 様</p>
-        <p>お問い合わせいただき、ありがとうございます。<br>
-        1〜2営業日以内にご連絡いたします。</p>
-        <p>少しお待ちください😊</p>
-        <hr>
-        <p style="color:#6b7280;font-size:12px">Kosei | HP制作</p>
-      `,
-    })
-
-    return NextResponse.json({ success: true })
+    if (error) {
+      console.error('[contact] notification failed:', error.name, error.message)
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 502 })
+    }
   } catch (err) {
-    console.error('[contact] resend error:', err instanceof Error ? err.message : 'unknown')
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    console.error('[contact] notification error:', err instanceof Error ? err.message : 'unknown')
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 502 })
   }
+
+  // 自動返信（送ってくれた人宛て）。独自ドメインの送信元（CONTACT_AUTOREPLY_FROM）を設定するまでは送らない。
+  // 通知はもう届いているので、ここで失敗しても利用者にはエラーを返さず、ログにだけ残す
+  if (AUTOREPLY_FROM) {
+    try {
+      const { error } = await resend.emails.send({
+        from: AUTOREPLY_FROM,
+        to: email,
+        subject: 'メッセージありがとうございます — 出塚航世',
+        html: `
+          <p>${escapeHtml(name)} 様</p>
+          <p>メッセージをありがとうございます。<br>
+          2営業日以内に返信します。</p>
+          <hr>
+          <p style="color:#6b7280;font-size:12px">出塚航世 / Kosei Idezuka</p>
+        `,
+      })
+      if (error) console.error('[contact] auto-reply failed:', error.name, error.message)
+    } catch (err) {
+      console.error('[contact] auto-reply error:', err instanceof Error ? err.message : 'unknown')
+    }
+  }
+
+  return NextResponse.json({ success: true })
 }

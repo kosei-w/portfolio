@@ -1,39 +1,20 @@
-import Link from 'next/link'
-import { navLinks } from '@/lib/nav'
-
+/** 著作権表示と写真のクレジットだけ */
 export default function Footer() {
   return (
-    <footer
-      className="border-t px-6 md:px-10 py-10"
-      style={{ borderColor: 'var(--c-border)' }}
-    >
-      <div className="mx-auto flex flex-col md:flex-row items-center md:justify-between gap-6" style={{ maxWidth: 'var(--container-max)' }}>
-        <span
-          className="text-[var(--c-text)] font-bold tracking-[0.2em] text-sm"
-          style={{ fontFamily: 'var(--f-mono)' }}
-        >
-          KI
-        </span>
-
-        <nav className="flex items-center gap-8">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="text-[11px] tracking-[0.2em] text-[var(--c-muted)] hover:text-[var(--c-text)] transition-colors duration-300"
-              style={{ fontFamily: 'var(--f-mono)' }}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-
-        <span
-          className="text-[11px] tracking-[0.15em] text-[var(--c-subtle)]"
-          style={{ fontFamily: 'var(--f-mono)' }}
-        >
-          © 2026 All rights reserved.
-        </span>
+    <footer className="content-layer px-6 pb-8 pt-16 md:px-12">
+      <div className="mx-auto flex max-w-[76rem] flex-col gap-2 border-t border-line pt-6 font-mono text-label text-ink-3 sm:flex-row sm:justify-between">
+        <p>© 2026 KOSEI IDEZUKA</p>
+        <p>
+          PHOTOS:{' '}
+          <a
+            href="https://unsplash.com/@alexshuperart"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors duration-500 hover:text-ink"
+          >
+            ALEX SHUPER / UNSPLASH
+          </a>
+        </p>
       </div>
     </footer>
   )

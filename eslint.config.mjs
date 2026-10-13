@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // サイトのコードではないもの: 別セッションの作業コピー、git管理外の素材と作業スクリプト
+    ".claude/**",
+    "assets-src/**",
   ]),
 ]);
 

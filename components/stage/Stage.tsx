@@ -15,7 +15,7 @@ const markReady = () => document.documentElement.classList.add('is-ready')
 const MARK = {
   /** シーンB（背中で奥へ進む）の区間が始まる章 */
   walk: '[data-stage="walk"]',
-  /** 夜明けの光が差しはじめる章 */
+  /** 写真C（頂上の仲間たち）に切り替わり、夜明けの光が差しはじめる章 */
   dawn: '[data-stage="dawn"]',
 } as const
 
@@ -23,7 +23,7 @@ const MARK = {
  * 画面に固定した背景。写真2枚と霧を重ね、スクロール量をCSS変数に変換するだけ。
  *   --t    シーンA→Bの転換（0〜1）
  *   --walk シーンBの中をどれだけ奥へ進んだか（0〜1）
- *   --dawn 夜明けの光（0〜1）
+ *   --dawn 写真Cへの転換と夜明けの光（0〜1）
  * 実際の動き（transform / opacity）は globals.css の .stage 配下が担う。スクロールでReactの再描画は起こさない。
  */
 export default function Stage() {
@@ -31,6 +31,8 @@ export default function Stage() {
   // 写真Bは画面に固定した背景の中にあり、loading="lazy" では後回しにならない。
   // 最初の表示（写真A）の帯域を奪わないよう、Aが出てから読み込みを始める
   const [shouldLoadWalk, setShouldLoadWalk] = useState(false)
+  // 写真C（Visionの場面）も同じ理由で、Bが出てから読み込む
+  const [shouldLoadSummit, setShouldLoadSummit] = useState(false)
 
   useEffect(() => {
     const el = ref.current
@@ -73,9 +75,11 @@ export default function Stage() {
 
   // ヒーローの写真が出たら見出しも立ち上げる（.is-ready → globals.css の .hero .rise）
   useEffect(() => {
+    // 写真の読み込みが遅い・失敗したときも、見出しと後続の写真は待たせすぎない
     const fallback = setTimeout(() => {
       markReady()
       setShouldLoadWalk(true)
+      setShouldLoadSummit(true)
     }, READY_FALLBACK_MS)
     return () => clearTimeout(fallback)
   }, [])
@@ -87,6 +91,7 @@ export default function Stage() {
       markReady()
       setShouldLoadWalk(true)
     }
+    if (scene?.classList.contains('scene-b')) setShouldLoadSummit(true)
   }
 
   return (
@@ -112,6 +117,22 @@ export default function Stage() {
           {shouldLoadWalk && (
             <Image
               src="/images/scene-walk.jpg"
+              alt=""
+              fill
+              sizes="100vw"
+              className="scene-img"
+              onLoad={markLoaded}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* C — 満天の星と天の川の下、雲海の頂で仲間がそれぞれの持ち場につく（Visionから） */}
+      <div className="scene scene-c">
+        <div className="scene-move">
+          {shouldLoadSummit && (
+            <Image
+              src="/images/scene-summit.jpg"
               alt=""
               fill
               sizes="100vw"

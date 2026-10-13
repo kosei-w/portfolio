@@ -153,6 +153,17 @@ body {
   object-position: 50% 78%;
 }
 
+/* C：Visionで、霧を抜けた頂の場面に切り替わる。少し引いた位置から落ち着くように寄る */
+.scene-c {
+  opacity: var(--dawn);
+  transform: scale(calc(1.05 - var(--dawn) * 0.05));
+  transform-origin: 60% 55%;
+}
+/* 横長の画面では、天の川・惑星・地平線の光・仲間たちが入る高さで切り取る */
+.scene-c .scene-img {
+  object-position: 50% 55%;
+}
+
 /* 読み込めた写真からフェードイン（JSが動く環境だけ隠しておく） */
 .js .scene .scene-move {
   opacity: 0;
@@ -167,19 +178,19 @@ body {
   position: absolute;
   inset: 0;
   opacity: var(--dawn);
-  /* 地平線（宇宙飛行士の右奥で霧が光っているところ）から横に広がる光の帯。
-     screenで重ねて、写真の暗部は濁らせない。位置は写真Bの光の位置に合わせる */
-  --dawn-x: 66%;
-  --dawn-y: 68%;
+  /* 地平線（雲海の右奥で光っているところ）から横に広がる光の帯。位置は写真Cの光に合わせる。
+     写真Cの地平線は白く明るいので、screenだと色が白に飛ぶ。colorで明るさは写真のまま、色だけを乗せる。 */
+  --dawn-x: 86%;
+  --dawn-y: 57%;
   background:
-    radial-gradient(ellipse 95% 16% at var(--dawn-x) var(--dawn-y), rgba(255, 122, 61, 0.55), transparent 70%),
-    radial-gradient(ellipse 140% 40% at var(--dawn-x) calc(var(--dawn-y) - 3%), rgba(255, 122, 61, 0.18), transparent 70%);
-  mix-blend-mode: screen;
+    radial-gradient(ellipse 80% 14% at var(--dawn-x) var(--dawn-y), rgba(255, 122, 61, 0.9), transparent 70%),
+    radial-gradient(ellipse 130% 34% at var(--dawn-x) calc(var(--dawn-y) - 2%), rgba(255, 122, 61, 0.4), transparent 70%);
+  mix-blend-mode: color;
 }
 @media (min-width: 768px) {
   .dawn {
-    --dawn-x: 60%;
-    --dawn-y: 57%;
+    --dawn-x: 72%;
+    --dawn-y: 59%;
   }
 }
 
@@ -220,7 +231,8 @@ body {
 /* 動きを減らす設定：寄り・抜けは止め、シーンは重なりの入れ替え（クロスフェード）だけ */
 @media (prefers-reduced-motion: reduce) {
   .scene-a,
-  .scene-b {
+  .scene-b,
+  .scene-c {
     transform: none;
   }
 }

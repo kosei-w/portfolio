@@ -1,7 +1,7 @@
 // 背景素材の書き出し。元写真（assets-src/、git管理外）→ public/images/
 //   node scripts/prepare-images.mjs
 //
-// 1. 写真2枚をモノクロに焼き込む（サイトの色は霧のグレー1系統。夜明けの色はCSSで重ねる）
+// 1. 写真3枚をモノクロに焼き込む（サイトの色は霧のグレー1系統。夜明けの色はCSSで重ねる）
 // 2. 横に継ぎ目なくループする霧のテクスチャを、シード固定の乱数で生成する
 // 3. SNSカード（app/opengraph-image.jpg）を写真Aと見出しから書き出す
 //    文字はこのMacのシステムフォントで焼き込む（ビルド時にWebフォントを取りに行かないため）
@@ -15,6 +15,8 @@ const PHOTOS = [
   { src: 'assets-src/unsplash-JA14fUcNKFE-pillars.jpg', out: 'scene-pillars.jpg' },
   // 画像生成AIで作ったオリジナル（霧の奥の惑星へ歩く背中）。元が1086pxと小さいので2倍に拡大する
   { src: 'assets-src/ai-walk.png', out: 'scene-walk.jpg', upscale: true },
+  // 画像生成AIで作ったオリジナル（満天の星と天の川の下、雲海の頂でそれぞれの持ち場につく仲間たち）。元が896pxなので拡大する
+  { src: 'assets-src/ai-summit.jpg', out: 'scene-summit.jpg', upscale: true },
 ]
 
 const CONTRAST = 1.12
